@@ -5,11 +5,11 @@ export type LoginCredentials = {
   password: string;
 };
 
-async function login(body: LoginCredentials) {
+function login(body: LoginCredentials) {
   try {
-    const promise = await api.post("/auth/sign-in", body);
-    return promise.data;
-  } catch (_error) {
+    const promise: any = api.post("/auth/sign-in", body);
+    return promise;
+  } catch (error) {
     return;
   }
 }

@@ -7,11 +7,8 @@ import {
   Avatar,
   Box,
   Container,
-  Button,
   Grid,
   Link,
-  Checkbox,
-  FormControlLabel,
   TextField,
   Typography,
   Snackbar,
@@ -25,8 +22,10 @@ import { LoadingButton } from "@mui/lab";
 import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [requestMessage, setRequestMessage] = React.useState("");
@@ -35,6 +34,9 @@ export default function SignUp() {
 
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,6 +54,9 @@ export default function SignUp() {
         setSeverity("success");
         console.log(data);
         setRequestMessage("Cadastro realizado com sucesso!");
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
       })
       .catch((error: AxiosError | any) => {
         setSeverity("error");
@@ -66,9 +71,6 @@ export default function SignUp() {
         setOpen(true);
       });
   }
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -172,10 +174,7 @@ export default function SignUp() {
               ),
             }}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Lembrar de mim"
-          />
+
           <LoadingButton
             variant="contained"
             fullWidth
