@@ -16,7 +16,6 @@ import {
   Snackbar,
   AlertColor,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Copyright } from "@/components/atoms";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -24,6 +23,8 @@ import { LoadingButton } from "@mui/lab";
 import { login } from "./api";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import fundo_cultural from "/public/login_background.jpg";
 
 export default function SignIn() {
   const router = useRouter();
@@ -89,11 +90,14 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#49a2c5" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login{" "}
+        <Box sx={{}}>
+          <Image src={fundo_cultural} alt="fundo cultural" width={200}></Image>
+        </Box>
+        <Typography component="h1" variant="body2">
+          seja bem vindo à
+        </Typography>
+        <Typography component="h1" variant="h6">
+          Culturalize
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField

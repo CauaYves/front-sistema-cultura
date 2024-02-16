@@ -1,10 +1,8 @@
 "use client";
 import * as React from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import MaskedInput from "react-text-mask";
 import { Copyright } from "@/components/atoms";
 import {
-  Avatar,
   Box,
   Container,
   Grid,
@@ -23,6 +21,8 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import fundo_cultural from "/public/login_background.jpg";
 
 export default function SignUp() {
   const router = useRouter();
@@ -55,7 +55,7 @@ export default function SignUp() {
         console.log(data);
         setRequestMessage("Cadastro realizado com sucesso!");
         setTimeout(() => {
-          router.push("/");
+          router.push("/confirmacao");
         }, 1500);
       })
       .catch((error: AxiosError | any) => {
@@ -85,17 +85,19 @@ export default function SignUp() {
 
       <Box
         sx={{
-          marginTop: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "#49a2c5" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Cadastro
+        <Box sx={{}}>
+          <Image src={fundo_cultural} alt="fundo cultural" width={200}></Image>
+        </Box>
+        <Typography component="h1" variant="body2">
+          seja bem vindo à
+        </Typography>
+        <Typography component="h1" variant="h6">
+          Culturalize
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
@@ -180,7 +182,7 @@ export default function SignUp() {
             fullWidth
             loading={loading}
             type="submit"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 2, mb: 2 }}
           >
             cadastrar
           </LoadingButton>
