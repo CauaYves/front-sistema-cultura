@@ -94,7 +94,7 @@ export default function SignUp() {
           <Image src={fundo_cultural} alt="fundo cultural" width={200}></Image>
         </Box>
         <Typography component="h1" variant="body2">
-          seja bem vindo à
+          Seja bem vindo à
         </Typography>
         <Typography component="h1" variant="h6">
           Culturalize
@@ -137,7 +137,7 @@ export default function SignUp() {
                 required
                 fullWidth
                 name="cpf"
-                label="Cpf"
+                label="CPF"
                 type="cpf"
                 id="cpf"
                 autoComplete="cpf"
@@ -149,7 +149,7 @@ export default function SignUp() {
             required
             fullWidth
             id="email"
-            label="Email"
+            label="E-mail"
             name="email"
             autoComplete="email"
           />
@@ -189,7 +189,7 @@ export default function SignUp() {
           <Grid container>
             <Grid item>
               <Link href="/" variant="body2">
-                Já tem uma conta? entre agora
+                Já tem uma conta? Entre agora
               </Link>
             </Grid>
           </Grid>

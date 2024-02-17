@@ -1,4 +1,3 @@
-import { SnackbarProvider } from "@/context";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
@@ -16,9 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <SnackbarProvider>
-        <body className={inter.className}>{children}</body>
-      </SnackbarProvider>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
