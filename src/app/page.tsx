@@ -24,7 +24,6 @@ import { login } from "./api";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import fundo_cultural from "/public/login_background.jpg";
 import { createCookie } from "@/hooks";
 
 export default function SignIn() {
@@ -96,11 +95,12 @@ export default function SignIn() {
       >
         <Box sx={{}}>
           <Image
-            src={fundo_cultural}
+            src="/login_background.jpg"
             alt="fundo cultural"
-            width={200}
+            height={100}
+            width={150}
             priority
-          ></Image>
+          />
         </Box>
         <Typography component="h1" variant="body2">
           Seja bem vindo à

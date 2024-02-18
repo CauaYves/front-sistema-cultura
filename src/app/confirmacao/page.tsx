@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@mui/material";
 import Image from "next/image";
-import fundo_cultural from "/public/login_background.jpg";
 import { Copyright } from "@/components/atoms";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
@@ -77,13 +76,20 @@ export default function Confirmacao() {
       </Snackbar>
       <Box
         sx={{
+          marginTop: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         <Box>
-          <Image src={fundo_cultural} alt="fundo cultural" width={200}></Image>
+          <Image
+            src="/login_background.jpg"
+            alt="fundo cultural"
+            height={100}
+            width={150}
+            priority
+          />
         </Box>
         <Typography component="h1" variant="h6">
           Culturalize

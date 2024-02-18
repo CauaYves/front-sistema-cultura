@@ -5,14 +5,22 @@ import type { NextRequest } from "next/server";
 export async function middleware(request: NextRequest) {
   const cookiesList = cookies();
   const hasToken = cookiesList.has("token");
-  const signInURL = new URL("/", request.url);
-  if (!hasToken) {
-    return NextResponse.redirect(signInURL.href);
-  }
+  const url = request.url;
 
+  const signInURL = new URL("/", url).toString();
+  const homeUrl = new URL("/home", url);
+
+  const actualUrl = url.substring(url.lastIndexOf("/"), url.length);
+
+  if (actualUrl === "/" && hasToken) {
+    return NextResponse.redirect(homeUrl);
+  } else if (actualUrl === "/home" && !hasToken) {
+    return NextResponse.redirect(signInURL);
+  } else {
+  }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/home"],
+  matcher: ["/home", "/"],
 };

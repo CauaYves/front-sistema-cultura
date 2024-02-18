@@ -14,6 +14,7 @@ import {
   AlertColor,
   InputAdornment,
   IconButton,
+  CssBaseline,
 } from "@mui/material";
 import { register } from "../api";
 import { LoadingButton } from "@mui/lab";
@@ -22,7 +23,6 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import fundo_cultural from "/public/login_background.jpg";
 
 export default function SignUp() {
   const router = useRouter();
@@ -85,13 +85,20 @@ export default function SignUp() {
 
       <Box
         sx={{
+          marginTop: 4,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
         <Box sx={{}}>
-          <Image src={fundo_cultural} alt="fundo cultural" width={200}></Image>
+          <Image
+            src="/login_background.jpg"
+            alt="fundo cultural"
+            height={100}
+            width={150}
+            priority
+          />
         </Box>
         <Typography component="h1" variant="body2">
           Seja bem vindo à
