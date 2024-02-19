@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,14 +7,14 @@ import Box from "@mui/material/Box";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { List } from "@mui/material";
-import { primaryListItems } from "./listItems";
+import CustomizedAccordions from "./listItems";
+import SecondaryListItems from "./secondListItems";
+import Indentification from "./Indentification";
 
 const drawerWidth: number = 240;
 
@@ -67,8 +66,48 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
+interface OrganismObjects {
+  [key: string]: React.ReactNode;
+}
+
+export type ModulesKey =
+  | "identification"
+  | "location"
+  | "contacts"
+  | "professionalData"
+  | "culturalColective"
+  | "imagesAndLinks"
+  | "documents"
+  | "authorizedUsers"
+  | "notices"
+  | "alreadyIncentived"
+  | "searchProject"
+  | "queue"
+  | "support"
+  | "about";
+
+const organismObjects: OrganismObjects = {
+  identification: <Indentification />,
+  location: <p></p>,
+  contacts: <p></p>,
+  professionalData: <p></p>,
+  culturalColective: <p></p>,
+  imagesAndLinks: <p></p>,
+  documents: <p></p>,
+  authorizedUsers: <p></p>,
+  notices: <p></p>,
+  alreadyIncentived: <p></p>,
+  searchProject: <p></p>,
+  queue: <p></p>,
+  support: <p></p>,
+  about: <p></p>,
+};
+
 export default function Dashboard() {
+  const [selectedModule, setSelectedModule] =
+    React.useState<ModulesKey>("identification");
   const [open, setOpen] = React.useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -105,7 +144,7 @@ export default function Dashboard() {
             Área do agente cultural
           </Typography>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={1} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
@@ -127,9 +166,22 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
-        <Divider />
-        <List component="nav">{primaryListItems}</List>
+        <CustomizedAccordions
+          open={open}
+          selectedModule={selectedModule}
+          setSelectedModule={setSelectedModule}
+        />
+        <Box>
+          <SecondaryListItems />
+        </Box>
       </Drawer>
+      <Box
+        sx={{
+          padding: "100px 30px",
+        }}
+      >
+        {organismObjects[selectedModule]}
+      </Box>
     </Box>
   );
 }
