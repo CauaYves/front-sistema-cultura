@@ -1,7 +1,4 @@
 import * as React from "react";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import SearchIcon from "@mui/icons-material/Search";
 import FolderIcon from "@mui/icons-material/Folder";
 import People from "@mui/icons-material/People";
@@ -22,6 +19,7 @@ import Business from "@mui/icons-material/Business";
 import Link from "@mui/icons-material/Link";
 import Description from "@mui/icons-material/Description";
 import LockOpen from "@mui/icons-material/LockOpen";
+import LocalAtm from "@mui/icons-material/LocalAtm";
 
 import MuiAccordionSummary, {
   AccordionSummaryProps,
@@ -128,7 +126,7 @@ export default function CustomizedAccordions({
           </SubModule>
           <SubModule
             setSelectedModule={setSelectedModule}
-            tag="Dados profissionais"
+            tag="Dados profissio..."
             name="professionalData"
           >
             <ContactMail />
@@ -156,7 +154,7 @@ export default function CustomizedAccordions({
           </SubModule>
           <SubModule
             setSelectedModule={setSelectedModule}
-            tag="autorizados"
+            tag="Autorizados"
             name="authorizedUsers"
           >
             <LockOpen />
@@ -194,6 +192,13 @@ export default function CustomizedAccordions({
             name="notices"
           >
             <ListAlt />
+          </SubModule>
+          <SubModule
+            setSelectedModule={setSelectedModule}
+            tag="Prestação de co..."
+            name="billings"
+          >
+            <LocalAtm />
           </SubModule>
         </AccordionDetails>
       </Accordion>
