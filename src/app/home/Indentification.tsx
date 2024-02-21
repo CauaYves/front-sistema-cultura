@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   Divider,
   FormControl,
@@ -79,6 +80,14 @@ const StyledFormControlForSelect = styled(FormControl)`
   }
 `;
 
+const ResponsiveDatePicker = styled(DatePicker)`
+  margin: 5px;
+  width: 45%;
+  @media (max-width: ${mobalBreakpoint}) {
+    width: 100%;
+  }
+`;
+
 export default function Indentification() {
   const [nacionality, setNacionality] = useState<string>("Brasil");
   const [gender, setGender] = useState<string>("");
@@ -145,11 +154,7 @@ export default function Indentification() {
           label="Nome da mãe"
           autoComplete="family-name"
         />
-        <DatePicker
-          label="Data de nascimento"
-          name="borndate"
-          sx={{ margin: "5px", width: "45%" }}
-        />
+        <ResponsiveDatePicker label="Data de nascimento" name="borndate" />
         <StyledFormControlForSelect>
           <InputLabel id="nacionality-label">Nacionalidade</InputLabel>
           <Select
@@ -157,6 +162,7 @@ export default function Indentification() {
             labelId="nacionality-label"
             label="nacionalidade"
             name="nacionality"
+            required
             value={nacionality}
             onChange={(event) => setNacionality(event.target.value as string)}
           >
@@ -169,16 +175,22 @@ export default function Indentification() {
             })}
           </Select>
         </StyledFormControlForSelect>
-        <StyledTextField type="text" name="naturalness" label="naturalidade" />
+        <StyledTextField
+          type="text"
+          name="naturalness"
+          label="naturalidade"
+          required
+        />
         <Division />
         <Typography variant="caption" display="block" gutterBottom>
           Documentos
         </Typography>
-        <QuarterTextField type="text" name="rg" label="RG" />
+        <QuarterTextField type="text" name="rg" label="RG" required />
         <QuarterTextField
           type="text"
           name="issuingbody"
           label="Orgão expedidor"
+          required
         />
         <StyledFormControlForSelect>
           <InputLabel id="uf-label">UF orgão expeditor</InputLabel>
@@ -188,6 +200,7 @@ export default function Indentification() {
             label="UF orgão expeditor"
             name="uf"
             value={uf}
+            required
             onChange={(event) => setUf(event.target.value as string)}
           >
             {brazilStates.map((country) => {
@@ -206,6 +219,7 @@ export default function Indentification() {
             labelId="gender-label"
             label="Gênero"
             name="gender"
+            required
             value={gender}
             onChange={(event) => setGender(event.target.value as string)}
           >
@@ -222,6 +236,7 @@ export default function Indentification() {
             labelId="race-label"
             label="Raça"
             name="gender"
+            required
             value={race}
             onChange={(event) => setRace(event.target.value as string)}
           >
@@ -237,7 +252,7 @@ export default function Indentification() {
         <Typography variant="caption" display="block" gutterBottom>
           Informações complementares
         </Typography>
-        <FormControl>
+        <FormControl required>
           <FormLabel id="studentLabel">É estudante?</FormLabel>
           <RadioGroup row aria-labelledby="studentLabel" name="student">
             <FormControlLabel value={true} control={<Radio />} label="Sim" />
@@ -251,6 +266,7 @@ export default function Indentification() {
             labelId="education-label"
             label="Escolaridade"
             name="gender"
+            required
             value={education}
             onChange={(event) => setEducation(event.target.value as string)}
           >
@@ -272,7 +288,7 @@ export default function Indentification() {
           name="superiorCourses"
           label="Cursos superiores"
         />
-        <FormControl>
+        <FormControl required>
           <FormLabel id="deficiencyLabel">Possui deficiência?</FormLabel>
           <RadioGroup
             row
@@ -291,10 +307,16 @@ export default function Indentification() {
         <MiddleTextField
           type="text"
           name="address"
+          required
           label="Endereço"
           autoComplete="address-line1"
         />
-        <QuarterTextField type="number" name="houseNumber" label="Número" />
+        <QuarterTextField
+          type="number"
+          name="houseNumber"
+          label="Número"
+          required
+        />
         <QuarterTextField
           type="text"
           name="complement"
@@ -304,6 +326,7 @@ export default function Indentification() {
         <MiddleTextField
           type="text"
           name="cep"
+          required
           label="CEP"
           autoComplete="postal-code"
         />
@@ -339,6 +362,7 @@ export default function Indentification() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "end",
           width: "91.5%",
         }}
@@ -352,9 +376,11 @@ export default function Indentification() {
         >
           Salvar
         </LoadingButton>
-        <LoadingButton variant="outlined">
-          Autorizar publicação de dados ao público
-        </LoadingButton>
+
+        <FormControlLabel
+          control={<Checkbox />}
+          label="Autorizar publicação de dados ao público"
+        />
       </Box>
     </Container>
   );
