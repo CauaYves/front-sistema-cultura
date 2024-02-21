@@ -121,10 +121,7 @@ export default function Indentification() {
   };
 
   return (
-    <LocalizationProvider //AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
-      dateAdapter={AdapterDayjs}
-      adapterLocale="pt-br"
-    >
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
       <Container
         component="form"
         onSubmit={handleSubmit}
@@ -148,7 +145,7 @@ export default function Indentification() {
             type="email"
             name="email"
             required
-            label="e-mail"
+            label="E-mail"
             autoComplete="email"
           />
           <StyledTextField
@@ -170,7 +167,7 @@ export default function Indentification() {
             <Select
               id="nacionality-label"
               labelId="nacionality-label"
-              label="nacionalidade"
+              label="Nacionalidade"
               name="nacionality"
               required
               value={nacionality}
@@ -188,7 +185,7 @@ export default function Indentification() {
           <StyledTextField
             type="text"
             name="naturalness"
-            label="naturalidade"
+            label="Naturalidade"
             required
           />
           <Division />
@@ -292,11 +289,13 @@ export default function Indentification() {
             type="text"
             name="extracurricularCourses"
             label="Cursos extracurriculares"
+            placeholder="Exemplo: Udemy, gastronomia 40 horas"
           />
           <MiddleTextField
             type="text"
             name="superiorCourses"
             label="Cursos superiores"
+            placeholder="Exemplo: UFRJ, Ciência da computação"
           />
           <FormControl required>
             <FormLabel id="deficiencyLabel">Possui deficiência?</FormLabel>
@@ -344,7 +343,8 @@ export default function Indentification() {
             sx={{
               margin: "10px 5px",
               display: "flex",
-              alignItems: "center",
+              flexDirection: "column",
+              alignItems: "baseline",
             }}
           >
             <Button
@@ -364,6 +364,9 @@ export default function Indentification() {
                 accept="pdf image/* !mp4 !bat !txt"
               />
             </Button>
+            <Typography component="p" variant="caption">
+              Envie o comprovante de residência:{" "}
+            </Typography>
             {files.map((file) => {
               return <Typography key={file}>{file}</Typography>;
             })}

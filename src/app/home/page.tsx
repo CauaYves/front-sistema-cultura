@@ -89,6 +89,7 @@ export type ModulesKey =
   | "documents"
   | "authorizedUsers"
   | "notices"
+  | "billings"
   | "alreadyIncentived"
   | "searchProject"
   | "queue"
@@ -110,6 +111,7 @@ const organismObjects: OrganismObjects = {
   queue: <p>queue</p>,
   support: <p>support</p>,
   about: <p>about</p>,
+  billings: <p>billings</p>,
 };
 
 export default function Dashboard() {
