@@ -24,7 +24,7 @@ import { login } from "./api";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import fundo_cultural from "/public/login_background.jpg";
+import { createCookie } from "@/hooks";
 
 export default function SignIn() {
   const router = useRouter();
@@ -44,23 +44,26 @@ export default function SignIn() {
     setLoading(true);
     const promise = login(userData);
     promise
-      .then((data: AxiosResponse) => {
+      .then((response: AxiosResponse) => {
         setSeverity("success");
-        console.log(data);
+        createCookie("token", response.data.token);
         setRequestMessage("Login efetuado com sucesso!");
         setTimeout(() => {
           router.push("/home");
         }, 1500);
       })
-      .catch((error: AxiosError | any) => {
-        console.log(error);
+      .catch(({ response }: AxiosError | any) => {
+        const { status, data } = response;
         setSeverity("error");
         setRequestMessage(
-          error.response.status === 422
-            ? `${error.response.data}`
-            : `${error.response?.data.details}`
+          status === 422
+            ? `${data}`
+            : status === 404
+            ? "Usuário não encontrado"
+            : `${data.details}`
         );
       })
+
       .finally(() => {
         setLoading(false);
         setOpen(true);
@@ -90,22 +93,28 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Box sx={{}}>
-          <Image src={fundo_cultural} alt="fundo cultural" width={200}></Image>
+        <Box>
+          <Image
+            src="/login_background.jpg"
+            alt="fundo cultural"
+            height={100}
+            width={150}
+            priority
+          />
         </Box>
         <Typography component="h1" variant="body2">
-          seja bem vindo à
+          Seja bem vindo à
         </Typography>
         <Typography component="h1" variant="h6">
           Culturalize
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email"
+            label="E-mail"
             name="email"
             autoComplete="email"
             autoFocus

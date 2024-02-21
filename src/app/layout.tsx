@@ -1,6 +1,6 @@
-import { SnackbarProvider } from "@/context";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ModuleContextProvider } from "@/context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,9 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <SnackbarProvider>
+      <ModuleContextProvider>
         <body className={inter.className}>{children}</body>
-      </SnackbarProvider>
+      </ModuleContextProvider>
     </html>
   );
 }
