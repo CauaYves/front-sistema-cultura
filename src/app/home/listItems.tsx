@@ -69,10 +69,10 @@ export default function CustomizedAccordions({
 }: CustomizedAccordionsProps) {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
 
-  const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+  const AccordionDetails = styled(MuiAccordionDetails)(() => ({
     padding: 0,
     borderTop: "1px solid rgba(0, 0, 0, .125)",
-    marginLeft: `${open ? "40px" : "18px"}`,
+    marginLeft: `${open ? "40px" : "13px"}`,
   }));
   const handleChange =
     (panel: string) => (_event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -156,7 +156,7 @@ export default function CustomizedAccordions({
           </SubModule>
           <SubModule
             setSelectedModule={setSelectedModule}
-            tag="Usuários autorizados"
+            tag="autorizados"
             name="authorizedUsers"
           >
             <LockOpen />

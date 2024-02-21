@@ -13,7 +13,7 @@ import Image from "next/image";
 import { Copyright } from "@/components/atoms";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
-import { confirmRegistration } from "../api";
+import { confirmRegistration } from "../../api";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 

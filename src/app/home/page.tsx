@@ -15,6 +15,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import CustomizedAccordions from "./listItems";
 import SecondaryListItems from "./secondListItems";
 import Indentification from "./Indentification";
+import { mobalBreakpoint } from "@/constants";
 
 const drawerWidth: number = 240;
 
@@ -66,6 +67,14 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
+const OrganismWrapper = styled(Box)`
+  padding: 100px 30px;
+
+  @media (max-width: ${mobalBreakpoint}) {
+    padding: 100px 0;
+  }
+`;
+
 interface OrganismObjects {
   [key: string]: React.ReactNode;
 }
@@ -88,19 +97,19 @@ export type ModulesKey =
 
 const organismObjects: OrganismObjects = {
   identification: <Indentification />,
-  location: <p></p>,
-  contacts: <p></p>,
-  professionalData: <p></p>,
-  culturalColective: <p></p>,
-  imagesAndLinks: <p></p>,
-  documents: <p></p>,
-  authorizedUsers: <p></p>,
-  notices: <p></p>,
-  alreadyIncentived: <p></p>,
-  searchProject: <p></p>,
-  queue: <p></p>,
-  support: <p></p>,
-  about: <p></p>,
+  location: <p>location</p>,
+  contacts: <p>contacts</p>,
+  professionalData: <p>professionalData</p>,
+  culturalColective: <p>culturalColective</p>,
+  imagesAndLinks: <p>imagesAndLinks</p>,
+  documents: <p>documents</p>,
+  authorizedUsers: <p>authorizedUsers</p>,
+  notices: <p>notices</p>,
+  alreadyIncentived: <p>alreadyIncentived</p>,
+  searchProject: <p>searchProject</p>,
+  queue: <p>queue</p>,
+  support: <p>support</p>,
+  about: <p>about</p>,
 };
 
 export default function Dashboard() {
@@ -175,13 +184,13 @@ export default function Dashboard() {
           <SecondaryListItems />
         </Box>
       </Drawer>
-      <Box
+      <OrganismWrapper
         sx={{
           padding: "100px 30px",
         }}
       >
         {organismObjects[selectedModule]}
-      </Box>
+      </OrganismWrapper>
     </Box>
   );
 }

@@ -1,5 +1,8 @@
 "use client";
 import * as React from "react";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
 export type ModulesKey =
   | "identification"
   | "location"
@@ -39,9 +42,11 @@ export function ModuleContextProvider({
   };
 
   return (
-    <ModuleContext.Provider value={contextData}>
-      {children}
-    </ModuleContext.Provider>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ModuleContext.Provider value={contextData}>
+        {children}
+      </ModuleContext.Provider>
+    </LocalizationProvider>
   );
 }
 

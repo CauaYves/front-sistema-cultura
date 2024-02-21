@@ -93,7 +93,7 @@ export default function SignIn() {
           alignItems: "center",
         }}
       >
-        <Box sx={{}}>
+        <Box>
           <Image
             src="/login_background.jpg"
             alt="fundo cultural"
@@ -108,7 +108,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h6">
           Culturalize
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
