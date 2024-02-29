@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 
 interface SnackbarState {
   message: string;
-  severity: "success" | "error" | "info" | "warning"; // Tipando a chave severity
+  severity: "success" | "error" | "info" | "warning";
   open: boolean;
 }
 

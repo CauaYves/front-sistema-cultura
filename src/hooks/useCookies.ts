@@ -5,11 +5,12 @@ export async function createCookie(key: string, value: string) {
   cookies().set(key, value);
 }
 
-export async function deleteCookie({ name }: { name: string }) {
+export async function deleteCookie(name: string) {
   cookies().delete(name);
 }
 
-export async function getCookie({ name }: { name: string }) {
+export async function getCookie(name: string) {
   const cookiesStored = cookies();
-  return cookiesStored.get(name);
+  const cookie = cookiesStored.get(name);
+  return `${cookie?.value}`;
 }

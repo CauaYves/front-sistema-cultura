@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   Checkbox,
@@ -12,21 +13,26 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Snackbar,
   TextField,
   Typography,
   styled,
 } from "@mui/material";
+import MaskedInput from "react-text-mask";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
 import { LoadingButton } from "@mui/lab";
 import { ChangeEventHandler, FormEvent, useState } from "react";
 import { brazilStates, countries } from "./countrys";
-import { DatePicker } from "@mui/x-date-pickers";
 import { mobalBreakpoint } from "@/constants";
 import "dayjs/locale/pt-br";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import "dayjs/locale/pt-br";
+import { createEnrollmentIdentification } from "../api";
+import { getCookie } from "@/hooks";
+import { AxiosResponse } from "axios";
+import { filterErrors } from "@/utils/filterErrorMessages";
+import { upload } from "../api/upload";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -90,38 +96,105 @@ const ResponsiveDatePicker = styled(DatePicker)`
     width: 100%;
   }
 `;
+interface SnackbarState {
+  message: string;
+  severity: "success" | "error" | "info" | "warning";
+  open: boolean;
+}
 
 export default function Indentification() {
   const [nacionality, setNacionality] = useState<string>("Brasil");
   const [gender, setGender] = useState<string>("");
   const [race, setRace] = useState<string>("");
   const [education, setEducation] = useState<string>("");
-  const [files, setFiles] = useState<string[]>([]);
+  const [fileName, setFileName] = useState<string[]>([]);
+  const [file, setFile] = useState({});
   const [uf, setUf] = useState<string>("");
-
+  const [snackbar, setSnackbar] = useState<SnackbarState>({
+    message: "",
+    severity: "warning",
+    open: false,
+  });
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const fileList = event.target.files;
-    console.log(fileList);
+
     if (fileList) {
+      setFile(fileList);
+
       const fileArray: string[] = [];
-      for (let i = 0; i < fileList.length; i++) {
-        fileArray.push(fileList[i].name);
+      for (const element of fileList) {
+        fileArray.push(element.name);
       }
-      setFiles(fileArray);
+      setFileName(fileArray);
     }
   };
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("dados do formulário: ");
-    const data = new FormData(event.currentTarget);
-    for (const [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
+    const archive: any = file;
+    if (Object.keys(archive).length === 0 && archive.constructor === Object) {
+      return setSnackbar({
+        severity: "warning",
+        open: true,
+        message: "Inclua o comprovante de residência em arquivo. ",
+      });
     }
-    console.log(files);
+    const data = new FormData(event.currentTarget);
+    const formData: any = {};
+
+    for (const [key, value] of data.entries()) {
+      formData[key] = value as string;
+    }
+
+    formData.student = Boolean(formData.student === true);
+    formData.deficiency = Boolean(formData.deficiency);
+    formData.public = formData.public === "on";
+    formData.upload = {
+      name: fileName[0],
+      contentType: archive[0].type,
+    };
+
+    const token = await getCookie("token");
+    const promise = createEnrollmentIdentification(formData, token);
+
+    promise
+      .then((response: AxiosResponse) => {
+        console.log(response);
+        setSnackbar({
+          open: true,
+          severity: "success",
+          message: "Cadastro realizado com sucesso!",
+        });
+        upload(file, response.data.signedUrl, archive[0].type);
+      })
+      .catch((error: any) => {
+        let message = "";
+        console.log(error);
+        if (error.response.status === 400) {
+          message = filterErrors(error);
+        } else {
+          message = error.response.data.message;
+        }
+        return setSnackbar({
+          open: true,
+          severity: "error",
+          message: message,
+        });
+      });
   };
 
+  const handleClose = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
+      <Snackbar
+        onClose={handleClose}
+        open={snackbar.open}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity={snackbar.severity}>{snackbar.message} </Alert>
+      </Snackbar>
       <Container
         component="form"
         onSubmit={handleSubmit}
@@ -147,6 +220,7 @@ export default function Indentification() {
             required
             label="E-mail"
             autoComplete="email"
+            placeholder="jhonDoe@gmail.com"
           />
           <StyledTextField
             type="name"
@@ -154,11 +228,13 @@ export default function Indentification() {
             required
             label="Nome artístico"
             autoComplete="nickname"
+            placeholder="Mágico Jhon"
           />
           <StyledTextField
             type="name"
             name="mothername"
             label="Nome da mãe"
+            required
             autoComplete="family-name"
           />
           <ResponsiveDatePicker label="Data de nascimento" name="borndate" />
@@ -171,7 +247,7 @@ export default function Indentification() {
               name="nacionality"
               required
               value={nacionality}
-              onChange={(event) => setNacionality(event.target.value as string)}
+              onChange={(event) => setNacionality(event.target.value)}
             >
               {countries.map((country) => {
                 return (
@@ -187,12 +263,39 @@ export default function Indentification() {
             name="naturalness"
             label="Naturalidade"
             required
+            placeholder="Rio de Janeiro, Petrópolis"
           />
           <Division />
           <Typography variant="caption" display="block" gutterBottom>
             Documentos
           </Typography>
-          <QuarterTextField type="text" name="rg" label="RG" required />
+          <MaskedInput
+            mask={[
+              /[1-9]/,
+              /\d/,
+              ".",
+              /\d/,
+              /\d/,
+              /\d/,
+              ".",
+              /\d/,
+              /\d/,
+              /\d/,
+              "-",
+              /\d/,
+            ]}
+            render={(ref, props) => (
+              <QuarterTextField
+                {...props}
+                inputRef={ref}
+                type="text"
+                name="rg"
+                label="RG"
+                required
+                placeholder="99.999.999-9"
+              />
+            )}
+          />
           <QuarterTextField
             type="text"
             name="issuingbody"
@@ -200,15 +303,15 @@ export default function Indentification() {
             required
           />
           <StyledFormControlForSelect>
-            <InputLabel id="uf-label">UF orgão expeditor</InputLabel>
+            <InputLabel id="uf-label">UF orgão expedidor</InputLabel>
             <Select
               id="uf-label"
               labelId="uf-label"
-              label="UF orgão expeditor"
+              label="UF orgão expedidor"
               name="uf"
               value={uf}
               required
-              onChange={(event) => setUf(event.target.value as string)}
+              onChange={(event) => setUf(event.target.value)}
             >
               {brazilStates.map((country) => {
                 return (
@@ -228,7 +331,7 @@ export default function Indentification() {
               name="gender"
               required
               value={gender}
-              onChange={(event) => setGender(event.target.value as string)}
+              onChange={(event) => setGender(event.target.value)}
             >
               <MenuItem value="masculino">Masculino</MenuItem>
               <MenuItem value="feminino">Feminino</MenuItem>
@@ -241,11 +344,11 @@ export default function Indentification() {
             <Select
               id="race-label"
               labelId="race-label"
-              label="Raça"
-              name="gender"
+              label="race"
+              name="race"
               required
               value={race}
-              onChange={(event) => setRace(event.target.value as string)}
+              onChange={(event) => setRace(event.target.value)}
             >
               <MenuItem value="amarela">Amarela</MenuItem>
               <MenuItem value="indigena">Indígena</MenuItem>
@@ -272,16 +375,17 @@ export default function Indentification() {
               id="education-label"
               labelId="education-label"
               label="Escolaridade"
-              name="gender"
+              name="education"
               required
               value={education}
-              onChange={(event) => setEducation(event.target.value as string)}
+              onChange={(event) => setEducation(event.target.value)}
             >
               <MenuItem value="fundamental">Fundamental completo</MenuItem>
               <MenuItem value="nonFundamental">Fundamental incompleto</MenuItem>
               <MenuItem value="medium">Médio completo</MenuItem>
               <MenuItem value="nonMedium">Médio incompleto</MenuItem>
-              <MenuItem value="superior">Ensino Superior</MenuItem>
+              <MenuItem value="nonSuperior">Superior incompleto</MenuItem>
+              <MenuItem value="superior">Superior completo</MenuItem>
               <MenuItem value="none">Não alfabetizado</MenuItem>
             </Select>
           </StyledFormControlForSelect>
@@ -319,12 +423,14 @@ export default function Indentification() {
             required
             label="Endereço"
             autoComplete="address-line1"
+            placeholder="Nome da rua, Cidade, Estado"
           />
           <QuarterTextField
             type="number"
             name="houseNumber"
             label="Número"
             required
+            placeholder="Número da casa ou apartamento"
           />
           <QuarterTextField
             type="text"
@@ -332,12 +438,19 @@ export default function Indentification() {
             label="Complemento"
             autoComplete="address-line2"
           />
-          <MiddleTextField
-            type="text"
-            name="cep"
-            required
-            label="CEP"
-            autoComplete="postal-code"
+          <MaskedInput
+            mask={[/[1-8]/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+            render={(ref, props) => (
+              <MiddleTextField
+                {...props}
+                inputRef={ref}
+                type="text"
+                name="cep"
+                required
+                label="CEP"
+                autoComplete="postal-code"
+              />
+            )}
           />
           <Box
             sx={{
@@ -365,9 +478,9 @@ export default function Indentification() {
               />
             </Button>
             <Typography component="p" variant="caption">
-              Envie o comprovante de residência:{" "}
+              Envie o comprovante de residência
             </Typography>
-            {files.map((file) => {
+            {fileName.map((file) => {
               return <Typography key={file}>{file}</Typography>;
             })}
           </Box>
@@ -389,11 +502,27 @@ export default function Indentification() {
           >
             Salvar
           </LoadingButton>
-
           <FormControlLabel
+            name="public"
             control={<Checkbox />}
             label="Autorizar publicação de dados ao público"
           />
+
+          <Typography variant="body2">
+            Ao autorizar a publicação dos meus dados ao público, estou ciente
+            que abro mão dos direitos a privacidade de informações confidenciais
+            regidas pela{" "}
+            <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">
+              lei geral de proteção de dados pessoais (LGPD)
+            </a>
+            ,após autorizar a publicidade dos seus dados, os dados não sensíveis
+            ficarão visíveis a criadores de projetos culturais, tornando assim
+            mais fácil a busca por realizadores desse projetos, dados como RG,
+            CPF, endereço e data de nascimento{" "}
+            <strong>nunca ficarão visíveis</strong>. Mesmo após autorizar a
+            publicação dos dados ao público, poderá retirar o seu consentimento
+            a qualquer momento na aba [aba] {">"} [opção].
+          </Typography>
         </Box>
       </Container>
     </LocalizationProvider>
