@@ -6,12 +6,8 @@ export type LoginCredentials = {
 };
 
 function login(body: LoginCredentials) {
-  try {
-    const promise: any = api.post("/auth/sign-in", body);
-    return promise;
-  } catch (error) {
-    return;
-  }
+  const promise: any = api.post("/auth/sign-in", body);
+  return promise;
 }
 
 export { login };

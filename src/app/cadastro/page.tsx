@@ -55,10 +55,11 @@ export default function SignUp() {
         console.log(data);
         setRequestMessage("Cadastro realizado com sucesso!");
         setTimeout(() => {
-          router.push("/confirmacao");
+          router.push("/cadastro/confirmacao");
         }, 1500);
       })
       .catch((error: AxiosError | any) => {
+        console.log(error);
         setSeverity("error");
         setRequestMessage(
           error.response.status === 400
@@ -91,7 +92,7 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
-        <Box sx={{}}>
+        <Box>
           <Image
             src="/login_background.jpg"
             alt="fundo cultural"
@@ -120,7 +121,7 @@ export default function SignUp() {
           />
           <MaskedInput
             mask={[
-              /[1-9]/,
+              /[0-9]/,
               /\d/,
               /\d/,
               ".",
