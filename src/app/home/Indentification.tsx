@@ -16,6 +16,7 @@ import {
   Snackbar,
   TextField,
   Typography,
+  makeStyles,
   styled,
 } from "@mui/material";
 import MaskedInput from "react-text-mask";
@@ -33,6 +34,7 @@ import { getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import { upload } from "../api/upload";
+import CustomDivider from "@/components/atoms/divider";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -74,7 +76,7 @@ const MiddleTextField = styled(TextField)`
 `;
 
 const QuarterTextField = styled(TextField)`
-  margin: 5px 2.5px;
+  margin: 5px 3.5px;
   width: 22.25%;
   @media (max-width: ${mobalBreakpoint}) {
     width: 100%;
@@ -211,9 +213,15 @@ export default function Indentification() {
             um agente cultural
           </Typography>
 
-          <Typography variant="caption" display="block" gutterBottom>
+          <Typography
+            variant="caption"
+            display="block"
+            gutterBottom
+            marginTop="10px"
+          >
             Identificação
           </Typography>
+          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
           <StyledTextField
             type="email"
             name="email"
@@ -265,49 +273,52 @@ export default function Indentification() {
             required
             placeholder="Rio de Janeiro, Petrópolis"
           />
-          <Division />
-          <Typography variant="caption" display="block" gutterBottom>
+          <Typography
+            variant="caption"
+            display="block"
+            gutterBottom
+            marginTop="10px"
+          >
             Documentos
           </Typography>
+          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
           <MaskedInput
             mask={[
-              /[1-9]/,
-              /\d/,
-              ".",
               /\d/,
               /\d/,
               /\d/,
-              ".",
               /\d/,
               /\d/,
               /\d/,
-              "-",
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
               /\d/,
             ]}
             render={(ref, props) => (
               <QuarterTextField
                 {...props}
                 inputRef={ref}
-                type="text"
                 name="rg"
                 label="RG"
                 required
-                placeholder="99.999.999-9"
               />
             )}
           />
           <QuarterTextField
             type="text"
             name="issuingbody"
-            label="Orgão expedidor"
+            label="Órgão expedidor"
             required
           />
           <StyledFormControlForSelect>
-            <InputLabel id="uf-label">UF orgão expedidor</InputLabel>
+            <InputLabel id="uf-label">UF órgão expedidor</InputLabel>
             <Select
               id="uf-label"
               labelId="uf-label"
-              label="UF orgão expedidor"
+              label="UF órgão expedidor"
               name="uf"
               value={uf}
               required
@@ -358,10 +369,15 @@ export default function Indentification() {
               <MenuItem value="none">Prefiro nao responder</MenuItem>
             </Select>
           </StyledFormControlForSelect>
-          <Division />
-          <Typography variant="caption" display="block" gutterBottom>
+          <Typography
+            variant="caption"
+            display="block"
+            gutterBottom
+            marginTop="10px"
+          >
             Informações complementares
           </Typography>
+          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
           <FormControl required>
             <FormLabel id="studentLabel">É estudante?</FormLabel>
             <RadioGroup row aria-labelledby="studentLabel" name="student">
@@ -413,10 +429,15 @@ export default function Indentification() {
               <FormControlLabel value={false} control={<Radio />} label="Não" />
             </RadioGroup>
           </FormControl>
-          <Division />
-          <Typography variant="caption" display="block" gutterBottom>
+          <Typography
+            variant="caption"
+            display="block"
+            gutterBottom
+            marginTop="10px"
+          >
             Endereço
           </Typography>
+          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
           <MiddleTextField
             type="text"
             name="address"
@@ -424,6 +445,9 @@ export default function Indentification() {
             label="Endereço"
             autoComplete="address-line1"
             placeholder="Nome da rua, Cidade, Estado"
+            sx={{
+              marginRight: "5px",
+            }}
           />
           <QuarterTextField
             type="number"
