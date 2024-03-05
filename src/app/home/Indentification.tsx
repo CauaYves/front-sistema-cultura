@@ -4,7 +4,6 @@ import {
   Button,
   Checkbox,
   Container,
-  Divider,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -16,7 +15,6 @@ import {
   Snackbar,
   TextField,
   Typography,
-  makeStyles,
   styled,
 } from "@mui/material";
 import MaskedInput from "react-text-mask";
@@ -26,15 +24,15 @@ import { LoadingButton } from "@mui/lab";
 import { ChangeEventHandler, FormEvent, useState } from "react";
 import { brazilStates, countries } from "./countrys";
 import { mobalBreakpoint } from "@/constants";
-import "dayjs/locale/pt-br";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { createEnrollmentIdentification } from "../api";
 import { getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import { upload } from "../api/upload";
-import CustomDivider from "@/components/atoms/divider";
+import { ConsentWarn, FormTitleSection } from "@/components/atoms";
+
+import "dayjs/locale/pt-br";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -51,15 +49,6 @@ const VisuallyHiddenInput = styled("input")({
 const StyledTextField = styled(TextField)`
   margin: 5px;
   width: 45%;
-
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const Division = styled(Divider)`
-  margin: 10px;
-  width: 90%;
 
   @media (max-width: ${mobalBreakpoint}) {
     width: 100%;
@@ -111,12 +100,14 @@ export default function Indentification() {
   const [education, setEducation] = useState<string>("");
   const [fileName, setFileName] = useState<string[]>([]);
   const [file, setFile] = useState({});
+  const [loading, setLoading] = useState(false);
   const [uf, setUf] = useState<string>("");
   const [snackbar, setSnackbar] = useState<SnackbarState>({
     message: "",
     severity: "warning",
     open: false,
   });
+
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const fileList = event.target.files;
 
@@ -130,8 +121,15 @@ export default function Indentification() {
       setFileName(fileArray);
     }
   };
+  const handleStartLoading = () => {
+    setLoading(true);
+  };
+  const handleStopLoading = () => {
+    setLoading(false);
+  };
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    handleStartLoading();
     const archive: any = file;
     if (Object.keys(archive).length === 0 && archive.constructor === Object) {
       return setSnackbar({
@@ -181,12 +179,15 @@ export default function Indentification() {
           severity: "error",
           message: message,
         });
+      })
+      .finally(() => {
+        handleStopLoading();
       });
   };
-
   const handleClose = () => {
     setSnackbar({ ...snackbar, open: false });
   };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
       <Snackbar
@@ -213,15 +214,7 @@ export default function Indentification() {
             um agente cultural
           </Typography>
 
-          <Typography
-            variant="caption"
-            display="block"
-            gutterBottom
-            marginTop="10px"
-          >
-            Identificação
-          </Typography>
-          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
+          <FormTitleSection title="Identificação" />
           <StyledTextField
             type="email"
             name="email"
@@ -273,15 +266,7 @@ export default function Indentification() {
             required
             placeholder="Rio de Janeiro, Petrópolis"
           />
-          <Typography
-            variant="caption"
-            display="block"
-            gutterBottom
-            marginTop="10px"
-          >
-            Documentos
-          </Typography>
-          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
+          <FormTitleSection title="Documentos" />
           <MaskedInput
             mask={[
               /\d/,
@@ -369,15 +354,7 @@ export default function Indentification() {
               <MenuItem value="none">Prefiro nao responder</MenuItem>
             </Select>
           </StyledFormControlForSelect>
-          <Typography
-            variant="caption"
-            display="block"
-            gutterBottom
-            marginTop="10px"
-          >
-            Informações complementares
-          </Typography>
-          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
+          <FormTitleSection title="Informações complementares" />
           <FormControl required>
             <FormLabel id="studentLabel">É estudante?</FormLabel>
             <RadioGroup row aria-labelledby="studentLabel" name="student">
@@ -429,15 +406,8 @@ export default function Indentification() {
               <FormControlLabel value={false} control={<Radio />} label="Não" />
             </RadioGroup>
           </FormControl>
-          <Typography
-            variant="caption"
-            display="block"
-            gutterBottom
-            marginTop="10px"
-          >
-            Endereço
-          </Typography>
-          <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
+          <FormTitleSection title="Endereço" />
+
           <MiddleTextField
             type="text"
             name="address"
@@ -463,7 +433,7 @@ export default function Indentification() {
             autoComplete="address-line2"
           />
           <MaskedInput
-            mask={[/[1-8]/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
             render={(ref, props) => (
               <MiddleTextField
                 {...props}
@@ -520,6 +490,7 @@ export default function Indentification() {
           <LoadingButton
             type="submit"
             variant="contained"
+            loading={loading}
             sx={{
               marginRight: "10px",
             }}
@@ -531,22 +502,7 @@ export default function Indentification() {
             control={<Checkbox />}
             label="Autorizar publicação de dados ao público"
           />
-
-          <Typography variant="body2">
-            Ao autorizar a publicação dos meus dados ao público, estou ciente
-            que abro mão dos direitos a privacidade de informações confidenciais
-            regidas pela{" "}
-            <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm">
-              lei geral de proteção de dados pessoais (LGPD)
-            </a>
-            ,após autorizar a publicidade dos seus dados, os dados não sensíveis
-            ficarão visíveis a criadores de projetos culturais, tornando assim
-            mais fácil a busca por realizadores desse projetos, dados como RG,
-            CPF, endereço e data de nascimento{" "}
-            <strong>nunca ficarão visíveis</strong>. Mesmo após autorizar a
-            publicação dos dados ao público, poderá retirar o seu consentimento
-            a qualquer momento na aba [aba] {">"} [opção].
-          </Typography>
+          <ConsentWarn />
         </Box>
       </Container>
     </LocalizationProvider>
