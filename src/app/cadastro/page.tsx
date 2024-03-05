@@ -14,15 +14,14 @@ import {
   AlertColor,
   InputAdornment,
   IconButton,
-  CssBaseline,
 } from "@mui/material";
-import { register } from "../api";
 import { LoadingButton } from "@mui/lab";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import authService from "../api/auth";
 
 export default function SignUp() {
   const router = useRouter();
@@ -48,11 +47,10 @@ export default function SignUp() {
       password: data.get("password") as string,
     };
     setLoading(true);
-    const promise = register(userData);
+    const promise = authService.register(userData);
     promise
-      .then((data: AxiosResponse) => {
+      .then(() => {
         setSeverity("success");
-        console.log(data);
         setRequestMessage("Cadastro realizado com sucesso!");
         setTimeout(() => {
           router.push("/cadastro/confirmacao");

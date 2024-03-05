@@ -19,11 +19,11 @@ import { Copyright } from "@/components/atoms";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { login } from "./api";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createCookie } from "@/hooks";
+import authService from "./api/auth";
 
 export default function SignIn() {
   const router = useRouter();
@@ -41,7 +41,7 @@ export default function SignIn() {
       password: data.get("password") as string,
     };
     setLoading(true);
-    const promise = login(userData);
+    const promise = authService.login(userData);
     promise
       .then((response: AxiosResponse) => {
         setSeverity("success");
@@ -53,14 +53,18 @@ export default function SignIn() {
       })
       .catch(({ response }: AxiosError | any) => {
         const { status, data } = response;
+        let errorMessage = "";
+
+        if (status === 422) {
+          errorMessage = `${data}`;
+        } else if (status === 404) {
+          errorMessage = "Usuário não encontrado";
+        } else {
+          errorMessage = `${data.details}`;
+        }
+
         setSeverity("error");
-        setRequestMessage(
-          status === 422
-            ? `${data}`
-            : status === 404
-            ? "Usuário não encontrado"
-            : `${data.details}`
-        );
+        setRequestMessage(errorMessage);
       })
 
       .finally(() => {

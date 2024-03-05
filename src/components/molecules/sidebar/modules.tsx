@@ -20,12 +20,11 @@ import Link from "@mui/icons-material/Link";
 import Description from "@mui/icons-material/Description";
 import LockOpen from "@mui/icons-material/LockOpen";
 import LocalAtm from "@mui/icons-material/LocalAtm";
-
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import { SubModule } from "@/components/atoms";
-import { ModulesKey } from "./page";
+import { ModulesKey } from "@/app/home/page";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -60,11 +59,11 @@ interface CustomizedAccordionsProps {
   setSelectedModule: React.Dispatch<React.SetStateAction<ModulesKey>>;
 }
 
-export default function CustomizedAccordions({
+export default function SidebarModules({
   open,
   selectedModule,
   setSelectedModule,
-}: CustomizedAccordionsProps) {
+}: Readonly<CustomizedAccordionsProps>) {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
 
   const AccordionDetails = styled(MuiAccordionDetails)(() => ({
@@ -105,12 +104,14 @@ export default function CustomizedAccordions({
         <AccordionDetails>
           <SubModule
             tag="Identificação"
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             name="identification"
           >
             <FingerprintRoundedIcon />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Localização"
             name="location"
@@ -118,6 +119,7 @@ export default function CustomizedAccordions({
             <LocationOnRoundedIcon />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Contatos"
             name="contacts"
@@ -125,6 +127,7 @@ export default function CustomizedAccordions({
             <ContactPhone />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Dados profissio..."
             name="professionalData"
@@ -132,6 +135,7 @@ export default function CustomizedAccordions({
             <ContactMail />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Coletivo cultural"
             name="culturalColective"
@@ -139,6 +143,7 @@ export default function CustomizedAccordions({
             <Business />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Imagens e links"
             name="imagesAndLinks"
@@ -146,6 +151,7 @@ export default function CustomizedAccordions({
             <Link />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Documentos"
             name="documents"
@@ -153,6 +159,7 @@ export default function CustomizedAccordions({
             <Description />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Autorizados"
             name="authorizedUsers"
@@ -187,6 +194,7 @@ export default function CustomizedAccordions({
         </AccordionSummary>
         <AccordionDetails>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Editais"
             name="notices"
@@ -194,6 +202,7 @@ export default function CustomizedAccordions({
             <ListAlt />
           </SubModule>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Prestação de co..."
             name="billings"
@@ -228,6 +237,7 @@ export default function CustomizedAccordions({
         </AccordionSummary>
         <AccordionDetails>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Já Incentivados"
             name="alreadyIncentived"
@@ -236,6 +246,7 @@ export default function CustomizedAccordions({
           </SubModule>
 
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Buscar Projeto"
             name="searchProject"
@@ -270,6 +281,7 @@ export default function CustomizedAccordions({
         </AccordionSummary>
         <AccordionDetails>
           <SubModule
+            selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Fila"
             name="queue"

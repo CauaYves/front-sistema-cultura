@@ -25,14 +25,14 @@ import { ChangeEventHandler, FormEvent, useState } from "react";
 import { brazilStates, countries } from "./countrys";
 import { mobalBreakpoint } from "@/constants";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { createEnrollmentIdentification } from "../api";
+import enrollmentService from "@/app/api/enrollment";
 import { getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
-import { upload } from "../api/upload";
 import { ConsentWarn, FormTitleSection } from "@/components/atoms";
 
 import "dayjs/locale/pt-br";
+import uploadService from "@/app/api/upload";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -154,7 +154,7 @@ export default function Indentification() {
     };
 
     const token = await getCookie("token");
-    const promise = createEnrollmentIdentification(formData, token);
+    const promise = enrollmentService.post(formData, token);
 
     promise
       .then((response: AxiosResponse) => {
@@ -164,7 +164,7 @@ export default function Indentification() {
           severity: "success",
           message: "Cadastro realizado com sucesso!",
         });
-        upload(file, response.data.signedUrl, archive[0].type);
+        uploadService.upload(file, response.data.signedUrl, archive[0].type);
       })
       .catch((error: any) => {
         let message = "";
@@ -267,31 +267,8 @@ export default function Indentification() {
             placeholder="Rio de Janeiro, Petrópolis"
           />
           <FormTitleSection title="Documentos" />
-          <MaskedInput
-            mask={[
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-            ]}
-            render={(ref, props) => (
-              <QuarterTextField
-                {...props}
-                inputRef={ref}
-                name="rg"
-                label="RG"
-                required
-              />
-            )}
-          />
+
+          <QuarterTextField name="rg" type="number" label="RG" required />
           <QuarterTextField
             type="text"
             name="issuingbody"

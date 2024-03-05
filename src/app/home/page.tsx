@@ -12,10 +12,11 @@ import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import CustomizedAccordions from "./listItems";
-import SecondaryListItems from "./secondListItems";
-import Indentification from "./Indentification";
 import { mobalBreakpoint } from "@/constants";
+import Indentification from "@/components/organisms/Identification";
+import SidebarModules from "@/components/molecules/sidebar/modules";
+import SubModules from "../../components/molecules/sidebar/sub-modules";
+import Localization from "@/components/organisms/Localization";
 
 const drawerWidth: number = 240;
 
@@ -98,7 +99,7 @@ export type ModulesKey =
 
 const organismObjects: OrganismObjects = {
   identification: <Indentification />,
-  location: <p>location</p>,
+  location: <Localization />,
   contacts: <p>contacts</p>,
   professionalData: <p>professionalData</p>,
   culturalColective: <p>culturalColective</p>,
@@ -177,13 +178,13 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
-        <CustomizedAccordions
+        <SidebarModules
           open={open}
           selectedModule={selectedModule}
           setSelectedModule={setSelectedModule}
         />
         <Box>
-          <SecondaryListItems />
+          <SubModules />
         </Box>
       </Drawer>
       <OrganismWrapper
