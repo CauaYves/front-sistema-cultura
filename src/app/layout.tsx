@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   title: "Cultura Barra Mansa",
   description: "sistema de cultura de barra mansa para agentes culturais",
 };
-//TODO implementar um middleware de erros que identifique o erro ocorrido e trate de acordo
 export default function RootLayout({
   children,
 }: Readonly<{

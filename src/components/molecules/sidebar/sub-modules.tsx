@@ -6,7 +6,7 @@ import AssignmentIcon from "@mui/icons-material/ExitToApp";
 import InfoIcon from "@mui/icons-material/Info";
 import Help from "@mui/icons-material/Help";
 
-export default function SecondaryListItems() {
+export default function SubModules() {
   return (
     <React.Fragment>
       <ListItemButton>

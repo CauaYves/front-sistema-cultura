@@ -8,4 +8,8 @@ function upload(file: any, url: string, contentType: string) {
   });
   return promise;
 }
-export { upload };
+
+const uploadService = {
+  upload,
+};
+export default uploadService;

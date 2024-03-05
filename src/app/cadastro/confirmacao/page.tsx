@@ -13,9 +13,9 @@ import Image from "next/image";
 import { Copyright } from "@/components/atoms";
 import { LoadingButton } from "@mui/lab";
 import { useState } from "react";
-import { confirmRegistration } from "../../api";
 import { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
+import authService from "@/app/api/auth";
 
 interface SnackbarState {
   message: string;
@@ -36,7 +36,7 @@ export default function Confirmacao() {
     setLoading(true);
     const data = new FormData(event.currentTarget);
     const code = data.get("code") as string;
-    const promise = confirmRegistration(code);
+    const promise = authService.confirmRegistration(code);
     promise
       .then((res: AxiosResponse) => {
         console.log(res.data);
