@@ -17,6 +17,9 @@ import Indentification from "@/components/organisms/Identification";
 import SidebarModules from "@/components/molecules/sidebar/modules";
 import SubModules from "../../components/molecules/sidebar/sub-modules";
 import Localization from "@/components/organisms/Localization";
+import Contacts from "@/components/organisms/Contacts";
+import { useSnackbar } from "@/context/snackbar-context";
+import { Alert, Snackbar } from "@mui/material";
 
 const drawerWidth: number = 240;
 
@@ -97,37 +100,52 @@ export type ModulesKey =
   | "support"
   | "about";
 
-const organismObjects: OrganismObjects = {
-  identification: <Indentification />,
-  location: <Localization />,
-  contacts: <p>contacts</p>,
-  professionalData: <p>professionalData</p>,
-  culturalColective: <p>culturalColective</p>,
-  imagesAndLinks: <p>imagesAndLinks</p>,
-  documents: <p>documents</p>,
-  authorizedUsers: <p>authorizedUsers</p>,
-  notices: <p>notices</p>,
-  alreadyIncentived: <p>alreadyIncentived</p>,
-  searchProject: <p>searchProject</p>,
-  queue: <p>queue</p>,
-  support: <p>support</p>,
-  about: <p>about</p>,
-  billings: <p>billings</p>,
-};
-
 export default function Dashboard() {
   const [selectedModule, setSelectedModule] =
     React.useState<ModulesKey>("identification");
-  const [open, setOpen] = React.useState(true);
+  const [openDrawer, setOpenDrawer] = React.useState(true);
+  const { message, open, severity, setSnackbar } = useSnackbar();
 
-  const toggleDrawer = () => {
-    setOpen(!open);
+  const organismObjects: OrganismObjects = {
+    identification: <Indentification />,
+    location: <Localization />,
+    contacts: <Contacts />,
+    professionalData: <p>professionalData</p>,
+    culturalColective: <p>culturalColective</p>,
+    imagesAndLinks: <p>imagesAndLinks</p>,
+    documents: <p>documents</p>,
+    authorizedUsers: <p>authorizedUsers</p>,
+    notices: <p>notices</p>,
+    alreadyIncentived: <p>alreadyIncentived</p>,
+    searchProject: <p>searchProject</p>,
+    queue: <p>queue</p>,
+    support: <p>support</p>,
+    about: <p>about</p>,
+    billings: <p>billings</p>,
   };
 
+  const toggleDrawer = () => {
+    setOpenDrawer(!openDrawer);
+  };
+  const handleClose = () => {
+    setSnackbar({
+      message,
+      severity,
+      open: false,
+    });
+  };
   return (
     <Box sx={{ display: "flex" }}>
+      <Snackbar
+        onClose={handleClose}
+        open={open}
+        autoHideDuration={6000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity={severity}>{message} </Alert>
+      </Snackbar>
       <CssBaseline />
-      <AppBar position="absolute" open={open}>
+      <AppBar position="absolute" open={openDrawer}>
         <Toolbar
           sx={{
             pr: "24px",
@@ -140,7 +158,7 @@ export default function Dashboard() {
             onClick={toggleDrawer}
             sx={{
               marginRight: "36px",
-              ...(open && { display: "none" }),
+              ...(openDrawer && { display: "none" }),
             }}
           >
             <MenuIcon />
@@ -162,7 +180,7 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={openDrawer}>
         <Toolbar
           sx={{
             display: "flex",
@@ -179,7 +197,7 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
         <SidebarModules
-          open={open}
+          open={openDrawer}
           selectedModule={selectedModule}
           setSelectedModule={setSelectedModule}
         />

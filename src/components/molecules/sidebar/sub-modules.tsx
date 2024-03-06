@@ -5,11 +5,21 @@ import ListItemText from "@mui/material/ListItemText";
 import AssignmentIcon from "@mui/icons-material/ExitToApp";
 import InfoIcon from "@mui/icons-material/Info";
 import Help from "@mui/icons-material/Help";
+import { useRouter } from "next/navigation";
+import { deleteCookie } from "@/hooks";
 
 export default function SubModules() {
+  const router = useRouter();
+
   return (
     <React.Fragment>
-      <ListItemButton>
+      <ListItemButton
+        onClick={async () => {
+          console.log("entrou");
+          await deleteCookie("token");
+          router.push("/");
+        }}
+      >
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>

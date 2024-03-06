@@ -28,3 +28,9 @@ export type CulturalUser = {
   superiorCourses: string;
   uf: string;
 };
+
+export type Contact = {
+  type: string;
+  number: string;
+  public: boolean | string;
+};
