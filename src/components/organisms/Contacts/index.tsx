@@ -64,8 +64,8 @@ export default function Contacts() {
     },
     {
       field: "number",
-      headerName: "Número",
-      width: 130,
+      headerName: "Contato",
+      width: 170,
     },
     {
       field: "createdAt",

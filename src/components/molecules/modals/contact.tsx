@@ -1,4 +1,5 @@
 import contactsService from "@/app/api/contacts";
+import { countries } from "@/components/organisms/Identification/countrys";
 import { useContacts } from "@/context/contacts-context";
 import { useSnackbar } from "@/context/snackbar-context";
 import { getCookie } from "@/hooks";
@@ -6,14 +7,17 @@ import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
+  FormControl,
   FormControlLabel,
+  InputLabel,
+  MenuItem,
   Radio,
   RadioGroup,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import MaskedInput from "react-text-mask";
 
 const flexibleBoxStyles = {
   display: "flex",
@@ -26,6 +30,7 @@ export default function ContactModal({
 }: {
   close: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const { contacts, setContacts } = useContacts();
   const { setSnackbar } = useSnackbar();
@@ -92,51 +97,37 @@ export default function ContactModal({
           Criação de contato
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
-          <Box sx={flexibleBoxStyles}>
-            <MaskedInput
-              mask={[
-                "(",
-                /\d/,
-                /\d/,
-                ")",
-                " ",
-                /\d/,
-                /\d/,
-                /\d/,
-                /\d/,
-                /\d/,
-                "-",
-                /\d/,
-                /\d/,
-                /\d/,
-                /\d/,
-              ]}
-              render={(ref, props) => (
-                <TextField
-                  {...props}
-                  inputRef={ref}
-                  name="number"
-                  required
-                  label="Número"
-                  autoComplete="tel"
-                  placeholder="(99) 99999-9999"
-                  variant="standard"
-                  fullWidth
-                  inputProps={{ minLength: 9 }}
-                />
-              )}
-            />
-          </Box>
-          <Box sx={flexibleBoxStyles}>
+          <Box sx={{ ...flexibleBoxStyles, mb: "20px" }}>
             <TextField
-              name="type"
-              label="Tipo de contato"
+              label="Contato"
+              name="number"
               variant="standard"
-              placeholder="empresarial, pessoal"
               fullWidth
               margin="normal"
               required
             />
+          </Box>
+          <Box sx={flexibleBoxStyles}>
+            <FormControl fullWidth>
+              <InputLabel id="contact-label">Tipo de contato</InputLabel>
+              <Select
+                id="contact-label"
+                labelId="contact-label"
+                label="Tipo de contato"
+                name="type"
+                required
+                margin="dense"
+                variant="standard"
+                value={contact}
+                onChange={(event) => setContact(event.target.value)}
+              >
+                <MenuItem value="Whatsapp">Whatsapp</MenuItem>
+                <MenuItem value="E-mail">E-mail</MenuItem>
+                <MenuItem value="Facebook">Facebook</MenuItem>
+                <MenuItem value="Instagram">Instagram</MenuItem>
+                <MenuItem value="Linkedin">Linkedin</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
           <Typography
             sx={{
