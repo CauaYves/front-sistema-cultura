@@ -11,12 +11,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={inter.className}>
-        <SnackbarProvider>
-          <ContactsProvider>{children}</ContactsProvider>
-        </SnackbarProvider>
-      </body>
-    </html>
+    <SnackbarProvider>
+      <ContactsProvider>{children}</ContactsProvider>
+    </SnackbarProvider>
   );
 }

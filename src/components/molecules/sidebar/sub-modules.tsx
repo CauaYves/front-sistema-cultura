@@ -15,7 +15,6 @@ export default function SubModules() {
     <React.Fragment>
       <ListItemButton
         onClick={async () => {
-          console.log("entrou");
           await deleteCookie("token");
           router.push("/");
         }}

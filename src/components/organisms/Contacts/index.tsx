@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, IconButton, Typography } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import contactsService from "@/app/api/contacts";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
@@ -14,12 +14,37 @@ import { useSnackbar } from "@/context/snackbar-context";
 import ContactModal from "@/components/molecules/modals/contact";
 import { useRouter } from "next/navigation";
 import formatDatetime from "@/utils/formatDatetime";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Contacts() {
   const { contacts, setContacts } = useContacts();
   const { setSnackbar } = useSnackbar();
   const [modalOpen, setModalOpen] = useState(false);
+  const [delLoading, setDelLoading] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState<number>();
+  const [refreshTable, setRefreshTable] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchContact = async () => {
+      const token = await getCookie("token");
+      const promise = contactsService.get(token);
+      promise
+        .then((res) => setContacts(res.data))
+        .catch((error) => handleError(error));
+    };
+    fetchContact();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setContacts, refreshTable]);
+
+  const handleDelLoading = () => {
+    setDelLoading(true);
+  };
+
+  const handleStopDelLoading = () => {
+    setDelLoading(false);
+  };
+
   const handleError = async (error: AxiosError) => {
     if (error.response?.status === 401) {
       setSnackbar({
@@ -32,20 +57,32 @@ export default function Contacts() {
     }
   };
 
-  useEffect(() => {
-    const fetchContact = async () => {
-      const token = await getCookie("token");
-      const promise = contactsService.get(token);
-      promise
-        .then((res) => setContacts(res.data))
-        .catch((error) => handleError(error));
-    };
-    fetchContact();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setContacts]);
+  const handleEditContact = () => {
+    console.log("editando contato");
+  };
 
-  const handleCreateContact = () => {
-    console.log("Contato criado!");
+  const handleDeleteContact = async (params: GridRenderCellParams) => {
+    const contactId = params.id as string;
+    const token = await getCookie("token");
+    handleDelLoading();
+    const promise = contactsService.deleteOne(token, contactId);
+    promise
+      .then(() => {
+        setSnackbar({
+          message: "Contato excluído com sucesso! ",
+          open: true,
+          severity: "success",
+        });
+        setRefreshTable(!refreshTable);
+      })
+      .catch(() => {
+        setSnackbar({
+          message: "Falha ao excluir contato. ",
+          open: true,
+          severity: "error",
+        });
+      })
+      .finally(() => handleStopDelLoading());
   };
 
   const columns: GridColDef[] = [
@@ -85,8 +122,8 @@ export default function Contacts() {
       headerName: "Editar",
       sortable: false,
       width: 70,
-      renderCell: () => (
-        <IconButton onClick={handleCreateContact}>
+      renderCell: (params) => (
+        <IconButton onClick={() => handleEditContact()}>
           <EditIcon fontSize="small" />
         </IconButton>
       ),
@@ -96,9 +133,13 @@ export default function Contacts() {
       headerName: "Excluir",
       sortable: false,
       width: 160,
-      renderCell: () => (
-        <IconButton onClick={handleCreateContact}>
-          <DeleteIcon fontSize="small" />
+      renderCell: (params) => (
+        <IconButton onClick={() => handleDeleteContact(params)}>
+          {delLoading && selectedRowId === params.id ? (
+            <CircularProgress size={20} />
+          ) : (
+            <DeleteIcon fontSize="small" />
+          )}
         </IconButton>
       ),
     },
@@ -122,7 +163,13 @@ export default function Contacts() {
           Você não criou nenhum contato ainda.
         </Typography>
       ) : (
-        <DataGrid rows={contacts} columns={columns} />
+        <DataGrid
+          rows={contacts}
+          columns={columns}
+          onRowSelectionModelChange={(row) => {
+            setSelectedRowId(+row[0]);
+          }}
+        />
       )}
       <Dialog open={modalOpen} onClose={handleClose}>
         <ContactModal close={setModalOpen} />
