@@ -1,4 +1,12 @@
-import { Box, Button, Dialog, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  IconButton,
+  Typography,
+  styled,
+} from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -15,13 +23,25 @@ import ContactModal from "@/components/molecules/modals/contact";
 import { useRouter } from "next/navigation";
 import formatDatetime from "@/utils/formatDatetime";
 import CircularProgress from "@mui/material/CircularProgress";
+import EditContactModal from "@/components/molecules/modals/editContact";
+
+export type TableContactRow = {
+  id: number;
+  number: string;
+  public: boolean;
+  type: string;
+  userId: number;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export default function Contacts() {
   const { contacts, setContacts } = useContacts();
   const { setSnackbar } = useSnackbar();
-  const [modalOpen, setModalOpen] = useState(false);
-  const [delLoading, setDelLoading] = useState(false);
-  const [selectedRowId, setSelectedRowId] = useState<number>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalEditionOpen, setModalEditionOpen] = useState<boolean>(false);
+  const [delLoading, setDelLoading] = useState<boolean>(false);
+  const [selectedRow, setSelectedRow] = useState<TableContactRow>();
   const [refreshTable, setRefreshTable] = useState<boolean>(false);
   const router = useRouter();
 
@@ -37,14 +57,7 @@ export default function Contacts() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setContacts, refreshTable]);
 
-  const handleDelLoading = () => {
-    setDelLoading(true);
-  };
-
-  const handleStopDelLoading = () => {
-    setDelLoading(false);
-  };
-
+  //TODO colocar esse handleError na função de manipulação de error do nextjs
   const handleError = async (error: AxiosError) => {
     if (error.response?.status === 401) {
       setSnackbar({
@@ -55,10 +68,6 @@ export default function Contacts() {
       await deleteCookie("token");
       router.push("/");
     }
-  };
-
-  const handleEditContact = () => {
-    console.log("editando contato");
   };
 
   const handleDeleteContact = async (params: GridRenderCellParams) => {
@@ -84,9 +93,26 @@ export default function Contacts() {
       })
       .finally(() => handleStopDelLoading());
   };
+  const handleDelLoading = () => {
+    setDelLoading(true);
+  };
+  const handleStopDelLoading = () => {
+    setDelLoading(false);
+  };
+
+  const handleOpenEditModal = () => {
+    setModalEditionOpen(true);
+  };
+  const handleCloseEditModal = () => {
+    setModalEditionOpen(false);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "id", headerName: "ID", width: 10 },
     { field: "type", headerName: "Tipo de contato", width: 130 },
     {
       field: "public",
@@ -102,7 +128,7 @@ export default function Contacts() {
     {
       field: "number",
       headerName: "Contato",
-      width: 170,
+      width: 290,
     },
     {
       field: "createdAt",
@@ -122,8 +148,8 @@ export default function Contacts() {
       headerName: "Editar",
       sortable: false,
       width: 70,
-      renderCell: (params) => (
-        <IconButton onClick={() => handleEditContact()}>
+      renderCell: () => (
+        <IconButton onClick={() => setModalEditionOpen(true)}>
           <EditIcon fontSize="small" />
         </IconButton>
       ),
@@ -135,7 +161,7 @@ export default function Contacts() {
       width: 160,
       renderCell: (params) => (
         <IconButton onClick={() => handleDeleteContact(params)}>
-          {delLoading && selectedRowId === params.id ? (
+          {delLoading && selectedRow?.id === params.id ? (
             <CircularProgress size={20} />
           ) : (
             <DeleteIcon fontSize="small" />
@@ -144,11 +170,9 @@ export default function Contacts() {
       ),
     },
   ];
-  const handleClose = () => {
-    setModalOpen(false);
-  };
+
   return (
-    <Box style={{ width: "100%" }}>
+    <div style={{ height: "auto", width: "100%" }}>
       <Button
         onClick={() => setModalOpen(true)}
         variant="outlined"
@@ -158,22 +182,29 @@ export default function Contacts() {
       >
         Criar contato
       </Button>
-      {contacts.length === 0 ? (
-        <Typography variant="body1" component="h2">
-          Você não criou nenhum contato ainda.
-        </Typography>
-      ) : (
-        <DataGrid
-          rows={contacts}
-          columns={columns}
-          onRowSelectionModelChange={(row) => {
-            setSelectedRowId(+row[0]);
-          }}
-        />
-      )}
+      <StyledTable
+        rows={contacts}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: { page: 0, pageSize: 15 },
+          },
+        }}
+        pageSizeOptions={[5, 10, 15, 20]}
+        onCellClick={(cell) => {
+          setSelectedRow(cell.row);
+        }}
+      />
       <Dialog open={modalOpen} onClose={handleClose}>
         <ContactModal close={setModalOpen} />
       </Dialog>
-    </Box>
+      <Dialog open={modalEditionOpen} onClose={handleCloseEditModal}>
+        <EditContactModal close={setModalEditionOpen} row={selectedRow} />
+      </Dialog>
+    </div>
   );
 }
+
+const StyledTable = styled(DataGrid)`
+  width: 100%;
+`;

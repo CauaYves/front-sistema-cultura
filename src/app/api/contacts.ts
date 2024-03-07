@@ -28,6 +28,15 @@ function deleteOne(token: string, id: string) {
   return promise;
 }
 
-const contactsService = { create, get, deleteOne };
+function editContat(token: string, body: Contact, contactId: string) {
+  const promise = instance.put(`/contact/${contactId}`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return promise;
+}
+
+const contactsService = { create, get, deleteOne, editContat };
 
 export default contactsService;

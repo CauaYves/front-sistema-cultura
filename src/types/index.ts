@@ -30,6 +30,7 @@ export type CulturalUser = {
 };
 
 export type Contact = {
+  id: number;
   type: string;
   number: string;
   public: boolean | string;

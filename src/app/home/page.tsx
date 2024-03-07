@@ -12,7 +12,6 @@ import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mobalBreakpoint } from "@/constants";
 import Indentification from "@/components/organisms/Identification";
 import SidebarModules from "@/components/molecules/sidebar/modules";
 import SubModules from "../../components/molecules/sidebar/sub-modules";
@@ -71,14 +70,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const OrganismWrapper = styled(Box)`
-  padding: 100px 30px;
-
-  @media (max-width: ${mobalBreakpoint}) {
-    padding: 100px 0;
-  }
-`;
-
 interface OrganismObjects {
   [key: string]: React.ReactNode;
 }
@@ -136,6 +127,7 @@ export default function Dashboard() {
   };
   return (
     <Box sx={{ display: "flex" }}>
+      <CssBaseline />
       <Snackbar
         onClose={handleClose}
         open={open}
@@ -205,13 +197,18 @@ export default function Dashboard() {
           <SubModules />
         </Box>
       </Drawer>
-      <OrganismWrapper
+      <Box
+        component="main"
         sx={{
-          padding: "100px 30px",
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+          mt: "100px",
+          ml: "30px",
         }}
       >
         {organismObjects[selectedModule]}
-      </OrganismWrapper>
+      </Box>
     </Box>
   );
 }
