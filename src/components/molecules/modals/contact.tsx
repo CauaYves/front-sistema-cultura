@@ -23,12 +23,11 @@ const flexibleBoxStyles = {
   alignItems: "end",
   justifiContent: "space-between",
 };
-
-export default function ContactModal({
-  close,
-}: {
+interface EditModalProps {
   close: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+  row: any;
+}
+export default function ContactModal({ close, row }: EditModalProps) {
   const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const { contacts, setContacts } = useContacts();
@@ -48,6 +47,7 @@ export default function ContactModal({
       type: data.get("type") as string,
       number: data.get("number") as string,
       public: data.get("public") === "true",
+      id: row.id,
     };
     if (body.number.includes("_")) {
       handleStopLoading();

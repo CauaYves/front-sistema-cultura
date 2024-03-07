@@ -196,7 +196,7 @@ export default function Contacts() {
         }}
       />
       <Dialog open={modalOpen} onClose={handleClose}>
-        <ContactModal close={setModalOpen} />
+        <ContactModal close={setModalOpen} row={selectedRow} />
       </Dialog>
       <Dialog open={modalEditionOpen} onClose={handleCloseEditModal}>
         <EditContactModal close={setModalEditionOpen} row={selectedRow} />
