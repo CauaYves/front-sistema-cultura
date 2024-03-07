@@ -1,8 +1,8 @@
 import { CulturalUser } from "@/types";
-import api from "./api";
+import instance from "./api";
 
 function post(formData: CulturalUser, token: string) {
-  const promise: any = api.post(`/enrollment/identification`, formData, {
+  const promise: any = instance.post(`/enrollment/identification`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -11,7 +11,7 @@ function post(formData: CulturalUser, token: string) {
 }
 
 function get(token: string) {
-  const promise: any = api.get(`/enrollment/identification`, {
+  const promise: any = instance.get(`/enrollment/identification`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
