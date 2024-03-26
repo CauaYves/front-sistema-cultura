@@ -1,9 +1,6 @@
 "use client";
 import { ContactsProvider } from "@/context/contacts-context";
 import { SnackbarProvider } from "@/context/snackbar-context";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,

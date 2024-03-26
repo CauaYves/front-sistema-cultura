@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import formatDatetime from "@/utils/formatDatetime";
 import CircularProgress from "@mui/material/CircularProgress";
 import EditContactModal from "@/components/molecules/modals/editContact";
+import { FallbackMode } from "next/dist/server/base-server";
 
 export type TableContactRow = {
   id: number;
@@ -34,6 +35,10 @@ export type TableContactRow = {
   createdAt: string;
   updatedAt: string;
 };
+
+interface ContactProps {
+  fallback: FallbackMode;
+}
 
 export default function Contacts() {
   const { contacts, setContacts } = useContacts();
@@ -100,9 +105,6 @@ export default function Contacts() {
     setDelLoading(false);
   };
 
-  const handleOpenEditModal = () => {
-    setModalEditionOpen(true);
-  };
   const handleCloseEditModal = () => {
     setModalEditionOpen(false);
   };
