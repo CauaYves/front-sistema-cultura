@@ -47,7 +47,6 @@ export default function ContactModal({ close, row }: EditModalProps) {
       type: data.get("type") as string,
       number: data.get("number") as string,
       public: data.get("public") === "true",
-      id: row.id,
     };
     if (body.number.includes("_")) {
       handleStopLoading();
@@ -74,6 +73,7 @@ export default function ContactModal({ close, row }: EditModalProps) {
         });
       })
       .catch((error) => {
+        console.log("DEU ERROOOOOOOOOOO");
         console.log(error);
         setSnackbar({
           message:

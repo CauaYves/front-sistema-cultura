@@ -1,7 +1,7 @@
 import { Contact } from "@/types";
 import instance from "./api";
 
-function create(body: Contact, token: string) {
+function create(body: Omit<Contact, "id">, token: string) {
   const promise = instance.post("/contact", body, {
     headers: {
       Authorization: `Bearer ${token}`,
