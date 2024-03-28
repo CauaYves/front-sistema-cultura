@@ -23,7 +23,10 @@ interface EditModalProps {
   row: any;
 }
 
-export default function EditContactModal({ close, row }: EditModalProps) {
+export default function EditContactModal({
+  close,
+  row,
+}: Readonly<EditModalProps>) {
   const [contact, setContact] = useState<string>(row.type);
   const [loading, setLoading] = useState(false);
 
@@ -107,7 +110,6 @@ export default function EditContactModal({ close, row }: EditModalProps) {
           <TextField
             label="Novo contato"
             name="number"
-            variant="standard"
             fullWidth
             margin="normal"
             required
@@ -125,7 +127,6 @@ export default function EditContactModal({ close, row }: EditModalProps) {
               name="type"
               required
               margin="dense"
-              variant="standard"
               value={contact}
               onChange={(event) => setContact(event.target.value)}
             >

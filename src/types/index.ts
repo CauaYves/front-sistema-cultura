@@ -5,6 +5,15 @@ export type User = {
   password: string;
 };
 
+export type UserData = {
+  id: string;
+  name: string;
+  cpf: string;
+  email: string;
+  emailConfirmed: string;
+  token: string;
+};
+
 export type CulturalUser = {
   address: string;
   borndate: string;
@@ -35,3 +44,33 @@ export type Contact = {
   number: string;
   public: boolean | string;
 };
+
+export type Collective = {
+  id: number;
+  name: string;
+  area: string;
+  opening: string;
+  phone: string;
+  email: string;
+  address: string;
+  neighboorhood: string;
+  cep: string;
+  complement: string;
+  county: string;
+  responsible: string;
+  userId: number;
+};
+
+type InputProps = {
+  margin: "dense" | "none" | "normal";
+  fullWidth: boolean;
+  required: boolean;
+};
+
+const inputProps: InputProps = {
+  fullWidth: true,
+  required: true,
+  margin: "dense",
+};
+
+export { inputProps };

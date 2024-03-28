@@ -27,7 +27,7 @@ interface EditModalProps {
   close: React.Dispatch<React.SetStateAction<boolean>>;
   row: any;
 }
-export default function ContactModal({ close, row }: EditModalProps) {
+export default function ContactModal({ close }: Readonly<EditModalProps>) {
   const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const { contacts, setContacts } = useContacts();
@@ -73,7 +73,6 @@ export default function ContactModal({ close, row }: EditModalProps) {
         });
       })
       .catch((error) => {
-        console.log("DEU ERROOOOOOOOOOO");
         console.log(error);
         setSnackbar({
           message:
@@ -100,7 +99,6 @@ export default function ContactModal({ close, row }: EditModalProps) {
             <TextField
               label="Contato"
               name="number"
-              variant="standard"
               fullWidth
               margin="normal"
               required
@@ -116,7 +114,6 @@ export default function ContactModal({ close, row }: EditModalProps) {
                 name="type"
                 required
                 margin="dense"
-                variant="standard"
                 value={contact}
                 onChange={(event) => setContact(event.target.value)}
               >
