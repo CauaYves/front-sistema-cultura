@@ -19,6 +19,7 @@ import Localization from "@/components/organisms/Localization";
 import Contacts from "@/components/organisms/Contacts";
 import { useSnackbar } from "@/context/snackbar-context";
 import { Alert, Snackbar } from "@mui/material";
+import Collective from "@/components/organisms/Collective";
 
 const drawerWidth: number = 240;
 
@@ -58,7 +59,7 @@ export default function Dashboard() {
     location: <Localization />,
     contacts: <Contacts />,
     professionalData: <p>professionalData</p>,
-    culturalColective: <p>culturalColective</p>,
+    culturalColective: <Collective />,
     imagesAndLinks: <p>imagesAndLinks</p>,
     documents: <p>documents</p>,
     authorizedUsers: <p>authorizedUsers</p>,

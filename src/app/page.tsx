@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createCookie } from "@/hooks";
 import authService from "./api/auth";
+import { inputProps } from "@/types";
 
 export default function SignIn() {
   const router = useRouter();
@@ -46,6 +47,7 @@ export default function SignIn() {
       .then((response: AxiosResponse) => {
         setSeverity("success");
         createCookie("token", response.data.token);
+        createCookie("userData", JSON.stringify(response.data));
         setRequestMessage("Login efetuado com sucesso!");
         setTimeout(() => {
           router.push("/home");
@@ -78,6 +80,7 @@ export default function SignIn() {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <Container component="main" maxWidth="xs">
       <Snackbar
@@ -113,9 +116,7 @@ export default function SignIn() {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
-            margin="normal"
-            required
-            fullWidth
+            {...inputProps}
             id="email"
             label="E-mail"
             name="email"
@@ -123,9 +124,7 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
-            margin="normal"
-            required
-            fullWidth
+            {...inputProps}
             name="password"
             label="Senha"
             type={showPassword ? "text" : "password"}

@@ -22,6 +22,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import authService from "../api/auth";
+import { inputProps } from "@/types";
 
 export default function SignUp() {
   const router = useRouter();
@@ -107,9 +108,7 @@ export default function SignUp() {
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
           <TextField
-            margin="normal"
-            required
-            fullWidth
+            {...inputProps}
             name="name"
             label="Nome"
             type="name"
@@ -139,9 +138,7 @@ export default function SignUp() {
               <TextField
                 {...props}
                 inputRef={ref}
-                margin="normal"
-                required
-                fullWidth
+                {...inputProps}
                 name="cpf"
                 label="CPF"
                 type="cpf"
@@ -151,18 +148,14 @@ export default function SignUp() {
             )}
           />
           <TextField
-            margin="normal"
-            required
-            fullWidth
+            {...inputProps}
             id="email"
             label="E-mail"
             name="email"
             autoComplete="email"
           />
           <TextField
-            margin="normal"
-            required
-            fullWidth
+            {...inputProps}
             name="password"
             label="Senha"
             type={showPassword ? "text" : "password"}

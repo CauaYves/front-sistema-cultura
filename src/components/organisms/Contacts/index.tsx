@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Dialog,
-  IconButton,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Button, Dialog, IconButton, styled } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -24,7 +16,6 @@ import { useRouter } from "next/navigation";
 import formatDatetime from "@/utils/formatDatetime";
 import CircularProgress from "@mui/material/CircularProgress";
 import EditContactModal from "@/components/molecules/modals/editContact";
-import { FallbackMode } from "next/dist/server/base-server";
 
 export type TableContactRow = {
   id: number;
@@ -35,10 +26,6 @@ export type TableContactRow = {
   createdAt: string;
   updatedAt: string;
 };
-
-interface ContactProps {
-  fallback: FallbackMode;
-}
 
 export default function Contacts() {
   const { contacts, setContacts } = useContacts();
@@ -59,10 +46,9 @@ export default function Contacts() {
         .catch((error) => handleError(error));
     };
     fetchContact();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setContacts, refreshTable]);
 
-  //TODO colocar esse handleError na função de manipulação de error do nextjs
   const handleError = async (error: AxiosError) => {
     if (error.response?.status === 401) {
       setSnackbar({
