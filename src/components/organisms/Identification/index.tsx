@@ -29,10 +29,11 @@ import enrollmentService from "@/app/api/enrollment";
 import { getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
-import { ConsentWarn, FormTitleSection } from "@/components/atoms";
+import { FormTitleSection } from "@/components/atoms";
 
 import "dayjs/locale/pt-br";
 import uploadService from "@/app/api/upload";
+import Link from "next/link";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -479,8 +480,8 @@ export default function Indentification() {
             control={<Checkbox />}
             label="Autorizar publicação de dados ao público"
           />
-          <ConsentWarn />
         </Box>
+        <Link href="/home/about">Política de privacidade</Link>
       </Container>
     </LocalizationProvider>
   );
