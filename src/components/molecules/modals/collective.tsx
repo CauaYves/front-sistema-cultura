@@ -1,5 +1,4 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useContacts } from "@/context/contacts-context";
 import { useSnackbar } from "@/context/snackbar-context";
 import { getCookie, getUserData } from "@/hooks";
 import { LoadingButton } from "@mui/lab";
@@ -18,12 +17,16 @@ import { useEffect, useState } from "react";
 import { inputProps, UserData } from "@/types";
 import collectiveService from "@/app/api/collective";
 import { useCollective } from "@/context/collective-context";
+import { CulturalizeApiError } from "@/protocols";
+import { filterErrors } from "@/utils/filterErrorMessages";
 
 interface EditModalProps {
   close: React.Dispatch<React.SetStateAction<boolean>>;
   row: any;
 }
 export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
+  const { collective, setCollective } = useCollective();
+  const { setSnackbar } = useSnackbar();
   const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<UserData>({
@@ -34,9 +37,6 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
     name: "",
     token: "",
   });
-  const { collective, setCollective } = useCollective();
-  const { setSnackbar } = useSnackbar();
-
   useEffect(() => {
     async function fetchData() {
       const userDataCookie = await getUserData();
@@ -44,11 +44,21 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
     }
     fetchData();
   }, []);
-  const handleStartLoading = () => {
-    setLoading(true);
-  };
-  const handleStopLoading = () => {
-    setLoading(false);
+  const handleStartLoading = () => setLoading(true);
+  const handleStopLoading = () => setLoading(false);
+  const handleError = (error: CulturalizeApiError) => {
+    let message = "";
+    console.log(error);
+    if (error.response.status === 400) {
+      message = filterErrors(error);
+    } else {
+      message = error.response.data.message;
+    }
+    return setSnackbar({
+      open: true,
+      severity: "error",
+      message: message,
+    });
   };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -64,7 +74,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
 
     const body = {
       ...formDataObject,
-      userId: userData.id,
+      userId: Number(userData.id),
       responsible: userData.name,
     };
 
@@ -82,15 +92,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
           open: true,
         });
       })
-      .catch((error) => {
-        console.log(error);
-        setSnackbar({
-          message:
-            "erro ao criar Coletivo Cultural, verifique os campos e tente novamente! ",
-          severity: "error",
-          open: true,
-        });
-      })
+      .catch((error) => handleError(error))
       .finally(() => handleStopLoading());
   };
 

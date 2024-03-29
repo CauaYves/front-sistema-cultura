@@ -141,7 +141,7 @@ export default function Dashboard() {
           <Typography variant="h6" component="h1">
             Culturalize
           </Typography>
-          <IconButton onClick={toggleDrawer}>
+          <IconButton onClick={toggleDrawer} aria-label="Toogle sidebar">
             <ChevronLeftIcon />
           </IconButton>
         </Toolbar>
@@ -158,7 +158,6 @@ export default function Dashboard() {
         component="main"
         sx={{
           flexGrow: 1,
-          height: "100vh",
           overflow: "auto",
           mt: "100px",
           ml: "30px",
