@@ -9,13 +9,13 @@ import DoDisturbIcon from "@mui/icons-material/DoDisturb";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteCookie, getCookie } from "@/hooks";
 import { useContacts } from "@/context/contacts-context";
-import { AxiosError } from "axios";
 import { useSnackbar } from "@/context/snackbar-context";
 import ContactModal from "@/components/molecules/modals/contact";
 import { useRouter } from "next/navigation";
 import formatDatetime from "@/utils/formatDatetime";
 import CircularProgress from "@mui/material/CircularProgress";
 import EditContactModal from "@/components/molecules/modals/editContact";
+import { CulturalizeApiError } from "@/protocols";
 
 export type TableContactRow = {
   id: number;
@@ -46,11 +46,11 @@ export default function Contacts() {
         .catch((error) => handleError(error));
     };
     fetchContact();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setContacts, refreshTable]);
 
-  const handleError = async (error: AxiosError) => {
-    if (error.response?.status === 401) {
+  const handleError = async (error: CulturalizeApiError) => {
+    if (error.response.status === 401) {
       setSnackbar({
         message: "Token de acesso expirado, faça login novamente! ",
         open: true,

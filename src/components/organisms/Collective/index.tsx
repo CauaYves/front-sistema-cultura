@@ -1,21 +1,16 @@
-import { Button, Dialog, IconButton, styled } from "@mui/material";
+import { Button, Dialog, styled } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { DataGrid } from "@mui/x-data-grid";
 import { deleteCookie, getCookie } from "@/hooks";
-import { AxiosError } from "axios";
 import { useSnackbar } from "@/context/snackbar-context";
 import { useRouter } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useCollective } from "@/context/collective-context";
 import { Collective } from "@/types";
 import columns from "./collumns";
 import collectiveService from "@/app/api/collective";
 import CollectiveModal from "@/components/molecules/modals/collective";
+import { CulturalizeApiError } from "@/protocols";
 
 interface TableCollectiveRow extends Collective {
   createdAt: string;
@@ -41,8 +36,8 @@ export default function CulturalCollective() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setCollective]);
 
-  const handleError = async (error: AxiosError) => {
-    if (error.response?.status === 401) {
+  const handleError = async (error: CulturalizeApiError) => {
+    if (error.response.status === 401) {
       setSnackbar({
         message: "Token de acesso expirado, faça login novamente! ",
         open: true,
@@ -52,9 +47,8 @@ export default function CulturalCollective() {
       router.push("/");
     }
   };
-  const handleClose = () => {
-    setCreationModalOpen(false);
-  };
+  const handleClose = () => setCreationModalOpen(false);
+
   return (
     <div>
       <Button

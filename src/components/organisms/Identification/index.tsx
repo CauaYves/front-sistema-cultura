@@ -1,5 +1,4 @@
 import {
-  Alert,
   Box,
   Button,
   Checkbox,
@@ -12,7 +11,6 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Snackbar,
   TextField,
   Typography,
   styled,
@@ -30,69 +28,11 @@ import { getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import { FormTitleSection } from "@/components/atoms";
-
 import "dayjs/locale/pt-br";
 import uploadService from "@/app/api/upload";
 import Link from "next/link";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
-const StyledTextField = styled(TextField)`
-  margin: 5px;
-  width: 45%;
-
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const MiddleTextField = styled(TextField)`
-  margin: 5px 2.5px 2.5px 7.5px;
-  width: 44.7%;
-
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const QuarterTextField = styled(TextField)`
-  margin: 5px 3.5px;
-  width: 22.25%;
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const StyledFormControlForSelect = styled(FormControl)`
-  margin: 5px;
-  width: 45%;
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const ResponsiveDatePicker = styled(DatePicker)`
-  margin: 5px;
-  width: 45%;
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-interface SnackbarState {
-  message: string;
-  severity: "success" | "error" | "info" | "warning";
-  open: boolean;
-}
+import { useSnackbar } from "@/context/snackbar-context";
+import { CulturalizeApiError } from "@/protocols";
 
 export default function Indentification() {
   const [nacionality, setNacionality] = useState<string>("Brasil");
@@ -103,11 +43,7 @@ export default function Indentification() {
   const [file, setFile] = useState({});
   const [loading, setLoading] = useState(false);
   const [uf, setUf] = useState<string>("");
-  const [snackbar, setSnackbar] = useState<SnackbarState>({
-    message: "",
-    severity: "warning",
-    open: false,
-  });
+  const { setSnackbar } = useSnackbar();
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const fileList = event.target.files;
@@ -122,12 +58,25 @@ export default function Indentification() {
       setFileName(fileArray);
     }
   };
-  const handleStartLoading = () => {
-    setLoading(true);
+  const handleStartLoading = () => setLoading(true);
+
+  const handleStopLoading = () => setLoading(false);
+
+  const handleError = (error: CulturalizeApiError) => {
+    let message = "";
+    console.log(error);
+    if (error.response.status === 400) {
+      message = filterErrors(error);
+    } else {
+      message = error.response.data.message;
+    }
+    return setSnackbar({
+      open: true,
+      severity: "error",
+      message: message,
+    });
   };
-  const handleStopLoading = () => {
-    setLoading(false);
-  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleStartLoading();
@@ -159,7 +108,6 @@ export default function Indentification() {
 
     promise
       .then((response: AxiosResponse) => {
-        console.log(response);
         setSnackbar({
           open: true,
           severity: "success",
@@ -167,44 +115,18 @@ export default function Indentification() {
         });
         uploadService.upload(file, response.data.signedUrl, archive[0].type);
       })
-      .catch((error: any) => {
-        let message = "";
-        console.log(error);
-        if (error.response.status === 400) {
-          message = filterErrors(error);
-        } else {
-          message = error.response.data.message;
-        }
-        return setSnackbar({
-          open: true,
-          severity: "error",
-          message: message,
-        });
-      })
-      .finally(() => {
-        handleStopLoading();
-      });
-  };
-  const handleClose = () => {
-    setSnackbar({ ...snackbar, open: false });
+      .catch((error: CulturalizeApiError) => handleError(error))
+      .finally(() => handleStopLoading());
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-      <Snackbar
-        onClose={handleClose}
-        open={snackbar.open}
-        autoHideDuration={6000}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert severity={snackbar.severity}>{snackbar.message} </Alert>
-      </Snackbar>
       <Container
         component="form"
         onSubmit={handleSubmit}
         sx={{ width: "100%" }}
       >
-        <Box>
+        <Box sx={{ height: "100%" }}>
           <Typography
             variant="subtitle1"
             display="block"
@@ -261,7 +183,6 @@ export default function Indentification() {
             </Select>
           </StyledFormControlForSelect>
           <StyledTextField
-            type="text"
             name="naturalness"
             label="Naturalidade"
             required
@@ -271,7 +192,6 @@ export default function Indentification() {
 
           <QuarterTextField name="rg" type="number" label="RG" required />
           <QuarterTextField
-            type="text"
             name="issuingbody"
             label="Órgão expedidor"
             required
@@ -486,3 +406,57 @@ export default function Indentification() {
     </LocalizationProvider>
   );
 }
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
+const StyledTextField = styled(TextField)`
+  margin: 5px;
+  width: 45%;
+
+  @media (max-width: ${mobalBreakpoint}) {
+    width: 100%;
+  }
+`;
+
+const MiddleTextField = styled(TextField)`
+  margin: 5px 2.5px 2.5px 7.5px;
+  width: 44.7%;
+
+  @media (max-width: ${mobalBreakpoint}) {
+    width: 100%;
+  }
+`;
+
+const QuarterTextField = styled(TextField)`
+  margin: 5px 3.5px;
+  width: 22.25%;
+  @media (max-width: ${mobalBreakpoint}) {
+    width: 100%;
+  }
+`;
+
+const StyledFormControlForSelect = styled(FormControl)`
+  margin: 5px;
+  width: 45%;
+  @media (max-width: ${mobalBreakpoint}) {
+    width: 100%;
+  }
+`;
+
+const ResponsiveDatePicker = styled(DatePicker)`
+  margin: 5px;
+  width: 45%;
+  @media (max-width: ${mobalBreakpoint}) {
+    width: 100%;
+  }
+`;
