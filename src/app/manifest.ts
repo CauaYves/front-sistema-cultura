@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     background_color: "#fff",
-    theme_color: "#fff",
+    theme_color: "#1976D2",
     icons: [
       {
         src: "/paulo_gustavo.png",
@@ -21,7 +21,7 @@ export default function manifest(): MetadataRoute.Manifest {
         src: "/theater.png",
         sizes: "144x144",
         type: "image/png",
-        purpose: "any",
+        purpose: "maskable",
       },
       {
         src: "login_background.jpg",

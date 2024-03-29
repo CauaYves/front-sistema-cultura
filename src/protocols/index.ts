@@ -3,6 +3,7 @@ export interface CulturalizeApiError {
     status: number;
     data: {
       message: string;
+      details: string[];
     };
   };
 }

@@ -14,15 +14,15 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
-import { inputProps, UserData } from "@/types";
+import { Collective, inputProps, UserData } from "@/types";
 import collectiveService from "@/app/api/collective";
 import { useCollective } from "@/context/collective-context";
 import { CulturalizeApiError } from "@/protocols";
 import { filterErrors } from "@/utils/filterErrorMessages";
+import MaskedInput from "react-text-mask";
 
 interface EditModalProps {
   close: React.Dispatch<React.SetStateAction<boolean>>;
-  row: any;
 }
 export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
   const { collective, setCollective } = useCollective();
@@ -47,8 +47,8 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
   const handleStartLoading = () => setLoading(true);
   const handleStopLoading = () => setLoading(false);
   const handleError = (error: CulturalizeApiError) => {
-    let message = "";
     console.log(error);
+    let message = "";
     if (error.response.status === 400) {
       message = filterErrors(error);
     } else {
@@ -60,24 +60,40 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
       message: message,
     });
   };
+
+  const getFormData = async (event: React.FormEvent<HTMLFormElement>) => {
+    const data = new FormData(event.currentTarget);
+    const body: Omit<Collective, "id"> = {
+      name: data.get("name") as unknown as string,
+      area: data.get("area") as unknown as string,
+      opening: data.get("opening") as unknown as string,
+      phone: data.get("phone") as unknown as string,
+      email: data.get("email") as unknown as string,
+      address: data.get("address") as unknown as string,
+      neighboorhood: data.get("neighboorhood") as unknown as string,
+      cep: data.get("cep") as unknown as string,
+      complement: data.get("complement") as unknown as string,
+      county: data.get("county") as unknown as string,
+      responsible: userData.name,
+      userId: userData.id as unknown as number,
+    };
+
+    return body;
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleStartLoading();
-    const data = new FormData(event.currentTarget);
-    const formDataObject: { [key: string]: string } = {};
 
-    for (const [key, value] of data.entries()) {
-      if (typeof value === "string") {
-        formDataObject[key] = value;
-      }
+    const body = await getFormData(event);
+    if (body.cep.includes("_") || body.phone.includes("_")) {
+      handleStopLoading();
+      return setSnackbar({
+        message: "CEP ou Telefone incompletos! ",
+        severity: "warning",
+        open: true,
+      });
     }
-
-    const body = {
-      ...formDataObject,
-      userId: Number(userData.id),
-      responsible: userData.name,
-    };
-
     const token = await getCookie("token");
     const promise = collectiveService.create(body, token);
     promise
@@ -132,8 +148,37 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
           <FormControl {...inputProps}>
             <DatePicker label="Data de abertura" name="opening" disableFuture />
           </FormControl>
+          <MaskedInput
+            mask={[
+              "(",
+              /\d/,
+              /\d/,
+              ")",
+              " ",
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+              "-",
+              /\d/,
+              /\d/,
+              /\d/,
+              /\d/,
+            ]}
+            render={(ref, props) => (
+              <TextField
+                {...props}
+                inputRef={ref}
+                name="phone"
+                {...inputProps}
+                label="Telefone"
+                autoComplete="postal-code"
+              />
+            )}
+          />
           <TextField label="Telefone" name="phone" {...inputProps} />
-          <TextField label="E-mail" name="email" {...inputProps} />
+          <TextField label="E-mail" name="email" {...inputProps} type="email" />
           <TextField label="Endereço" name="address" {...inputProps} />
           <TextField label="Bairro" name="neighboorhood" {...inputProps} />
           <TextField
@@ -142,7 +187,19 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
             {...inputProps}
             required={false}
           />
-          <TextField label="CEP" name="cep" {...inputProps} />
+          <MaskedInput
+            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+            render={(ref, props) => (
+              <TextField
+                {...props}
+                inputRef={ref}
+                name="cep"
+                {...inputProps}
+                label="CEP"
+                autoComplete="postal-code"
+              />
+            )}
+          />
           <TextField label="Município" name="county" {...inputProps} />
 
           <Box

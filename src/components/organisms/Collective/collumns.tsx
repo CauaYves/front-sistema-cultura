@@ -1,7 +1,7 @@
 import { GridColDef } from "@mui/x-data-grid";
 import formatDatetime from "@/utils/formatDatetime";
 
-const columns: GridColDef[] = [
+const collectiveColumns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 10 },
   { field: "name", headerName: "Nome", width: 130 },
   {
@@ -68,4 +68,4 @@ const columns: GridColDef[] = [
   },
 ];
 
-export default columns;
+export default collectiveColumns;
