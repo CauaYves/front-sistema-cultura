@@ -7,6 +7,6 @@ export default function formatDatetime(datetime: string) {
   const minutes = datetime.substring(14, 16);
   const seconds = datetime.substring(17, 19);
 
-  const dataFormatada = `${date}/${month}/${year} ${hour}:${minutes}:${seconds}`;
-  return dataFormatada;
+  const formatedDate = `${date}/${month}/${year} ${hour}:${minutes}:${seconds}`;
+  return formatedDate;
 }

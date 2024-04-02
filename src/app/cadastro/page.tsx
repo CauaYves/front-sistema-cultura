@@ -58,7 +58,6 @@ export default function SignUp() {
         }, 1500);
       })
       .catch((error: AxiosError | any) => {
-        console.log(error);
         setSeverity("error");
         setRequestMessage(
           error.response.status === 400

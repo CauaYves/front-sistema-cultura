@@ -21,6 +21,7 @@ import { useSnackbar } from "@/context/snackbar-context";
 import { Alert, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const drawerWidth: number = 240;
 
@@ -52,8 +53,8 @@ export type ModulesKey =
 export default function Dashboard() {
   const router = useRouter();
   const [selectedModule, setSelectedModule] =
-    React.useState<ModulesKey>("identification");
-  const [openDrawer, setOpenDrawer] = React.useState(true);
+    useState<ModulesKey>("identification");
+  const [openDrawer, setOpenDrawer] = useState(true);
   const { message, open, severity, setSnackbar } = useSnackbar();
 
   const organismObjects: OrganismObjects = {

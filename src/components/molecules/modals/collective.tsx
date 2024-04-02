@@ -47,7 +47,6 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
   const handleStartLoading = () => setLoading(true);
   const handleStopLoading = () => setLoading(false);
   const handleError = (error: CulturalizeApiError) => {
-    console.log(error);
     let message = "";
     if (error.response.status === 400) {
       message = filterErrors(error);

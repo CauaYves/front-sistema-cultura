@@ -39,7 +39,6 @@ export default function Confirmacao() {
     const promise = authService.confirmRegistration(code);
     promise
       .then((res: AxiosResponse) => {
-        console.log(res.data);
         setSnackbar({
           message: res.data,
           open: true,
@@ -50,7 +49,6 @@ export default function Confirmacao() {
         }, 1500);
       })
       .catch((error: AxiosError) => {
-        console.log(error);
         setSnackbar({
           message: `${error.response?.data}`,
           open: true,

@@ -71,7 +71,6 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
     delLoading,
     selectedRow,
   });
-
   return (
     <div>
       <Button

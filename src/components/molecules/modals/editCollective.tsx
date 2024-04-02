@@ -56,7 +56,6 @@ export default function EditCollectiveModal({
   const handleStartLoading = () => setLoading(true);
   const handleStopLoading = () => setLoading(false);
   const handleError = (error: CulturalizeApiError) => {
-    console.log(error);
     let message = "";
     if (error.response.status === 400) {
       message = filterErrors(error);
@@ -110,7 +109,12 @@ export default function EditCollectiveModal({
 
         const newCollectiveList = [...collective];
         newCollectiveList.splice(index, 1);
-        const newRegister = { ...body, id: row.id };
+        const newRegister = {
+          ...body,
+          id: row.id,
+          createdAt: row.createdAt,
+          updatedAt: new Date().toISOString(),
+        };
         newCollectiveList.push(newRegister);
 
         setCollective(newCollectiveList);
