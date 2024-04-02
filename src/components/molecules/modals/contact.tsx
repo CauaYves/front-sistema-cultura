@@ -73,7 +73,6 @@ export default function ContactModal({ close }: Readonly<EditModalProps>) {
         });
       })
       .catch((error) => {
-        console.log(error);
         setSnackbar({
           message:
             "erro ao criar contato, verifique os campos e tente novamente! ",

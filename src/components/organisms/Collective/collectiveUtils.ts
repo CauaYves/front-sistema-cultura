@@ -22,7 +22,6 @@ export const handleDeleteCollective = async (
       setRefreshTable((prev: boolean) => !prev);
     })
     .catch((err) => {
-      console.log(err);
       setSnackbar({
         message: "Falha ao excluir Coletivo cultural . ",
         open: true,

@@ -64,7 +64,6 @@ export default function Indentification() {
 
   const handleError = (error: CulturalizeApiError) => {
     let message = "";
-    console.log(error);
     if (error.response.status === 400) {
       message = filterErrors(error);
     } else {
