@@ -6,8 +6,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Cultura Barra Mansa",
   description: "sistema de cultura de barra mansa para agentes culturais",
-
-  themeColor: "#1976D2 ",
 };
 export default function RootLayout({
   children,

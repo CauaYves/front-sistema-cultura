@@ -75,7 +75,6 @@ export default function EditContactModal({
         newContactsArr.push(res.data);
 
         setContacts(newContactsArr);
-        setContacts(newContactsArr);
         setLoading(false);
         close(false);
         setSnackbar({
@@ -84,8 +83,7 @@ export default function EditContactModal({
           open: true,
         });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setSnackbar({
           message:
             "erro ao editar contato, verifique os campos e tente novamente! ",

@@ -19,12 +19,13 @@ import { Copyright } from "@/components/atoms";
 import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createCookie } from "@/hooks";
 import authService from "./api/auth";
 import { inputProps } from "@/types";
+import { CulturalizeApiError } from "@/protocols";
 
 export default function SignIn() {
   const router = useRouter();
@@ -53,7 +54,7 @@ export default function SignIn() {
           router.push("/home");
         }, 1500);
       })
-      .catch(({ response }: AxiosError | any) => {
+      .catch(({ response }: CulturalizeApiError) => {
         const { status, data } = response;
         let errorMessage = "";
 

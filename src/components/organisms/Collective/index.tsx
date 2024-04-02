@@ -4,25 +4,33 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { deleteCookie, getCookie } from "@/hooks";
 import { useSnackbar } from "@/context/snackbar-context";
-import { useRouter } from "next/navigation";
 import { useCollective } from "@/context/collective-context";
 import { Collective } from "@/types";
-import columns from "./collumns";
 import collectiveService from "@/app/api/collective";
 import CollectiveModal from "@/components/molecules/modals/collective";
 import { CulturalizeApiError } from "@/protocols";
+import CollectiveCollumns from "./collumns";
+import { handleDeleteCollective } from "./collectiveUtils";
+import EditCollectiveModal from "@/components/molecules/modals/editCollective";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 interface TableCollectiveRow extends Collective {
   createdAt: string;
   updatedAt: string;
 }
 
-export default function CulturalCollective() {
+interface CulturalColl {
+  router: AppRouterInstance;
+}
+
+export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
   const { collective, setCollective } = useCollective();
   const { setSnackbar } = useSnackbar();
-  const router = useRouter();
   const [selectedRow, setSelectedRow] = useState<TableCollectiveRow>();
   const [creationModalOpen, setCreationModalOpen] = useState<boolean>(false);
+  const [modalEditionOpen, setModalEditionOpen] = useState<boolean>(false);
+  const [refreshTable, setRefreshTable] = useState<boolean>(false);
+  const [delLoading, setDelLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchContact = async () => {
@@ -34,7 +42,7 @@ export default function CulturalCollective() {
     };
     fetchContact();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setCollective]);
+  }, [setCollective, refreshTable]);
 
   const handleError = async (error: CulturalizeApiError) => {
     if (error.response.status === 401) {
@@ -48,6 +56,21 @@ export default function CulturalCollective() {
     }
   };
   const handleClose = () => setCreationModalOpen(false);
+  const handleCloseEditModal = () => setModalEditionOpen(false);
+
+  const columns = CollectiveCollumns({
+    setModalEditionOpen,
+    handleDeleteCollective: (params: any) =>
+      handleDeleteCollective(
+        params,
+        setSnackbar,
+        handleError,
+        setRefreshTable,
+        setDelLoading
+      ),
+    delLoading,
+    selectedRow,
+  });
 
   return (
     <div>
@@ -74,7 +97,10 @@ export default function CulturalCollective() {
         }}
       />
       <Dialog open={creationModalOpen} onClose={handleClose}>
-        <CollectiveModal close={setCreationModalOpen} row={selectedRow} />
+        <CollectiveModal close={setCreationModalOpen} />
+      </Dialog>
+      <Dialog open={modalEditionOpen} onClose={handleCloseEditModal}>
+        <EditCollectiveModal close={setModalEditionOpen} row={selectedRow} />
       </Dialog>
     </div>
   );

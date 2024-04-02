@@ -1,31 +1,16 @@
-import { Button, Dialog, IconButton, styled } from "@mui/material";
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import contactsService from "@/app/api/contacts";
-import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
-import DoDisturbIcon from "@mui/icons-material/DoDisturb";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteCookie, getCookie } from "@/hooks";
+import React, { useState, useEffect } from "react";
+import { Button, Dialog, styled } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { useContacts } from "@/context/contacts-context";
 import { useSnackbar } from "@/context/snackbar-context";
 import ContactModal from "@/components/molecules/modals/contact";
-import { useRouter } from "next/navigation";
-import formatDatetime from "@/utils/formatDatetime";
-import CircularProgress from "@mui/material/CircularProgress";
 import EditContactModal from "@/components/molecules/modals/editContact";
-import { CulturalizeApiError } from "@/protocols";
-
-export type TableContactRow = {
-  id: number;
-  number: string;
-  public: boolean;
-  type: string;
-  userId: number;
-  createdAt: string;
-  updatedAt: string;
-};
+import ContactColumns from "./collumns";
+import {
+  FetchContacts,
+  handleDeleteContact,
+  handleError,
+} from "./contactUtils";
 
 export default function Contacts() {
   const { contacts, setContacts } = useContacts();
@@ -33,63 +18,13 @@ export default function Contacts() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalEditionOpen, setModalEditionOpen] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState<boolean>(false);
-  const [selectedRow, setSelectedRow] = useState<TableContactRow>();
+  const [selectedRow, setSelectedRow] = useState<any>();
   const [refreshTable, setRefreshTable] = useState<boolean>(false);
-  const router = useRouter();
 
   useEffect(() => {
-    const fetchContact = async () => {
-      const token = await getCookie("token");
-      const promise = contactsService.get(token);
-      promise
-        .then((res) => setContacts(res.data))
-        .catch((error) => handleError(error));
-    };
-    fetchContact();
+    FetchContacts(setContacts, setSnackbar);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setContacts, refreshTable]);
-
-  const handleError = async (error: CulturalizeApiError) => {
-    if (error.response.status === 401) {
-      setSnackbar({
-        message: "Token de acesso expirado, faça login novamente! ",
-        open: true,
-        severity: "warning",
-      });
-      await deleteCookie("token");
-      router.push("/");
-    }
-  };
-
-  const handleDeleteContact = async (params: GridRenderCellParams) => {
-    const contactId = params.id as string;
-    const token = await getCookie("token");
-    handleDelLoading();
-    const promise = contactsService.deleteOne(token, contactId);
-    promise
-      .then(() => {
-        setSnackbar({
-          message: "Contato excluído com sucesso! ",
-          open: true,
-          severity: "success",
-        });
-        setRefreshTable(!refreshTable);
-      })
-      .catch(() => {
-        setSnackbar({
-          message: "Falha ao excluir contato. ",
-          open: true,
-          severity: "error",
-        });
-      })
-      .finally(() => handleStopDelLoading());
-  };
-  const handleDelLoading = () => {
-    setDelLoading(true);
-  };
-  const handleStopDelLoading = () => {
-    setDelLoading(false);
-  };
 
   const handleCloseEditModal = () => {
     setModalEditionOpen(false);
@@ -99,65 +34,19 @@ export default function Contacts() {
     setModalOpen(false);
   };
 
-  const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 10 },
-    { field: "type", headerName: "Tipo de contato", width: 130 },
-    {
-      field: "public",
-      headerName: "Público",
-      width: 70,
-      renderCell: (params) =>
-        params.value ? (
-          <DoDisturbIcon color="error" />
-        ) : (
-          <CheckIcon color="success" />
-        ),
-    },
-    {
-      field: "number",
-      headerName: "Contato",
-      width: 290,
-    },
-    {
-      field: "createdAt",
-      headerName: "Data de criação",
-      width: 170,
-      renderCell: (params) => formatDatetime(params.value),
-    },
-    {
-      field: "updatedAt",
-      headerName: "Última edição",
-      width: 170,
-      renderCell: (params) => formatDatetime(params.value),
-    },
-
-    {
-      field: "edit",
-      headerName: "Editar",
-      sortable: false,
-      width: 70,
-      renderCell: () => (
-        <IconButton onClick={() => setModalEditionOpen(true)}>
-          <EditIcon fontSize="small" />
-        </IconButton>
+  const columns = ContactColumns({
+    setModalEditionOpen,
+    handleDeleteContact: (params: any) =>
+      handleDeleteContact(
+        params,
+        setSnackbar,
+        handleError,
+        setRefreshTable,
+        setDelLoading
       ),
-    },
-    {
-      field: "delete",
-      headerName: "Excluir",
-      sortable: false,
-      width: 160,
-      renderCell: (params) => (
-        <IconButton onClick={() => handleDeleteContact(params)}>
-          {delLoading && selectedRow?.id === params.id ? (
-            <CircularProgress size={20} />
-          ) : (
-            <DeleteIcon fontSize="small" />
-          )}
-        </IconButton>
-      ),
-    },
-  ];
+    delLoading,
+    selectedRow,
+  });
 
   return (
     <div style={{ height: "auto", width: "100%" }}>

@@ -27,7 +27,7 @@ import enrollmentService from "@/app/api/enrollment";
 import { getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
-import { FormTitleSection } from "@/components/atoms";
+import { cepMask, FormTitleSection } from "@/components/atoms";
 import "dayjs/locale/pt-br";
 import uploadService from "@/app/api/upload";
 import Link from "next/link";
@@ -331,7 +331,7 @@ export default function Indentification() {
             autoComplete="address-line2"
           />
           <MaskedInput
-            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+            mask={cepMask}
             render={(ref, props) => (
               <MiddleTextField
                 {...props}

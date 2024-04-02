@@ -1,18 +1,21 @@
 import { GridColDef } from "@mui/x-data-grid";
-import formatDatetime from "@/utils/formatDatetime";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton, CircularProgress } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { CircularProgress, IconButton } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import DoDisturbIcon from "@mui/icons-material/DoDisturb";
+import DeleteIcon from "@mui/icons-material/Delete";
+import formatDatetime from "@/utils/formatDatetime";
 
 interface ColumnProps {
   setModalEditionOpen: (open: boolean) => void;
-  handleDeleteCollective: (params: any) => void;
+  handleDeleteContact: (params: any) => void;
   delLoading: boolean;
   selectedRow: any;
 }
-const CollectiveCollumns = ({
+
+const Columns = ({
   setModalEditionOpen,
-  handleDeleteCollective,
+  handleDeleteContact,
   delLoading,
   selectedRow,
 }: ColumnProps): GridColDef[] => {
@@ -34,7 +37,7 @@ const CollectiveCollumns = ({
       sortable: false,
       width: 70,
       renderCell: (params) => (
-        <IconButton onClick={() => handleDeleteCollective(params)}>
+        <IconButton onClick={() => handleDeleteContact(params)}>
           {delLoading && selectedRow?.id === params.id ? (
             <CircularProgress size={20} />
           ) : (
@@ -44,56 +47,22 @@ const CollectiveCollumns = ({
       ),
     },
     { field: "id", headerName: "ID", width: 10 },
-    { field: "name", headerName: "Nome", width: 130 },
+    { field: "type", headerName: "Tipo de contato", width: 130 },
     {
-      field: "area",
-      headerName: "Área",
-      width: 100,
+      field: "public",
+      headerName: "Público",
+      width: 70,
+      renderCell: (params) =>
+        params.value ? (
+          <DoDisturbIcon color="error" />
+        ) : (
+          <CheckIcon color="success" />
+        ),
     },
     {
-      field: "opening",
-      headerName: "Data de abertura",
-      width: 120,
-    },
-    {
-      field: "phone",
-      headerName: "contato",
-      width: 110,
-    },
-    {
-      field: "email",
-      headerName: "E-mail",
-      width: 160,
-    },
-    {
-      field: "address",
-      headerName: "Endereço",
-      width: 140,
-    },
-    {
-      field: "neighboorhood",
-      headerName: "Bairro",
-      width: 120,
-    },
-    {
-      field: "cep",
-      headerName: "CEP",
-      width: 90,
-    },
-    {
-      field: "complement",
-      headerName: "Complemento",
-      width: 90,
-    },
-    {
-      field: "county",
-      headerName: "Município",
-      width: 120,
-    },
-    {
-      field: "responsible",
-      headerName: "Responsável",
-      width: 130,
+      field: "number",
+      headerName: "Contato",
+      width: 290,
     },
     {
       field: "createdAt",
@@ -110,4 +79,4 @@ const CollectiveCollumns = ({
   ];
 };
 
-export default CollectiveCollumns;
+export default Columns;
