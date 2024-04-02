@@ -2,10 +2,7 @@ import { deleteCookie, getCookie } from "@/hooks";
 import contactsService from "@/app/api/contacts";
 import router from "next/router";
 
-export const FetchContacts = async (
-  setContacts: any,
-  setSnackbar: any
-) => {
+export const FetchContacts = async (setContacts: any, setSnackbar: any) => {
   const token = await getCookie("token");
   const promise = contactsService.get(token);
   promise

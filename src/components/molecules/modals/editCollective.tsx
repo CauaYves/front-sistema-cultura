@@ -20,14 +20,20 @@ import { useCollective } from "@/context/collective-context";
 import { CulturalizeApiError } from "@/protocols";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import MaskedInput from "react-text-mask";
+import { cepMask, phoneMask } from "@/components/atoms";
+import dayjs from "dayjs";
 
 interface EditModalProps {
   close: React.Dispatch<React.SetStateAction<boolean>>;
+  row: any;
 }
-export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
+
+export default function EditCollectiveModal({
+  close,
+  row,
+}: Readonly<EditModalProps>) {
   const { collective, setCollective } = useCollective();
   const { setSnackbar } = useSnackbar();
-  const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState<UserData>({
     id: "",
@@ -37,6 +43,8 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
     name: "",
     token: "",
   });
+  const formattedDate = dayjs(row.opening, "DD/MM/YYYY").format("YYYY/MM/DD");
+
   useEffect(() => {
     async function fetchData() {
       const userDataCookie = await getUserData();
@@ -44,6 +52,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
     }
     fetchData();
   }, []);
+
   const handleStartLoading = () => setLoading(true);
   const handleStopLoading = () => setLoading(false);
   const handleError = (error: CulturalizeApiError) => {
@@ -60,7 +69,6 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
       message: message,
     });
   };
-
   const getFormData = async (event: React.FormEvent<HTMLFormElement>) => {
     const data = new FormData(event.currentTarget);
     const body: Omit<Collective, "id"> = {
@@ -80,7 +88,6 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
 
     return body;
   };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleStartLoading();
@@ -94,16 +101,23 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
         open: true,
       });
     }
+
     const token = await getCookie("token");
-    const promise = collectiveService.create(body, token);
+    const promise = collectiveService.update(body, token, row.id);
     promise
       .then((res) => {
-        const newCollectiveList = [...collective, res.data];
+        const index = collective.findIndex((coll) => coll.id === row.id);
+
+        const newCollectiveList = [...collective];
+        newCollectiveList.splice(index, 1);
+        const newRegister = { ...body, id: row.id };
+        newCollectiveList.push(newRegister);
+
         setCollective(newCollectiveList);
         setLoading(false);
         close(false);
         setSnackbar({
-          message: "Coletivo Cultural criado com sucesso! ",
+          message: "Coletivo Cultural editado com sucesso! ",
           severity: "success",
           open: true,
         });
@@ -120,10 +134,15 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
         }}
       >
         <Typography component="h2" variant="h6">
-          Criação de Coletivo Cultural
+          Edição de Coletivo Cultural
         </Typography>
         <Box component="form" onSubmit={handleSubmit}>
-          <TextField label="Nome" name="name" {...inputProps} />
+          <TextField
+            label="Nome"
+            name="name"
+            {...inputProps}
+            defaultValue={row.name}
+          />
           <FormControl {...inputProps}>
             <InputLabel id="area-label">Principal Área Cultural</InputLabel>
             <Select
@@ -131,8 +150,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
               labelId="area-label"
               label="Principal Área Cultural"
               name="area"
-              value={contact}
-              onChange={(event) => setContact(event.target.value)}
+              defaultValue={row.area}
             >
               <MenuItem value="Artes Visuais">Artes Visuais</MenuItem>
               <MenuItem value="Audiovisual/Cinema">Audiovisual/Cinema</MenuItem>
@@ -148,30 +166,20 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
             </Select>
           </FormControl>
           <FormControl {...inputProps}>
-            <DatePicker label="Data de abertura" name="opening" disableFuture />
+            <DatePicker
+              label="Data de abertura"
+              name="opening"
+              disableFuture
+              defaultValue={dayjs(formattedDate)}
+            />
           </FormControl>
           <MaskedInput
-            mask={[
-              "(",
-              /\d/,
-              /\d/,
-              ")",
-              " ",
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-              "-",
-              /\d/,
-              /\d/,
-              /\d/,
-              /\d/,
-            ]}
+            mask={phoneMask}
             render={(ref, props) => (
               <TextField
                 {...props}
                 inputRef={ref}
+                defaultValue={row.phone}
                 name="phone"
                 {...inputProps}
                 label="Telefone"
@@ -179,18 +187,34 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
               />
             )}
           />
-          <TextField label="Telefone" name="phone" {...inputProps} />
-          <TextField label="E-mail" name="email" {...inputProps} type="email" />
-          <TextField label="Endereço" name="address" {...inputProps} />
-          <TextField label="Bairro" name="neighboorhood" {...inputProps} />
+          <TextField
+            label="E-mail"
+            name="email"
+            {...inputProps}
+            type="email"
+            defaultValue={row.email}
+          />
+          <TextField
+            label="Endereço"
+            name="address"
+            {...inputProps}
+            defaultValue={row.address}
+          />
+          <TextField
+            label="Bairro"
+            name="neighboorhood"
+            {...inputProps}
+            defaultValue={row.neighboorhood}
+          />
           <TextField
             label="Complemento"
             name="complement"
             {...inputProps}
             required={false}
+            defaultValue={row.complement}
           />
           <MaskedInput
-            mask={[/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/]}
+            mask={cepMask}
             render={(ref, props) => (
               <TextField
                 {...props}
@@ -199,10 +223,16 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
                 {...inputProps}
                 label="CEP"
                 autoComplete="postal-code"
+                defaultValue={row.cep}
               />
             )}
           />
-          <TextField label="Município" name="county" {...inputProps} />
+          <TextField
+            label="Município"
+            name="county"
+            {...inputProps}
+            defaultValue={row.county}
+          />
 
           <Box
             sx={{
@@ -214,7 +244,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
           >
             <Button onClick={() => close(false)}>cancelar</Button>
             <LoadingButton variant="contained" type="submit" loading={loading}>
-              Criar
+              Salvar
             </LoadingButton>
           </Box>
         </Box>

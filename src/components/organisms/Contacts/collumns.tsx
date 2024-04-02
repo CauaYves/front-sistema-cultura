@@ -20,6 +20,32 @@ const Columns = ({
   selectedRow,
 }: ColumnProps): GridColDef[] => {
   return [
+    {
+      field: "edit",
+      headerName: "Editar",
+      sortable: false,
+      width: 10,
+      renderCell: () => (
+        <IconButton onClick={() => setModalEditionOpen(true)}>
+          <EditIcon fontSize="small" color="info" />
+        </IconButton>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Excluir",
+      sortable: false,
+      width: 70,
+      renderCell: (params) => (
+        <IconButton onClick={() => handleDeleteContact(params)}>
+          {delLoading && selectedRow?.id === params.id ? (
+            <CircularProgress size={20} />
+          ) : (
+            <DeleteIcon fontSize="small" color="error" />
+          )}
+        </IconButton>
+      ),
+    },
     { field: "id", headerName: "ID", width: 10 },
     { field: "type", headerName: "Tipo de contato", width: 130 },
     {
@@ -49,33 +75,6 @@ const Columns = ({
       headerName: "Última edição",
       width: 170,
       renderCell: (params) => formatDatetime(params.value),
-    },
-
-    {
-      field: "edit",
-      headerName: "Editar",
-      sortable: false,
-      width: 70,
-      renderCell: () => (
-        <IconButton onClick={() => setModalEditionOpen(true)}>
-          <EditIcon fontSize="small" />
-        </IconButton>
-      ),
-    },
-    {
-      field: "delete",
-      headerName: "Excluir",
-      sortable: false,
-      width: 160,
-      renderCell: (params) => (
-        <IconButton onClick={() => handleDeleteContact(params)}>
-          {delLoading && selectedRow?.id === params.id ? (
-            <CircularProgress size={20} />
-          ) : (
-            <DeleteIcon fontSize="small" />
-          )}
-        </IconButton>
-      ),
     },
   ];
 };

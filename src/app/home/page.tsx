@@ -20,6 +20,7 @@ import Contacts from "@/components/organisms/Contacts";
 import { useSnackbar } from "@/context/snackbar-context";
 import { Alert, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
+import { useRouter } from "next/navigation";
 
 const drawerWidth: number = 240;
 
@@ -49,6 +50,7 @@ export type ModulesKey =
   | "about";
 
 export default function Dashboard() {
+  const router = useRouter();
   const [selectedModule, setSelectedModule] =
     React.useState<ModulesKey>("identification");
   const [openDrawer, setOpenDrawer] = React.useState(true);
@@ -59,7 +61,7 @@ export default function Dashboard() {
     location: <Localization />,
     contacts: <Contacts />,
     professionalData: <p>professionalData</p>,
-    culturalColective: <Collective />,
+    culturalColective: <Collective router={router} />,
     imagesAndLinks: <p>imagesAndLinks</p>,
     documents: <p>documents</p>,
     authorizedUsers: <p>authorizedUsers</p>,
