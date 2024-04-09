@@ -22,6 +22,7 @@ import { Alert, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Notices from "@/components/organisms/Notices";
 
 const drawerWidth: number = 240;
 
@@ -66,7 +67,7 @@ export default function Dashboard() {
     imagesAndLinks: <p>imagesAndLinks</p>,
     documents: <p>documents</p>,
     authorizedUsers: <p>authorizedUsers</p>,
-    notices: <p>notices</p>,
+    notices: <Notices />,
     alreadyIncentived: <p>alreadyIncentived</p>,
     searchProject: <p>searchProject</p>,
     queue: <p>queue</p>,
