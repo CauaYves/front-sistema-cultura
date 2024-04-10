@@ -53,7 +53,7 @@ export default function Partners() {
   };
 
   return (
-    <Box sx={{ padding: "20px 20px 20px 0px" }}>
+    <Box>
       <Box component="form" onSubmit={handleSubmit} sx={FormStyles}>
         <TextField label="Nome completo" name="name" />
         <TextField label="CPF" name="cpf" />

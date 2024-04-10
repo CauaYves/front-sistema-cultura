@@ -24,7 +24,7 @@ export default function Proponent() {
 const GridBox = styled(Box)`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 20px 20px 20px 0px;
+
   > div {
     margin-right: 10px;
   }
