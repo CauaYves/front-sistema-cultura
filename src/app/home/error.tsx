@@ -15,7 +15,7 @@ export default function ErrorHandler({
 
   return (
     <div>
-      <h2>something get wrong</h2>
+      <h2>something got wrong</h2>
       <button onClick={() => reset()}>Try again</button>
     </div>
   );

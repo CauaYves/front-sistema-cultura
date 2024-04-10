@@ -204,7 +204,7 @@ export default function SidebarModules({
           <SubModule
             selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
-            tag="Prestação de co..."
+            tag="Contrapartida"
             name="billings"
           >
             <LocalAtm />

@@ -2,6 +2,7 @@
 import { ContactsProvider } from "@/context/contacts-context";
 import { SnackbarProvider } from "@/context/snackbar-context";
 import { CollectiveProvider } from "@/context/collective-context";
+import { NoticesProvider } from "@/context/notices-context";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,9 @@ export default function RootLayout({
   return (
     <SnackbarProvider>
       <ContactsProvider>
-        <CollectiveProvider>{children}</CollectiveProvider>
+        <CollectiveProvider>
+          <NoticesProvider>{children}</NoticesProvider>
+        </CollectiveProvider>
       </ContactsProvider>
     </SnackbarProvider>
   );
