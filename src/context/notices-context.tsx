@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useState, useContext } from "react";
 
-export type NoticesKeys = "list" | "subscription";
+export type NoticesKeys = "list" | "subscription" | "proposal" | "enrollment";
 
 type SetModule = React.Dispatch<React.SetStateAction<NoticesKeys>>;
 

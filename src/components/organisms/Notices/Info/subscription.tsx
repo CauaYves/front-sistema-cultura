@@ -10,7 +10,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function Subscription() {
   return (
-    <Box sx={{ padding: "10px 0px" }}>
+    <Box>
+      <Typography variant="body1" sx={{ mb: "10px" }}>
+        Inscrições
+      </Typography>
       <Typography variant="body1">
         Edital de credenciamento de Pessoas Jurídicas para realização de
         apresentações e festivais de Quadrilhas Juninas, no formato presencial,
@@ -27,7 +30,6 @@ export default function Subscription() {
         CATEGORIA B - FESTIVAL DE QUADRILHAS JUNINAS, no valor de R$ 150.000,00
         (cento e cinquenta mil reais) cada.
       </Typography>
-
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -220,9 +222,6 @@ export default function Subscription() {
           </ol>
         </AccordionDetails>
       </Accordion>
-      <Box mt="20px">
-        <Button variant="contained">Iniciar inscrição</Button>
-      </Box>
     </Box>
   );
 }
