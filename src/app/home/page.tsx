@@ -23,6 +23,7 @@ import Collective from "@/components/organisms/Collective";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Notices from "@/components/organisms/Notices";
+import LegalActs from "@/components/organisms/LegalActs";
 
 const drawerWidth: number = 240;
 
@@ -49,7 +50,12 @@ export type ModulesKey =
   | "searchProject"
   | "queue"
   | "support"
-  | "about";
+  | "metometer"
+  | "about"
+  | "advice"
+  | "legislation"
+  | "cultUnitys"
+  | "cultCalendar";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -74,6 +80,9 @@ export default function Dashboard() {
     support: <p>support</p>,
     about: <p>about</p>,
     billings: <p>billings</p>,
+    advice: <p>advice</p>,
+    legislation: <LegalActs />,
+    metometer: <p>metometer</p>,
   };
 
   const toggleDrawer = () => {
