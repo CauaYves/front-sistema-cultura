@@ -20,6 +20,7 @@ import Link from "@mui/icons-material/Link";
 import Description from "@mui/icons-material/Description";
 import LockOpen from "@mui/icons-material/LockOpen";
 import LocalAtm from "@mui/icons-material/LocalAtm";
+
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
@@ -252,6 +253,81 @@ export default function SidebarModules({
             name="searchProject"
           >
             <SearchIcon />
+          </SubModule>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion
+        expanded={expanded === "panel5"}
+        onChange={handleChange("panel5")}
+      >
+        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+          {open ? (
+            <>
+              <People
+                sx={{
+                  mr: "10px",
+                  color: "#999",
+                }}
+              />
+              <Typography>Informações e Indi...</Typography>
+            </>
+          ) : (
+            <People
+              sx={{
+                color: "#999",
+              }}
+            />
+          )}
+        </AccordionSummary>
+        <AccordionDetails>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Legislação PMC"
+            name="legislation"
+          >
+            <People />
+          </SubModule>
+        </AccordionDetails>
+        <AccordionDetails>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Conselho Municipal"
+            name="advice"
+          >
+            <People />
+          </SubModule>
+        </AccordionDetails>
+        <AccordionDetails>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Metômetro PMC"
+            name="metometer"
+          >
+            <People />
+          </SubModule>
+        </AccordionDetails>
+        <AccordionDetails>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Unidades Culturais"
+            name="cultUnitys"
+          >
+            <People />
+          </SubModule>
+        </AccordionDetails>
+        <AccordionDetails>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Calendário Cultural"
+            name="cultCalendar"
+          >
+            <People />
           </SubModule>
         </AccordionDetails>
       </Accordion>
