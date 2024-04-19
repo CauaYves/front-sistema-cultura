@@ -20,14 +20,14 @@ function SubModule({
 }: Readonly<SubModuleProps>) {
   const theme = useTheme();
   const backgroundColor =
-    selectedModule === name ? theme.palette.primary.light : "inherit";
+    selectedModule === name ? theme.palette.success.light : "inherit";
 
   return (
     <ListItemButton
       sx={{
-        background: backgroundColor,
+        borderLeft: `5px solid ${backgroundColor}`,
         "&:hover": {
-          background: theme.palette.primary.light,
+          background: "none",
         },
       }}
       onClick={() => {

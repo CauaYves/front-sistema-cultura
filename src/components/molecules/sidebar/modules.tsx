@@ -20,7 +20,12 @@ import Link from "@mui/icons-material/Link";
 import Description from "@mui/icons-material/Description";
 import LockOpen from "@mui/icons-material/LockOpen";
 import LocalAtm from "@mui/icons-material/LocalAtm";
-
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import AssessmentIcon from "@mui/icons-material/Assessment";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import StraightenIcon from "@mui/icons-material/Straighten";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
@@ -38,7 +43,9 @@ const Accordion = styled((props: AccordionProps) => (
     display: "none",
   },
 }));
-
+const Icolors = {
+  color: "#0084f0",
+};
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
     expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
@@ -89,17 +96,13 @@ export default function SidebarModules({
               <AccountCircleRoundedIcon
                 sx={{
                   mr: "10px",
-                  color: "#999",
+                  ...Icolors,
                 }}
-              />{" "}
+              />
               <Typography>Meus Dados</Typography>
             </>
           ) : (
-            <AccountCircleRoundedIcon
-              sx={{
-                color: "#999",
-              }}
-            />
+            <AccountCircleRoundedIcon sx={Icolors} />
           )}
         </AccordionSummary>
         <AccordionDetails>
@@ -109,7 +112,7 @@ export default function SidebarModules({
             setSelectedModule={setSelectedModule}
             name="identification"
           >
-            <FingerprintRoundedIcon />
+            <FingerprintRoundedIcon sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -117,7 +120,7 @@ export default function SidebarModules({
             tag="Localização"
             name="location"
           >
-            <LocationOnRoundedIcon />
+            <LocationOnRoundedIcon sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -125,15 +128,15 @@ export default function SidebarModules({
             tag="Contatos"
             name="contacts"
           >
-            <ContactPhone />
+            <ContactPhone sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
-            tag="Dados profissio..."
+            tag="Dados profissionais"
             name="professionalData"
           >
-            <ContactMail />
+            <ContactMail sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -141,7 +144,7 @@ export default function SidebarModules({
             tag="Coletivo cultural"
             name="culturalColective"
           >
-            <Business />
+            <Business sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -149,7 +152,7 @@ export default function SidebarModules({
             tag="Imagens e links"
             name="imagesAndLinks"
           >
-            <Link />
+            <Link sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -157,7 +160,7 @@ export default function SidebarModules({
             tag="Documentos"
             name="documents"
           >
-            <Description />
+            <Description sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -165,7 +168,7 @@ export default function SidebarModules({
             tag="Autorizados"
             name="authorizedUsers"
           >
-            <LockOpen />
+            <LockOpen sx={Icolors} />
           </SubModule>
         </AccordionDetails>
       </Accordion>
@@ -180,17 +183,13 @@ export default function SidebarModules({
               <FolderIcon
                 sx={{
                   mr: "10px",
-                  color: "#999",
+                  ...Icolors,
                 }}
               />
               <Typography>Meus projetos</Typography>
             </>
           ) : (
-            <FolderIcon
-              sx={{
-                color: "#999",
-              }}
-            />
+            <FolderIcon sx={Icolors} />
           )}
         </AccordionSummary>
         <AccordionDetails>
@@ -200,7 +199,7 @@ export default function SidebarModules({
             tag="Editais"
             name="notices"
           >
-            <ListAlt />
+            <ListAlt sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
@@ -208,7 +207,7 @@ export default function SidebarModules({
             tag="Contrapartida"
             name="billings"
           >
-            <LocalAtm />
+            <LocalAtm sx={Icolors} />
           </SubModule>
         </AccordionDetails>
       </Accordion>
@@ -223,17 +222,13 @@ export default function SidebarModules({
               <TrendingUp
                 sx={{
                   mr: "10px",
-                  color: "#999",
+                  ...Icolors,
                 }}
               />
               <Typography>Incentivar Projeto</Typography>
             </>
           ) : (
-            <TrendingUp
-              sx={{
-                color: "#999",
-              }}
-            />
+            <TrendingUp sx={Icolors} />
           )}
         </AccordionSummary>
         <AccordionDetails>
@@ -243,7 +238,7 @@ export default function SidebarModules({
             tag="Já Incentivados"
             name="alreadyIncentived"
           >
-            <AttachMoney />
+            <AttachMoney sx={Icolors} />
           </SubModule>
 
           <SubModule
@@ -252,7 +247,7 @@ export default function SidebarModules({
             tag="Buscar Projeto"
             name="searchProject"
           >
-            <SearchIcon />
+            <SearchIcon sx={Icolors} />
           </SubModule>
         </AccordionDetails>
       </Accordion>
@@ -264,18 +259,18 @@ export default function SidebarModules({
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {open ? (
             <>
-              <People
+              <AssessmentIcon
                 sx={{
                   mr: "10px",
-                  color: "#999",
+                  color: "#0084f0",
                 }}
               />
-              <Typography>Informações e Indi...</Typography>
+              <Typography>Informações e Indicadores</Typography>
             </>
           ) : (
-            <People
+            <AssessmentIcon
               sx={{
-                color: "#999",
+                color: "#0084f0",
               }}
             />
           )}
@@ -287,7 +282,7 @@ export default function SidebarModules({
             tag="Legislação PMC"
             name="legislation"
           >
-            <People />
+            <LibraryBooksIcon sx={Icolors} />
           </SubModule>
         </AccordionDetails>
         <AccordionDetails>
@@ -297,7 +292,7 @@ export default function SidebarModules({
             tag="Conselho Municipal"
             name="advice"
           >
-            <People />
+            <AccountBalanceIcon sx={Icolors} />
           </SubModule>
         </AccordionDetails>
         <AccordionDetails>
@@ -307,7 +302,7 @@ export default function SidebarModules({
             tag="Metômetro PMC"
             name="metometer"
           >
-            <People />
+            <StraightenIcon sx={Icolors} />
           </SubModule>
         </AccordionDetails>
         <AccordionDetails>
@@ -317,7 +312,7 @@ export default function SidebarModules({
             tag="Unidades Culturais"
             name="cultUnitys"
           >
-            <People />
+            <LocalLibraryIcon sx={Icolors} />
           </SubModule>
         </AccordionDetails>
         <AccordionDetails>
@@ -327,7 +322,7 @@ export default function SidebarModules({
             tag="Calendário Cultural"
             name="cultCalendar"
           >
-            <People />
+            <CalendarMonthIcon sx={Icolors} />
           </SubModule>
         </AccordionDetails>
       </Accordion>
@@ -342,17 +337,13 @@ export default function SidebarModules({
               <People
                 sx={{
                   mr: "10px",
-                  color: "#999",
+                  ...Icolors,
                 }}
               />{" "}
               <Typography>Edital de chamada</Typography>
             </>
           ) : (
-            <People
-              sx={{
-                color: "#999",
-              }}
-            />
+            <People sx={Icolors} />
           )}
         </AccordionSummary>
         <AccordionDetails>
@@ -362,7 +353,7 @@ export default function SidebarModules({
             tag="Fila"
             name="queue"
           >
-            <People />
+            <People sx={Icolors} />
           </SubModule>
         </AccordionDetails>
       </Accordion>

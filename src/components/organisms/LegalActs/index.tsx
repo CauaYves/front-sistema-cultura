@@ -37,6 +37,8 @@ export default function LegalActs() {
   return (
     <PaddingBox>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
+        <FormTitleSection title="Identificação" />
+
         <TripleDiv>
           <TextField
             sx={fieldProps}

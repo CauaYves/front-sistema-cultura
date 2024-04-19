@@ -18,14 +18,14 @@ import SubModules from "../../components/molecules/sidebar/sub-modules";
 import Localization from "@/components/organisms/Localization";
 import Contacts from "@/components/organisms/Contacts";
 import { useSnackbar } from "@/context/snackbar-context";
-import { Alert, Snackbar } from "@mui/material";
+import { Alert, Paper, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Notices from "@/components/organisms/Notices";
 import LegalActs from "@/components/organisms/LegalActs";
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 285;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -172,11 +172,13 @@ export default function Dashboard() {
         sx={{
           flexGrow: 1,
           overflow: "auto",
-          mt: "100px",
-          ml: "30px",
+          margin: "100px auto auto auto",
+          maxWidth: "1100px",
         }}
       >
-        {organismObjects[selectedModule]}
+        <Paper sx={{ padding: "10px" }}>
+          {organismObjects[selectedModule]}
+        </Paper>
       </Box>
     </Box>
   );
