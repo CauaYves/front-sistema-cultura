@@ -8,6 +8,7 @@ import {
   FormLabel,
   InputLabel,
   MenuItem,
+  Paper,
   Radio,
   RadioGroup,
   Select,
@@ -120,288 +121,321 @@ export default function Indentification() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-      <Container
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ width: "100%" }}
-      >
-        <Box sx={{ height: "100%" }}>
-          <Typography
-            variant="subtitle1"
-            display="block"
-            gutterBottom
-            component="h2"
-          >
-            Preencha o formulário a seguir para conseguirmos identificá-lo como
-            um agente cultural
-          </Typography>
-
-          <FormTitleSection title="Identificação" />
-          <StyledTextField
-            type="email"
-            name="email"
-            required
-            label="E-mail"
-            autoComplete="email"
-            placeholder="jhonDoe@gmail.com"
-          />
-          <StyledTextField
-            type="name"
-            name="codename"
-            required
-            label="Nome artístico"
-            autoComplete="nickname"
-            placeholder="Mágico Jhon"
-          />
-          <StyledTextField
-            type="name"
-            name="mothername"
-            label="Nome da mãe"
-            required
-            autoComplete="family-name"
-          />
-          <ResponsiveDatePicker label="Data de nascimento" name="borndate" />
-          <StyledFormControlForSelect>
-            <InputLabel id="nacionality-label">Nacionalidade</InputLabel>
-            <Select
-              id="nacionality-label"
-              labelId="nacionality-label"
-              label="Nacionalidade"
-              name="nacionality"
-              required
-              value={nacionality}
-              onChange={(event) => setNacionality(event.target.value)}
+      <Paper sx={{ padding: "10px" }}>
+        <Container
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ width: "100%" }}
+        >
+          <Box sx={{ height: "100%" }}>
+            <Typography
+              variant="subtitle1"
+              display="block"
+              gutterBottom
+              component="h2"
             >
-              {countries.map((country) => {
-                return (
-                  <MenuItem key={country} value={country}>
-                    {country}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </StyledFormControlForSelect>
-          <StyledTextField
-            name="naturalness"
-            label="Naturalidade"
-            required
-            placeholder="Rio de Janeiro, Petrópolis"
-          />
-          <FormTitleSection title="Documentos" />
-
-          <QuarterTextField name="rg" type="number" label="RG" required />
-          <QuarterTextField
-            name="issuingbody"
-            label="Órgão expedidor"
-            required
-          />
-          <StyledFormControlForSelect>
-            <InputLabel id="uf-label">UF órgão expedidor</InputLabel>
-            <Select
-              id="uf-label"
-              labelId="uf-label"
-              label="UF órgão expedidor"
-              name="uf"
-              value={uf}
-              required
-              onChange={(event) => setUf(event.target.value)}
-            >
-              {brazilStates.map((country) => {
-                return (
-                  <MenuItem key={country} value={country}>
-                    {country}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </StyledFormControlForSelect>
-          <StyledFormControlForSelect>
-            <InputLabel id="gender-label">Gênero</InputLabel>
-            <Select
-              id="gender-label"
-              labelId="gender-label"
-              label="Gênero"
-              name="gender"
-              required
-              value={gender}
-              onChange={(event) => setGender(event.target.value)}
-            >
-              <MenuItem value="masculino">Masculino</MenuItem>
-              <MenuItem value="feminino">Feminino</MenuItem>
-              <MenuItem value="outro">Outro</MenuItem>
-              <MenuItem value="none">Prefiro não responder</MenuItem>
-            </Select>
-          </StyledFormControlForSelect>
-          <StyledFormControlForSelect>
-            <InputLabel id="race-label">Raça</InputLabel>
-            <Select
-              id="race-label"
-              labelId="race-label"
-              label="race"
-              name="race"
-              required
-              value={race}
-              onChange={(event) => setRace(event.target.value)}
-            >
-              <MenuItem value="amarela">Amarela</MenuItem>
-              <MenuItem value="indigena">Indígena</MenuItem>
-              <MenuItem value="branca">Branca</MenuItem>
-              <MenuItem value="parda">Parda</MenuItem>
-              <MenuItem value="preta">Preta</MenuItem>
-              <MenuItem value="none">Prefiro nao responder</MenuItem>
-            </Select>
-          </StyledFormControlForSelect>
-          <FormTitleSection title="Informações complementares" />
-          <FormControl required>
-            <FormLabel id="studentLabel">É estudante?</FormLabel>
-            <RadioGroup row aria-labelledby="studentLabel" name="student">
-              <FormControlLabel value={true} control={<Radio />} label="Sim" />
-              <FormControlLabel value={false} control={<Radio />} label="Não" />
-            </RadioGroup>
-          </FormControl>
-          <StyledFormControlForSelect>
-            <InputLabel id="education-label">Escolaridade</InputLabel>
-            <Select
-              id="education-label"
-              labelId="education-label"
-              label="Escolaridade"
-              name="education"
-              required
-              value={education}
-              onChange={(event) => setEducation(event.target.value)}
-            >
-              <MenuItem value="fundamental">Fundamental completo</MenuItem>
-              <MenuItem value="nonFundamental">Fundamental incompleto</MenuItem>
-              <MenuItem value="medium">Médio completo</MenuItem>
-              <MenuItem value="nonMedium">Médio incompleto</MenuItem>
-              <MenuItem value="nonSuperior">Superior incompleto</MenuItem>
-              <MenuItem value="superior">Superior completo</MenuItem>
-              <MenuItem value="none">Não alfabetizado</MenuItem>
-            </Select>
-          </StyledFormControlForSelect>
-          <MiddleTextField
-            type="text"
-            name="extracurricularCourses"
-            label="Cursos extracurriculares"
-            placeholder="Exemplo: Udemy, gastronomia 40 horas"
-          />
-          <MiddleTextField
-            type="text"
-            name="superiorCourses"
-            label="Cursos superiores"
-            placeholder="Exemplo: UFRJ, Ciência da computação"
-          />
-          <FormControl required>
-            <FormLabel id="deficiencyLabel">Possui deficiência?</FormLabel>
-            <RadioGroup
-              row
-              aria-labelledby="deficiencyLabel"
-              name="deficiency"
-              id="deficiencyLabel"
-            >
-              <FormControlLabel value={true} control={<Radio />} label="Sim" />
-              <FormControlLabel value={false} control={<Radio />} label="Não" />
-            </RadioGroup>
-          </FormControl>
-          <FormTitleSection title="Endereço" />
-
-          <MiddleTextField
-            type="text"
-            name="address"
-            required
-            label="Endereço"
-            autoComplete="address-line1"
-            placeholder="Nome da rua, Cidade, Estado"
-            sx={{
-              marginRight: "5px",
-            }}
-          />
-          <QuarterTextField
-            type="number"
-            name="houseNumber"
-            label="Número"
-            required
-            placeholder="Número da casa ou apartamento"
-          />
-          <QuarterTextField
-            type="text"
-            name="complement"
-            label="Complemento"
-            autoComplete="address-line2"
-          />
-          <MaskedInput
-            mask={cepMask}
-            render={(ref, props) => (
-              <MiddleTextField
-                {...props}
-                inputRef={ref}
-                type="text"
-                name="cep"
+              Preencha o formulário a seguir para conseguirmos identificá-lo
+              como um agente cultural
+            </Typography>
+            <Paper sx={{ padding: "10px" }}>
+              <FormTitleSection title="Identificação" />
+              <StyledTextField
+                type="email"
+                name="email"
                 required
-                label="CEP"
-                autoComplete="postal-code"
+                label="E-mail"
+                autoComplete="email"
+                placeholder="jhonDoe@gmail.com"
               />
-            )}
-          />
+              <StyledTextField
+                type="name"
+                name="codename"
+                required
+                label="Nome artístico"
+                autoComplete="nickname"
+                placeholder="Mágico Jhon"
+              />
+              <StyledTextField
+                type="name"
+                name="mothername"
+                label="Nome da mãe"
+                required
+                autoComplete="family-name"
+              />
+              <ResponsiveDatePicker
+                label="Data de nascimento"
+                name="borndate"
+              />
+              <StyledFormControlForSelect>
+                <InputLabel id="nacionality-label">Nacionalidade</InputLabel>
+                <Select
+                  id="nacionality-label"
+                  labelId="nacionality-label"
+                  label="Nacionalidade"
+                  name="nacionality"
+                  required
+                  value={nacionality}
+                  onChange={(event) => setNacionality(event.target.value)}
+                >
+                  {countries.map((country) => {
+                    return (
+                      <MenuItem key={country} value={country}>
+                        {country}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </StyledFormControlForSelect>
+              <StyledTextField
+                name="naturalness"
+                label="Naturalidade"
+                required
+                placeholder="Rio de Janeiro, Petrópolis"
+              />
+            </Paper>
+            <br />
+            <Paper sx={{ padding: "10px" }}>
+              <FormTitleSection title="Documentos" />
+              <QuarterTextField name="rg" type="number" label="RG" required />
+              <QuarterTextField
+                name="issuingbody"
+                label="Órgão expedidor"
+                required
+              />
+              <StyledFormControlForSelect>
+                <InputLabel id="uf-label">UF órgão expedidor</InputLabel>
+                <Select
+                  id="uf-label"
+                  labelId="uf-label"
+                  label="UF órgão expedidor"
+                  name="uf"
+                  value={uf}
+                  required
+                  onChange={(event) => setUf(event.target.value)}
+                >
+                  {brazilStates.map((country) => {
+                    return (
+                      <MenuItem key={country} value={country}>
+                        {country}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </StyledFormControlForSelect>
+              <StyledFormControlForSelect>
+                <InputLabel id="gender-label">Gênero</InputLabel>
+                <Select
+                  id="gender-label"
+                  labelId="gender-label"
+                  label="Gênero"
+                  name="gender"
+                  required
+                  value={gender}
+                  onChange={(event) => setGender(event.target.value)}
+                >
+                  <MenuItem value="masculino">Masculino</MenuItem>
+                  <MenuItem value="feminino">Feminino</MenuItem>
+                  <MenuItem value="outro">Outro</MenuItem>
+                  <MenuItem value="none">Prefiro não responder</MenuItem>
+                </Select>
+              </StyledFormControlForSelect>
+              <StyledFormControlForSelect>
+                <InputLabel id="race-label">Raça</InputLabel>
+                <Select
+                  id="race-label"
+                  labelId="race-label"
+                  label="race"
+                  name="race"
+                  required
+                  value={race}
+                  onChange={(event) => setRace(event.target.value)}
+                >
+                  <MenuItem value="amarela">Amarela</MenuItem>
+                  <MenuItem value="indigena">Indígena</MenuItem>
+                  <MenuItem value="branca">Branca</MenuItem>
+                  <MenuItem value="parda">Parda</MenuItem>
+                  <MenuItem value="preta">Preta</MenuItem>
+                  <MenuItem value="none">Prefiro nao responder</MenuItem>
+                </Select>
+              </StyledFormControlForSelect>
+            </Paper>
+            <br />
+            <Paper sx={{ padding: "10px" }}>
+              <FormTitleSection title="Informações complementares" />
+              <FormControl required>
+                <FormLabel id="studentLabel">É estudante?</FormLabel>
+                <RadioGroup row aria-labelledby="studentLabel" name="student">
+                  <FormControlLabel
+                    value={true}
+                    control={<Radio />}
+                    label="Sim"
+                  />
+                  <FormControlLabel
+                    value={false}
+                    control={<Radio />}
+                    label="Não"
+                  />
+                </RadioGroup>
+              </FormControl>
+              <StyledFormControlForSelect>
+                <InputLabel id="education-label">Escolaridade</InputLabel>
+                <Select
+                  id="education-label"
+                  labelId="education-label"
+                  label="Escolaridade"
+                  name="education"
+                  required
+                  value={education}
+                  onChange={(event) => setEducation(event.target.value)}
+                >
+                  <MenuItem value="fundamental">Fundamental completo</MenuItem>
+                  <MenuItem value="nonFundamental">
+                    Fundamental incompleto
+                  </MenuItem>
+                  <MenuItem value="medium">Médio completo</MenuItem>
+                  <MenuItem value="nonMedium">Médio incompleto</MenuItem>
+                  <MenuItem value="nonSuperior">Superior incompleto</MenuItem>
+                  <MenuItem value="superior">Superior completo</MenuItem>
+                  <MenuItem value="none">Não alfabetizado</MenuItem>
+                </Select>
+              </StyledFormControlForSelect>
+              <MiddleTextField
+                type="text"
+                name="extracurricularCourses"
+                label="Cursos extracurriculares"
+                placeholder="Exemplo: Udemy, gastronomia 40 horas"
+              />
+              <MiddleTextField
+                type="text"
+                name="superiorCourses"
+                label="Cursos superiores"
+                placeholder="Exemplo: UFRJ, Ciência da computação"
+              />
+              <FormControl required>
+                <FormLabel id="deficiencyLabel">Possui deficiência?</FormLabel>
+                <RadioGroup
+                  row
+                  aria-labelledby="deficiencyLabel"
+                  name="deficiency"
+                  id="deficiencyLabel"
+                >
+                  <FormControlLabel
+                    value={true}
+                    control={<Radio />}
+                    label="Sim"
+                  />
+                  <FormControlLabel
+                    value={false}
+                    control={<Radio />}
+                    label="Não"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Paper>
+            <br />
+
+            <Paper sx={{ padding: "10px" }}>
+              <FormTitleSection title="Endereço" />
+              <MiddleTextField
+                type="text"
+                name="address"
+                required
+                label="Endereço"
+                autoComplete="address-line1"
+                placeholder="Nome da rua, Cidade, Estado"
+                sx={{
+                  marginRight: "5px",
+                }}
+              />
+              <QuarterTextField
+                type="number"
+                name="houseNumber"
+                label="Número"
+                required
+                placeholder="Número da casa ou apartamento"
+              />
+              <QuarterTextField
+                type="text"
+                name="complement"
+                label="Complemento"
+                autoComplete="address-line2"
+              />
+              <MaskedInput
+                mask={cepMask}
+                render={(ref, props) => (
+                  <MiddleTextField
+                    {...props}
+                    inputRef={ref}
+                    type="text"
+                    name="cep"
+                    required
+                    label="CEP"
+                    autoComplete="postal-code"
+                  />
+                )}
+              />
+            </Paper>
+            <br />
+            <Box
+              sx={{
+                margin: "10px 5px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "baseline",
+              }}
+            >
+              <Button
+                component="label"
+                role={undefined}
+                sx={{
+                  marginRight: "10px",
+                }}
+                variant="contained"
+                tabIndex={-1}
+                startIcon={<CloudUploadIcon />}
+              >
+                Enviar Arquivo
+                <VisuallyHiddenInput
+                  type="file"
+                  onChange={handleChange}
+                  accept="pdf image/* !mp4 !bat !txt"
+                />
+              </Button>
+              <Typography component="p" variant="caption">
+                Envie o comprovante de residência
+              </Typography>
+              {fileName.map((file) => {
+                return <Typography key={file}>{file}</Typography>;
+              })}
+            </Box>
+          </Box>
           <Box
             sx={{
-              margin: "10px 5px",
               display: "flex",
               flexDirection: "column",
-              alignItems: "baseline",
+              justifyContent: "end",
+              width: "91.5%",
             }}
           >
-            <Button
-              component="label"
-              role={undefined}
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={loading}
               sx={{
                 marginRight: "10px",
               }}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
             >
-              Enviar Arquivo
-              <VisuallyHiddenInput
-                type="file"
-                onChange={handleChange}
-                accept="pdf image/* !mp4 !bat !txt"
-              />
-            </Button>
-            <Typography component="p" variant="caption">
-              Envie o comprovante de residência
-            </Typography>
-            {fileName.map((file) => {
-              return <Typography key={file}>{file}</Typography>;
-            })}
+              Salvar
+            </LoadingButton>
+            <FormControlLabel
+              name="public"
+              control={<Checkbox />}
+              label="Autorizar publicação de dados ao público"
+            />
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "end",
-            width: "91.5%",
-          }}
-        >
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            loading={loading}
-            sx={{
-              marginRight: "10px",
-            }}
-          >
-            Salvar
-          </LoadingButton>
-          <FormControlLabel
-            name="public"
-            control={<Checkbox />}
-            label="Autorizar publicação de dados ao público"
-          />
-        </Box>
-        <Link href="/home/about">Política de privacidade</Link>
-      </Container>
+          <Link href="/home/about">Política de privacidade</Link>
+        </Container>
+      </Paper>
     </LocalizationProvider>
   );
 }
