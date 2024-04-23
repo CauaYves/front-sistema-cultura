@@ -6,6 +6,10 @@ export type LoginCredentials = {
   password: string;
 };
 
+interface RecoverPasswordType extends LoginCredentials {
+  code: string;
+}
+
 function login(body: LoginCredentials) {
   const promise: any = instance.post("/auth/sign-in", body);
   return promise;
@@ -21,10 +25,22 @@ function confirmRegistration(code: string) {
   return promise;
 }
 
+function recoverPassword(email: string) {
+  const promise = instance.post(`/auth/forgot-password`, { email });
+  return promise;
+}
+
+function updatePassword(body: RecoverPasswordType) {
+  const promise = instance.put("/auth/update-password", body);
+  return promise;
+}
+
 const authService = {
   login,
   register,
   confirmRegistration,
+  recoverPassword,
+  updatePassword,
 };
 
 export default authService;
