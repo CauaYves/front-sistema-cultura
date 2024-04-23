@@ -124,7 +124,7 @@ export default function CreateNewPassword({
       <TextField
         {...inputProps}
         error={inputError === false}
-        helperText={`${!inputError ? "Senhas não coincidem" : ""}`}
+        helperText={`${inputError ? "Senhas não coincidem" : ""}`}
         name="confirmPassword"
         label="Confirme a senha"
         autoComplete="new-password"
