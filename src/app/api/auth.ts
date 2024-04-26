@@ -35,8 +35,18 @@ function updatePassword(body: RecoverPasswordType) {
   return promise;
 }
 
+function getUserData(token: string) {
+  const promise = instance.get("/auth/user", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return promise;
+}
+
 const authService = {
   login,
+  getUserData,
   register,
   confirmRegistration,
   recoverPassword,

@@ -26,6 +26,7 @@ import { createCookie } from "@/hooks";
 import authService from "./api/auth";
 import { inputProps } from "@/types";
 import { CulturalizeApiError } from "@/protocols";
+import { useUserData } from "@/context/user-context";
 
 export default function SignIn() {
   const router = useRouter();
@@ -50,9 +51,7 @@ export default function SignIn() {
         createCookie("token", response.data.token);
         createCookie("userData", JSON.stringify(response.data));
         setRequestMessage("Login efetuado com sucesso!");
-        setTimeout(() => {
-          router.push("/home");
-        }, 1500);
+        setTimeout(() => router.push("/home"), 1500);
       })
       .catch(({ response }: CulturalizeApiError) => {
         const { status, data } = response;
