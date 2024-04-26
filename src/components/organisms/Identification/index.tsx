@@ -122,11 +122,7 @@ export default function Indentification() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
       <Paper sx={{ padding: "10px" }}>
-        <Container
-          component="form"
-          onSubmit={handleSubmit}
-          sx={{ width: "100%" }}
-        >
+        <Box component="form" onSubmit={handleSubmit}>
           <Box sx={{ height: "100%" }}>
             <Typography
               variant="subtitle1"
@@ -434,7 +430,7 @@ export default function Indentification() {
             />
           </Box>
           <Link href="/home/about">Política de privacidade</Link>
-        </Container>
+        </Box>
       </Paper>
     </LocalizationProvider>
   );

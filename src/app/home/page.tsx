@@ -8,10 +8,8 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import Indentification from "@/components/organisms/Identification";
 import SidebarModules from "@/components/molecules/sidebar/modules";
 import SubModules from "../../components/molecules/sidebar/sub-modules";
@@ -24,6 +22,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Notices from "@/components/organisms/Notices";
 import LegalActs from "@/components/organisms/LegalActs";
+import HomePage from "@/components/organisms/Home";
+import ProfileBar from "@/components/molecules/profile";
+import { getCookie } from "@/hooks";
+import { useUserData } from "@/context/user-context";
+import authService from "../api/auth";
 
 const drawerWidth: number = 285;
 
@@ -36,14 +39,12 @@ interface OrganismObjects {
 }
 
 export type ModulesKey =
+  | "homePage"
   | "identification"
-  | "location"
-  | "contacts"
-  | "professionalData"
+  | "myProjects"
+  | "counterpart"
+  | "noticesClosed"
   | "culturalColective"
-  | "imagesAndLinks"
-  | "documents"
-  | "authorizedUsers"
   | "notices"
   | "billings"
   | "alreadyIncentived"
@@ -59,12 +60,22 @@ export type ModulesKey =
 
 export default function Dashboard() {
   const router = useRouter();
-  const [selectedModule, setSelectedModule] =
-    useState<ModulesKey>("identification");
+  const [selectedModule, setSelectedModule] = useState<ModulesKey>("homePage");
   const [openDrawer, setOpenDrawer] = useState(true);
   const { message, open, severity, setSnackbar } = useSnackbar();
+  const { setUserData } = useUserData();
+
+  React.useEffect(() => {
+    const handleGetToken = async () => {
+      const cookie = await getCookie("token");
+      const user = await authService.getUserData(cookie);
+      setUserData(user.data);
+    };
+    handleGetToken();
+  }, []);
 
   const organismObjects: OrganismObjects = {
+    homePage: <HomePage />,
     identification: <Indentification />,
     location: <Localization />,
     contacts: <Contacts />,
@@ -135,11 +146,7 @@ export default function Dashboard() {
           >
             Área do agente cultural
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={1} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <ProfileBar />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={openDrawer}>
@@ -173,7 +180,6 @@ export default function Dashboard() {
           flexGrow: 1,
           overflow: "auto",
           margin: "100px auto auto auto",
-          maxWidth: "1100px",
         }}
       >
         <Paper sx={{ padding: "10px" }}>

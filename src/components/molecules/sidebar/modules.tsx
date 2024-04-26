@@ -4,7 +4,6 @@ import FolderIcon from "@mui/icons-material/Folder";
 import People from "@mui/icons-material/People";
 import AttachMoney from "@mui/icons-material/AttachMoney";
 import TrendingUp from "@mui/icons-material/TrendingUp";
-import ListAlt from "@mui/icons-material/ListAlt";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -12,13 +11,7 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import FingerprintRoundedIcon from "@mui/icons-material/FingerprintRounded";
-import LocationOnRoundedIcon from "@mui/icons-material/LocationOnRounded";
-import ContactPhone from "@mui/icons-material/ContactPhone";
-import ContactMail from "@mui/icons-material/ContactMail";
 import Business from "@mui/icons-material/Business";
-import Link from "@mui/icons-material/Link";
-import Description from "@mui/icons-material/Description";
-import LockOpen from "@mui/icons-material/LockOpen";
 import LocalAtm from "@mui/icons-material/LocalAtm";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import AssessmentIcon from "@mui/icons-material/Assessment";
@@ -31,6 +24,9 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import { SubModule } from "@/components/atoms";
 import { ModulesKey } from "@/app/home/page";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import FolderCopyIcon from "@mui/icons-material/FolderCopy";
+import EventBusyIcon from "@mui/icons-material/EventBusy";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -72,7 +68,7 @@ export default function SidebarModules({
   selectedModule,
   setSelectedModule,
 }: Readonly<CustomizedAccordionsProps>) {
-  const [expanded, setExpanded] = React.useState<string | false>("panel1");
+  const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const AccordionDetails = styled(MuiAccordionDetails)(() => ({
     padding: 0,
@@ -117,58 +113,10 @@ export default function SidebarModules({
           <SubModule
             selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
-            tag="Localização"
-            name="location"
-          >
-            <LocationOnRoundedIcon sx={Icolors} />
-          </SubModule>
-          <SubModule
-            selectedModule={selectedModule}
-            setSelectedModule={setSelectedModule}
-            tag="Contatos"
-            name="contacts"
-          >
-            <ContactPhone sx={Icolors} />
-          </SubModule>
-          <SubModule
-            selectedModule={selectedModule}
-            setSelectedModule={setSelectedModule}
-            tag="Dados profissionais"
-            name="professionalData"
-          >
-            <ContactMail sx={Icolors} />
-          </SubModule>
-          <SubModule
-            selectedModule={selectedModule}
-            setSelectedModule={setSelectedModule}
             tag="Coletivo cultural"
             name="culturalColective"
           >
             <Business sx={Icolors} />
-          </SubModule>
-          <SubModule
-            selectedModule={selectedModule}
-            setSelectedModule={setSelectedModule}
-            tag="Imagens e links"
-            name="imagesAndLinks"
-          >
-            <Link sx={Icolors} />
-          </SubModule>
-          <SubModule
-            selectedModule={selectedModule}
-            setSelectedModule={setSelectedModule}
-            tag="Documentos"
-            name="documents"
-          >
-            <Description sx={Icolors} />
-          </SubModule>
-          <SubModule
-            selectedModule={selectedModule}
-            setSelectedModule={setSelectedModule}
-            tag="Autorizados"
-            name="authorizedUsers"
-          >
-            <LockOpen sx={Icolors} />
           </SubModule>
         </AccordionDetails>
       </Accordion>
@@ -186,7 +134,7 @@ export default function SidebarModules({
                   ...Icolors,
                 }}
               />
-              <Typography>Meus projetos</Typography>
+              <Typography>Projetos</Typography>
             </>
           ) : (
             <FolderIcon sx={Icolors} />
@@ -196,10 +144,26 @@ export default function SidebarModules({
           <SubModule
             selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
-            tag="Editais"
+            tag="Inscrições"
             name="notices"
           >
-            <ListAlt sx={Icolors} />
+            <AssignmentIcon sx={Icolors} />
+          </SubModule>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Meus Projetos"
+            name="myProjects"
+          >
+            <FolderCopyIcon sx={Icolors} />
+          </SubModule>
+          <SubModule
+            selectedModule={selectedModule}
+            setSelectedModule={setSelectedModule}
+            tag="Editais Encerrados"
+            name="myProjects"
+          >
+            <EventBusyIcon sx={Icolors} />
           </SubModule>
           <SubModule
             selectedModule={selectedModule}
