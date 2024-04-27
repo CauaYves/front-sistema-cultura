@@ -43,9 +43,7 @@ export default function CreateNewPassword({
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const handleToogleInputError = (bool: boolean) => {
-    setInputError(bool);
-  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -61,7 +59,6 @@ export default function CreateNewPassword({
     };
 
     const passwordAreEquals = checkIfPasswordAreEqual(password1, password2);
-    console.log(passwordAreEquals);
     if (!passwordAreEquals) {
       setInputError(false);
       return;
@@ -87,7 +84,6 @@ export default function CreateNewPassword({
         setRequestMessage("Código de confirmação não confere! ");
       });
   };
-  console.log(inputError);
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
       <TextField

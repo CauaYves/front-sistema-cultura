@@ -22,7 +22,7 @@ import { LoadingButton } from "@mui/lab";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { createCookie } from "@/hooks";
+import { appLocalStore, createCookie } from "@/hooks";
 import authService from "./api/auth";
 import { inputProps } from "@/types";
 import { CulturalizeApiError } from "@/protocols";
@@ -32,7 +32,7 @@ export default function SignIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [requestMessage, setRequestMessage] = React.useState("");
+  const [requestMessage, setRequestMessage] = useState("");
   const [severity, setSeverity] = useState<AlertColor>("warning");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -49,7 +49,8 @@ export default function SignIn() {
       .then((response: AxiosResponse) => {
         setSeverity("success");
         createCookie("token", response.data.token);
-        createCookie("userData", JSON.stringify(response.data));
+        appLocalStore.SetData("session", response.data);
+
         setRequestMessage("Login efetuado com sucesso!");
         setTimeout(() => router.push("/home"), 1500);
       })

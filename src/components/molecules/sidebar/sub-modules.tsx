@@ -6,7 +6,7 @@ import AssignmentIcon from "@mui/icons-material/ExitToApp";
 import InfoIcon from "@mui/icons-material/Info";
 import Help from "@mui/icons-material/Help";
 import { useRouter } from "next/navigation";
-import { deleteCookie } from "@/hooks";
+import { appLocalStore, deleteCookie } from "@/hooks";
 
 export default function SubModules() {
   const router = useRouter();
@@ -16,6 +16,7 @@ export default function SubModules() {
       <ListItemButton
         onClick={async () => {
           await deleteCookie("token");
+          appLocalStore.removeData("session");
           router.push("/");
         }}
       >

@@ -63,20 +63,10 @@ export default function Dashboard() {
   const [selectedModule, setSelectedModule] = useState<ModulesKey>("homePage");
   const [openDrawer, setOpenDrawer] = useState(true);
   const { message, open, severity, setSnackbar } = useSnackbar();
-  const { setUserData } = useUserData();
-
-  React.useEffect(() => {
-    const handleGetToken = async () => {
-      const cookie = await getCookie("token");
-      const user = await authService.getUserData(cookie);
-      setUserData(user.data);
-    };
-    handleGetToken();
-  }, []);
 
   const organismObjects: OrganismObjects = {
     homePage: <HomePage />,
-    identification: <Indentification />,
+    identification: <Indentification router={router} />,
     location: <Localization />,
     contacts: <Contacts />,
     professionalData: <p>professionalData</p>,
@@ -107,7 +97,7 @@ export default function Dashboard() {
     });
   };
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", background: "#eeeeee", minHeight: "100vh" }}>
       <CssBaseline />
       <Snackbar
         onClose={handleClose}
@@ -118,7 +108,7 @@ export default function Dashboard() {
         <Alert severity={severity}>{message} </Alert>
       </Snackbar>
       <CssBaseline />
-      <AppBar position="absolute" open={openDrawer}>
+      <AppBar position="absolute" open={openDrawer} sx={{ maxHeight: "70px" }}>
         <Toolbar
           sx={{
             pr: "24px",
@@ -146,7 +136,7 @@ export default function Dashboard() {
           >
             Área do agente cultural
           </Typography>
-          <ProfileBar />
+          <ProfileBar router={router} />
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={openDrawer}>
@@ -180,11 +170,10 @@ export default function Dashboard() {
           flexGrow: 1,
           overflow: "auto",
           margin: "100px auto auto auto",
+          padding: "10px",
         }}
       >
-        <Paper sx={{ padding: "10px" }}>
-          {organismObjects[selectedModule]}
-        </Paper>
+        {organismObjects[selectedModule]}
       </Box>
     </Box>
   );

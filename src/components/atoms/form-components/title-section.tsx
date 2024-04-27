@@ -16,7 +16,7 @@ function FormTitleSection({ title }: Readonly<FormSectionTitleProps>) {
       >
         {title}
       </Typography>
-      <CustomDivider color="#9c9c9c" width="91%" margin="10px 0px" />
+      <CustomDivider color="#9c9c9c" margin="10px 0px" />
     </>
   );
 }

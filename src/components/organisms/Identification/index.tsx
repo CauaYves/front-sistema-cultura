@@ -2,63 +2,71 @@ import {
   Box,
   Button,
   Checkbox,
-  Container,
-  FormControl,
   FormControlLabel,
-  FormLabel,
   InputLabel,
   MenuItem,
-  Paper,
-  Radio,
-  RadioGroup,
   Select,
-  TextField,
+  SelectChangeEvent,
   Typography,
-  styled,
 } from "@mui/material";
-import MaskedInput from "react-text-mask";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { LoadingButton } from "@mui/lab";
-import { ChangeEventHandler, FormEvent, useState } from "react";
-import { brazilStates, countries } from "./countrys";
-import { mobalBreakpoint } from "@/constants";
+import { FormEvent, useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import enrollmentService from "@/app/api/enrollment";
-import { getCookie } from "@/hooks";
+import { appLocalStore, deleteCookie, getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
-import { cepMask, FormTitleSection } from "@/components/atoms";
+import { cepMask, FormTitleSection, phoneMask } from "@/components/atoms";
 import "dayjs/locale/pt-br";
 import uploadService from "@/app/api/upload";
 import Link from "next/link";
 import { useSnackbar } from "@/context/snackbar-context";
 import { CulturalizeApiError } from "@/protocols";
+import PersonIcon from "@mui/icons-material/Person";
+import {
+  PapersContainer,
+  StyledPaper,
+  TextFieldWrapper,
+  StyledTextField,
+  ButtonsContainer,
+  SelectFormControl,
+} from "./styles";
+import CompanyData from "./components/companyData";
+import FisicPersonData from "./components/fisicPersonData";
+import MaskedInput from "react-text-mask";
+import { inputProps } from "@/types";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-export default function Indentification() {
-  const [nacionality, setNacionality] = useState<string>("Brasil");
-  const [gender, setGender] = useState<string>("");
-  const [race, setRace] = useState<string>("");
-  const [education, setEducation] = useState<string>("");
+type IdentificationModulesKey = "PF" | "PJ" | "MEI" | "PJSFL";
+
+interface IdentificationProps {
+  router: AppRouterInstance;
+}
+
+export default function Indentification({
+  router,
+}: Readonly<IdentificationProps>) {
   const [fileName, setFileName] = useState<string[]>([]);
   const [file, setFile] = useState({});
   const [loading, setLoading] = useState(false);
-  const [uf, setUf] = useState<string>("");
   const { setSnackbar } = useSnackbar();
+  const [session, setSession] = useState<any>(null);
+  const [proponent, setProponent] = useState<IdentificationModulesKey>("PF");
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const fileList = event.target.files;
-
-    if (fileList) {
-      setFile(fileList);
-
-      const fileArray: string[] = [];
-      for (const element of fileList) {
-        fileArray.push(element.name);
-      }
-      setFileName(fileArray);
-    }
+  useEffect(() => {
+    const sessionData = appLocalStore.getData("session");
+    setSession(sessionData);
+  }, []);
+  const handleChange = (event: SelectChangeEvent) => {
+    setProponent(event.target.value as IdentificationModulesKey);
   };
+
+  if (!session) {
+    return null;
+  }
+  const { email } = session.session.user;
+
   const handleStartLoading = () => setLoading(true);
 
   const handleStopLoading = () => setLoading(false);
@@ -75,6 +83,13 @@ export default function Indentification() {
       severity: "error",
       message: message,
     });
+  };
+
+  const proponentModule = {
+    PF: <FisicPersonData />,
+    PJ: <CompanyData />,
+    PJSFL: <CompanyData />,
+    MEI: <CompanyData />,
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -121,371 +136,158 @@ export default function Indentification() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
-      <Paper sx={{ padding: "10px" }}>
-        <Box component="form" onSubmit={handleSubmit}>
-          <Box sx={{ height: "100%" }}>
-            <Typography
-              variant="subtitle1"
-              display="block"
-              gutterBottom
-              component="h2"
-            >
-              Preencha o formulário a seguir para conseguirmos identificá-lo
-              como um agente cultural
-            </Typography>
-            <Paper sx={{ padding: "10px" }}>
-              <FormTitleSection title="Identificação" />
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{ padding: "10px", background: "#eeeeee" }}
+      >
+        <Box sx={{ display: "flex" }}>
+          <PersonIcon color="info" />
+          <Typography variant="h6" component="h2" sx={{ marginRight: "10px" }}>
+            Alterar meu perfil
+          </Typography>
+        </Box>
+        <PapersContainer>
+          <StyledPaper>
+            <FormTitleSection title="Identificação" />
+            <TextFieldWrapper>
               <StyledTextField
                 type="email"
                 name="email"
-                required
-                label="E-mail"
-                autoComplete="email"
-                placeholder="jhonDoe@gmail.com"
+                disabled
+                defaultValue={email}
+                label="Usuário"
+                fullWidth
               />
-              <StyledTextField
-                type="name"
-                name="codename"
-                required
-                label="Nome artístico"
-                autoComplete="nickname"
-                placeholder="Mágico Jhon"
-              />
-              <StyledTextField
-                type="name"
-                name="mothername"
-                label="Nome da mãe"
-                required
-                autoComplete="family-name"
-              />
-              <ResponsiveDatePicker
-                label="Data de nascimento"
-                name="borndate"
-              />
-              <StyledFormControlForSelect>
-                <InputLabel id="nacionality-label">Nacionalidade</InputLabel>
-                <Select
-                  id="nacionality-label"
-                  labelId="nacionality-label"
-                  label="Nacionalidade"
-                  name="nacionality"
-                  required
-                  value={nacionality}
-                  onChange={(event) => setNacionality(event.target.value)}
-                >
-                  {countries.map((country) => {
-                    return (
-                      <MenuItem key={country} value={country}>
-                        {country}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </StyledFormControlForSelect>
-              <StyledTextField
-                name="naturalness"
-                label="Naturalidade"
-                required
-                placeholder="Rio de Janeiro, Petrópolis"
-              />
-            </Paper>
-            <br />
-            <Paper sx={{ padding: "10px" }}>
-              <FormTitleSection title="Documentos" />
-              <QuarterTextField name="rg" type="number" label="RG" required />
-              <QuarterTextField
-                name="issuingbody"
-                label="Órgão expedidor"
-                required
-              />
-              <StyledFormControlForSelect>
-                <InputLabel id="uf-label">UF órgão expedidor</InputLabel>
-                <Select
-                  id="uf-label"
-                  labelId="uf-label"
-                  label="UF órgão expedidor"
-                  name="uf"
-                  value={uf}
-                  required
-                  onChange={(event) => setUf(event.target.value)}
-                >
-                  {brazilStates.map((country) => {
-                    return (
-                      <MenuItem key={country} value={country}>
-                        {country}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </StyledFormControlForSelect>
-              <StyledFormControlForSelect>
-                <InputLabel id="gender-label">Gênero</InputLabel>
-                <Select
-                  id="gender-label"
-                  labelId="gender-label"
-                  label="Gênero"
-                  name="gender"
-                  required
-                  value={gender}
-                  onChange={(event) => setGender(event.target.value)}
-                >
-                  <MenuItem value="masculino">Masculino</MenuItem>
-                  <MenuItem value="feminino">Feminino</MenuItem>
-                  <MenuItem value="outro">Outro</MenuItem>
-                  <MenuItem value="none">Prefiro não responder</MenuItem>
-                </Select>
-              </StyledFormControlForSelect>
-              <StyledFormControlForSelect>
-                <InputLabel id="race-label">Raça</InputLabel>
-                <Select
-                  id="race-label"
-                  labelId="race-label"
-                  label="race"
-                  name="race"
-                  required
-                  value={race}
-                  onChange={(event) => setRace(event.target.value)}
-                >
-                  <MenuItem value="amarela">Amarela</MenuItem>
-                  <MenuItem value="indigena">Indígena</MenuItem>
-                  <MenuItem value="branca">Branca</MenuItem>
-                  <MenuItem value="parda">Parda</MenuItem>
-                  <MenuItem value="preta">Preta</MenuItem>
-                  <MenuItem value="none">Prefiro nao responder</MenuItem>
-                </Select>
-              </StyledFormControlForSelect>
-            </Paper>
-            <br />
-            <Paper sx={{ padding: "10px" }}>
-              <FormTitleSection title="Informações complementares" />
-              <FormControl required>
-                <FormLabel id="studentLabel">É estudante?</FormLabel>
-                <RadioGroup row aria-labelledby="studentLabel" name="student">
-                  <FormControlLabel
-                    value={true}
-                    control={<Radio />}
-                    label="Sim"
-                  />
-                  <FormControlLabel
-                    value={false}
-                    control={<Radio />}
-                    label="Não"
-                  />
-                </RadioGroup>
-              </FormControl>
-              <StyledFormControlForSelect>
-                <InputLabel id="education-label">Escolaridade</InputLabel>
-                <Select
-                  id="education-label"
-                  labelId="education-label"
-                  label="Escolaridade"
-                  name="education"
-                  required
-                  value={education}
-                  onChange={(event) => setEducation(event.target.value)}
-                >
-                  <MenuItem value="fundamental">Fundamental completo</MenuItem>
-                  <MenuItem value="nonFundamental">
-                    Fundamental incompleto
-                  </MenuItem>
-                  <MenuItem value="medium">Médio completo</MenuItem>
-                  <MenuItem value="nonMedium">Médio incompleto</MenuItem>
-                  <MenuItem value="nonSuperior">Superior incompleto</MenuItem>
-                  <MenuItem value="superior">Superior completo</MenuItem>
-                  <MenuItem value="none">Não alfabetizado</MenuItem>
-                </Select>
-              </StyledFormControlForSelect>
-              <MiddleTextField
-                type="text"
-                name="extracurricularCourses"
-                label="Cursos extracurriculares"
-                placeholder="Exemplo: Udemy, gastronomia 40 horas"
-              />
-              <MiddleTextField
-                type="text"
-                name="superiorCourses"
-                label="Cursos superiores"
-                placeholder="Exemplo: UFRJ, Ciência da computação"
-              />
-              <FormControl required>
-                <FormLabel id="deficiencyLabel">Possui deficiência?</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="deficiencyLabel"
-                  name="deficiency"
-                  id="deficiencyLabel"
-                >
-                  <FormControlLabel
-                    value={true}
-                    control={<Radio />}
-                    label="Sim"
-                  />
-                  <FormControlLabel
-                    value={false}
-                    control={<Radio />}
-                    label="Não"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Paper>
-            <br />
+            </TextFieldWrapper>
+          </StyledPaper>
+          <StyledPaper>
+            <FormTitleSection title="Tipo de proponente" />
 
-            <Paper sx={{ padding: "10px" }}>
-              <FormTitleSection title="Endereço" />
-              <MiddleTextField
-                type="text"
-                name="address"
-                required
-                label="Endereço"
-                autoComplete="address-line1"
-                placeholder="Nome da rua, Cidade, Estado"
-                sx={{
-                  marginRight: "5px",
-                }}
+            <SelectFormControl required>
+              <InputLabel id="type">Tipo</InputLabel>
+              <Select
+                labelId="type"
+                value={proponent}
+                label="Tipo"
+                onChange={handleChange}
+              >
+                <MenuItem value={"PF"}>Pessoa física</MenuItem>
+                <MenuItem value={"PJ"}>Pessoa jurídica</MenuItem>
+                <MenuItem value={"PJSFL"}>
+                  Pessoa jurídica sem fins lucrativos
+                </MenuItem>
+                <MenuItem value={"MEI"}>MEI</MenuItem>
+              </Select>
+            </SelectFormControl>
+          </StyledPaper>
+          {proponentModule[proponent]}
+
+          <StyledPaper>
+            <FormTitleSection title="Contato" />
+            <TextFieldWrapper>
+              <StyledTextField
+                type="email"
+                name="email"
+                defaultValue={email}
+                label="E-mail"
+                fullWidth
               />
-              <QuarterTextField
-                type="number"
-                name="houseNumber"
-                label="Número"
-                required
-                placeholder="Número da casa ou apartamento"
+              <MaskedInput
+                mask={phoneMask}
+                render={(ref, props) => (
+                  <StyledTextField
+                    {...props}
+                    inputRef={ref}
+                    name="phone"
+                    {...inputProps}
+                    label="Telefone"
+                    autoComplete="postal-code"
+                  />
+                )}
               />
-              <QuarterTextField
-                type="text"
-                name="complement"
-                label="Complemento"
-                autoComplete="address-line2"
-              />
+            </TextFieldWrapper>
+          </StyledPaper>
+
+          <StyledPaper>
+            <FormTitleSection title="Endereço" />
+            <TextFieldWrapper>
               <MaskedInput
                 mask={cepMask}
                 render={(ref, props) => (
-                  <MiddleTextField
+                  <StyledTextField
                     {...props}
                     inputRef={ref}
-                    type="text"
                     name="cep"
-                    required
+                    {...inputProps}
                     label="CEP"
                     autoComplete="postal-code"
                   />
                 )}
               />
-            </Paper>
-            <br />
-            <Box
-              sx={{
-                margin: "10px 5px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "baseline",
-              }}
-            >
-              <Button
-                component="label"
-                role={undefined}
-                sx={{
-                  marginRight: "10px",
-                }}
-                variant="contained"
-                tabIndex={-1}
-                startIcon={<CloudUploadIcon />}
-              >
-                Enviar Arquivo
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={handleChange}
-                  accept="pdf image/* !mp4 !bat !txt"
-                />
-              </Button>
-              <Typography component="p" variant="caption">
-                Envie o comprovante de residência
-              </Typography>
-              {fileName.map((file) => {
-                return <Typography key={file}>{file}</Typography>;
-              })}
-            </Box>
-          </Box>
+              <StyledTextField
+                name="publicPlace"
+                label="Logradouro"
+                fullWidth
+              />
+            </TextFieldWrapper>
+            <TextFieldWrapper>
+              <StyledTextField name="houseNumber" label="Numero" fullWidth />
+              <StyledTextField
+                name="complement"
+                label="Complemento"
+                fullWidth
+              />
+            </TextFieldWrapper>
+            <TextFieldWrapper>
+              <StyledTextField name="neighboorhod" label="Bairro" fullWidth />
+              <StyledTextField name="county" label="Município" fullWidth />
+            </TextFieldWrapper>
+
+            <StyledTextField name="uf" label="UF" fullWidth />
+          </StyledPaper>
+          <StyledPaper>
+            <FormTitleSection title="Área de interesse" />
+            <Typography variant="body1">Programas</Typography>
+            <Typography variant="caption" display="block">
+              É importante marcar uma ou mais áreas que deseja receber
+              informações ou se inscrever em editais.
+            </Typography>
+            <FormControlLabel control={<Checkbox />} label="Cultura" />
+          </StyledPaper>
+        </PapersContainer>
+        <ButtonsContainer>
           <Box
             sx={{
+              width: "300px",
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "end",
-              width: "91.5%",
+              alignItems: "center",
+              justifyContent: "space-around",
             }}
           >
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={loading}
-              sx={{
-                marginRight: "10px",
+            <Button
+              onClick={async () => {
+                await deleteCookie("token");
+                appLocalStore.removeData("session");
+                router.push("/home");
               }}
             >
+              Fechar
+            </Button>
+            <Button variant="outlined">?</Button>
+
+            <LoadingButton type="submit" variant="contained" loading={loading}>
               Salvar
             </LoadingButton>
-            <FormControlLabel
-              name="public"
-              control={<Checkbox />}
-              label="Autorizar publicação de dados ao público"
-            />
           </Box>
-          <Link href="/home/about">Política de privacidade</Link>
-        </Box>
-      </Paper>
+          <FormControlLabel
+            name="public"
+            control={<Checkbox />}
+            label="Autorizar publicação de dados ao público"
+          />
+        </ButtonsContainer>
+        <Link href="/home/about">Política de privacidade</Link>
+      </Box>
     </LocalizationProvider>
   );
 }
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
-const StyledTextField = styled(TextField)`
-  margin: 5px;
-  width: 45%;
-
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const MiddleTextField = styled(TextField)`
-  margin: 5px 2.5px 2.5px 7.5px;
-  width: 44.7%;
-
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const QuarterTextField = styled(TextField)`
-  margin: 5px 3.5px;
-  width: 22.25%;
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const StyledFormControlForSelect = styled(FormControl)`
-  margin: 5px;
-  width: 45%;
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
-
-const ResponsiveDatePicker = styled(DatePicker)`
-  margin: 5px;
-  width: 45%;
-  @media (max-width: ${mobalBreakpoint}) {
-    width: 100%;
-  }
-`;
