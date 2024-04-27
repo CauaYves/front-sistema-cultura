@@ -49,7 +49,6 @@ export default function SignIn() {
       .then((response: AxiosResponse) => {
         setSeverity("success");
         createCookie("token", response.data.token);
-        console.log(response.data);
         appLocalStore.SetData("session", response.data);
 
         setRequestMessage("Login efetuado com sucesso!");

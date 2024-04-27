@@ -1,3 +1,3 @@
-const mobalBreakpoint = "768px";
+const mobalBreakpoint = "968px";
 
 export { mobalBreakpoint };

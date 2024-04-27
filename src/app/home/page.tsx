@@ -66,7 +66,7 @@ export default function Dashboard() {
 
   const organismObjects: OrganismObjects = {
     homePage: <HomePage />,
-    identification: <Indentification />,
+    identification: <Indentification router={router} />,
     location: <Localization />,
     contacts: <Contacts />,
     professionalData: <p>professionalData</p>,
@@ -97,7 +97,7 @@ export default function Dashboard() {
     });
   };
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", background: "#eeeeee", minHeight: "100vh" }}>
       <CssBaseline />
       <Snackbar
         onClose={handleClose}
@@ -170,11 +170,10 @@ export default function Dashboard() {
           flexGrow: 1,
           overflow: "auto",
           margin: "100px auto auto auto",
+          padding: "10px",
         }}
       >
-        <Paper sx={{ padding: "10px" }}>
-          {organismObjects[selectedModule]}
-        </Paper>
+        {organismObjects[selectedModule]}
       </Box>
     </Box>
   );
