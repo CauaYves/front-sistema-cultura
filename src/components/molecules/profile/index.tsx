@@ -1,19 +1,43 @@
-import { useUserData } from "@/context/user-context";
-import { Avatar, Box, Divider } from "@mui/material";
+import { useEffect, useState } from "react";
+import { appLocalStore } from "@/hooks";
+import { Avatar } from "@mui/material";
 import { cyan } from "@mui/material/colors";
-import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
+interface ProfileBarProps {
+  router: AppRouterInstance;
+}
 
-export default function ProfileBar() {
-  const { userData } = useUserData();
+export default function ProfileBar({ router }: Readonly<ProfileBarProps>) {
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    const sessionData = appLocalStore.getData("session");
+    setSession(sessionData);
+  }, []);
+
+  const handleGoToProfilePage = () => {
+    router.push("/profile");
+  };
+
+  if (!session) {
+    return null;
+  }
+
+  const { name } = session.session.user;
 
   return (
-    <Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Avatar sx={{ bgcolor: cyan[500] }}>{userData.name[0]}</Avatar>
-        <Divider sx={{ margin: "0px 5px" }} />
-        <Typography variant="body1">{userData.name}</Typography>
-      </Box>
-    </Box>
+    <List component="nav">
+      <ListItemButton onClick={handleGoToProfilePage}>
+        <ListItemIcon>
+          <Avatar sx={{ bgcolor: cyan[500] }}>{name[0]}</Avatar>
+        </ListItemIcon>
+        <ListItemText primary={name} />
+      </ListItemButton>
+    </List>
   );
 }

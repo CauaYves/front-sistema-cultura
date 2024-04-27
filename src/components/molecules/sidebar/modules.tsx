@@ -161,7 +161,7 @@ export default function SidebarModules({
             selectedModule={selectedModule}
             setSelectedModule={setSelectedModule}
             tag="Editais Encerrados"
-            name="myProjects"
+            name="noticesClosed"
           >
             <EventBusyIcon sx={Icolors} />
           </SubModule>

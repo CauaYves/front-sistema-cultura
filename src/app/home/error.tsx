@@ -9,9 +9,7 @@ export default function ErrorHandler({
   error: Error & { digest?: string };
   reset: () => void;
 }>) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
+  useEffect(() => {}, [error]);
 
   return (
     <div>
