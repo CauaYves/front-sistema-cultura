@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControlLabel,
   InputLabel,
@@ -10,11 +9,16 @@ import {
   Typography,
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
-import { LoadingButton } from "@mui/lab";
-import { FormEvent, useEffect, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import enrollmentService from "@/app/api/enrollment";
-import { appLocalStore, deleteCookie, getCookie } from "@/hooks";
+import { appLocalStore, getCookie } from "@/hooks";
 import { AxiosResponse } from "axios";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import { cepMask, FormTitleSection, phoneMask } from "@/components/atoms";
@@ -37,15 +41,25 @@ import FisicPersonData from "./components/fisicPersonData";
 import MaskedInput from "react-text-mask";
 import { inputProps } from "@/types";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import {
+  BackButton,
+  HelpButton,
+  SaveButton,
+} from "@/components/atoms/form-components/buttons";
+import { ModulesKey } from "@/app/home/page";
+import ContactFormPF from "./components/contactFormPF";
+import ContactFormPJ from "./components/contactFormPJ";
 
 type IdentificationModulesKey = "PF" | "PJ" | "MEI" | "PJSFL";
 
 interface IdentificationProps {
   router: AppRouterInstance;
+  setSelectedModule: Dispatch<SetStateAction<ModulesKey>>;
 }
 
 export default function Indentification({
   router,
+  setSelectedModule,
 }: Readonly<IdentificationProps>) {
   const [fileName, setFileName] = useState<string[]>([]);
   const [file, setFile] = useState({});
@@ -90,6 +104,13 @@ export default function Indentification({
     PJ: <CompanyData />,
     PJSFL: <CompanyData />,
     MEI: <CompanyData />,
+  };
+
+  const contactModule = {
+    PF: <ContactFormPF />,
+    PJ: <ContactFormPJ />,
+    PJSFL: <ContactFormPJ />,
+    MEI: <ContactFormPJ />,
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -182,33 +203,7 @@ export default function Indentification({
             </SelectFormControl>
           </StyledPaper>
           {proponentModule[proponent]}
-
-          <StyledPaper>
-            <FormTitleSection title="Contato" />
-            <TextFieldWrapper>
-              <StyledTextField
-                type="email"
-                name="email"
-                defaultValue={email}
-                label="E-mail"
-                fullWidth
-              />
-              <MaskedInput
-                mask={phoneMask}
-                render={(ref, props) => (
-                  <StyledTextField
-                    {...props}
-                    inputRef={ref}
-                    name="phone"
-                    {...inputProps}
-                    label="Telefone"
-                    autoComplete="postal-code"
-                  />
-                )}
-              />
-            </TextFieldWrapper>
-          </StyledPaper>
-
+          {contactModule[proponent]}
           <StyledPaper>
             <FormTitleSection title="Endereço" />
             <TextFieldWrapper>
@@ -265,20 +260,14 @@ export default function Indentification({
               justifyContent: "space-around",
             }}
           >
-            <Button
-              onClick={async () => {
-                await deleteCookie("token");
-                appLocalStore.removeData("session");
-                router.push("/home");
-              }}
-            >
+            <BackButton onClick={async () => setSelectedModule("homePage")}>
               Fechar
-            </Button>
-            <Button variant="outlined">?</Button>
+            </BackButton>
+            <HelpButton variant="outlined">?</HelpButton>
 
-            <LoadingButton type="submit" variant="contained" loading={loading}>
+            <SaveButton type="submit" variant="contained" loading={loading}>
               Salvar
-            </LoadingButton>
+            </SaveButton>
           </Box>
           <FormControlLabel
             name="public"
