@@ -26,7 +26,6 @@ import { appLocalStore, createCookie } from "@/hooks";
 import authService from "./api/auth";
 import { inputProps } from "@/types";
 import { CulturalizeApiError } from "@/protocols";
-import { useUserData } from "@/context/user-context";
 
 export default function SignIn() {
   const router = useRouter();

@@ -16,7 +16,7 @@ import SubModules from "../../components/molecules/sidebar/sub-modules";
 import Localization from "@/components/organisms/Localization";
 import Contacts from "@/components/organisms/Contacts";
 import { useSnackbar } from "@/context/snackbar-context";
-import { Alert, Paper, Snackbar } from "@mui/material";
+import { Alert, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,9 +24,6 @@ import Notices from "@/components/organisms/Notices";
 import LegalActs from "@/components/organisms/LegalActs";
 import HomePage from "@/components/organisms/Home";
 import ProfileBar from "@/components/molecules/profile";
-import { getCookie } from "@/hooks";
-import { useUserData } from "@/context/user-context";
-import authService from "../api/auth";
 
 const drawerWidth: number = 285;
 
@@ -66,7 +63,9 @@ export default function Dashboard() {
 
   const organismObjects: OrganismObjects = {
     homePage: <HomePage />,
-    identification: <Indentification router={router} />,
+    identification: (
+      <Indentification router={router} setSelectedModule={setSelectedModule} />
+    ),
     location: <Localization />,
     contacts: <Contacts />,
     professionalData: <p>professionalData</p>,

@@ -1,5 +1,4 @@
 import { FormTitleSection } from "@/components/atoms";
-import { Box, TextField } from "@mui/material";
 import { StyledPaper, TextFieldWrapper, StyledTextField } from "../styles";
 
 export default function CompanyData() {
@@ -21,6 +20,8 @@ export default function CompanyData() {
           fullWidth
           margin="dense"
         />
+      </TextFieldWrapper>
+      <TextFieldWrapper>
         <StyledTextField
           label="Nome fantasia"
           required
