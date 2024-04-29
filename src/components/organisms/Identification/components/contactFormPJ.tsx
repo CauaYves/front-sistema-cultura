@@ -5,21 +5,6 @@ import MaskedInput from "react-text-mask";
 import { useState } from "react";
 
 export default function ContactFormPJ() {
-  const [phoneInputError, setPhoneInputError] = useState<boolean | null>(null);
-  const [tel, setTel] = useState("");
-  const updateTelValue = (value: string) => {
-    setTel(value);
-  };
-  const checkIfNumberIsCorrect = (value: string) => {
-    if (value.length < 18) {
-      setPhoneInputError(true);
-      updateTelValue(value);
-    } else if (value.length === 18) {
-      return;
-    } else {
-      setPhoneInputError(false);
-    }
-  };
   return (
     <StyledPaper>
       <FormTitleSection title="Contato" />
@@ -57,6 +42,7 @@ export default function ContactFormPJ() {
               sx={{ width: "50%" }}
               inputRef={ref}
               name="phone"
+              required
               label="Celular"
               autoComplete="tel"
             />

@@ -7,8 +7,18 @@ export default function FisicPersonData() {
     <StyledPaper>
       <FormTitleSection title="Pessoa física" />
       <TextFieldWrapper>
-        <StyledTextField label="Nome" name="name" sx={{ width: "65%" }} />
-        <StyledTextField label="CPF" name="cpf" sx={{ width: "35%" }} />
+        <StyledTextField
+          label="Nome"
+          name="name"
+          sx={{ width: "65%" }}
+          required
+        />
+        <StyledTextField
+          label="CPF"
+          name="cpf"
+          sx={{ width: "35%" }}
+          required
+        />
       </TextFieldWrapper>
     </StyledPaper>
   );
