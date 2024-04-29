@@ -25,6 +25,7 @@ export default function ContactFormPF() {
               inputRef={ref}
               name="phone"
               label="Celular"
+              required
               autoComplete="tel"
             />
           )}
