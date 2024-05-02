@@ -7,3 +7,11 @@ export interface CulturalizeApiError {
     };
   };
 }
+
+export interface ApiResponse<T> {
+  config: {};
+  data: T;
+  headers: {};
+  status: number;
+  statusText: string;
+}

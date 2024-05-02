@@ -26,7 +26,6 @@ export default function FileInput({ file, setFile }: any) {
 
   const renderFile = (file: WebFile[]) => {
     if (file) {
-      console.log(file[0].name);
       setInputFile(file[0].name);
     }
   };

@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useState, useContext } from "react";
 
-type SnackbarState = {
+export type SnackbarState = {
   message: string;
   severity: "success" | "error" | "info" | "warning";
   open: boolean;

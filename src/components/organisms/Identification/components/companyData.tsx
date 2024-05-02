@@ -1,7 +1,6 @@
-import { FormTitleSection } from "@/components/atoms";
+import { FormTitleSection, cnpjMask } from "@/components/atoms";
 import { StyledPaper, TextFieldWrapper, StyledTextField } from "../styles";
 import MaskedInput from "react-text-mask";
-import { cnpjMask } from "@/components/atoms/masks/cnpj";
 
 export default function CompanyData() {
   return (

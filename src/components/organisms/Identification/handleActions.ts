@@ -1,20 +1,23 @@
 import { WebFile } from "@/components/molecules/fileUpload";
 import { getCookie } from "@/hooks";
-import { CulturalizeApiError } from "@/protocols";
+import { ApiResponse, CulturalizeApiError } from "@/protocols";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import { FormEvent } from "react";
 import { IdentificationModulesKey } from ".";
+import enrollmentService from "@/app/api/enrollment";
+import { SnackbarState } from "@/context/snackbar-context";
+import uploadService, { uploadResponseData } from "@/app/api/upload";
 
 export const handleSubmit = async (
   event: FormEvent<HTMLFormElement>,
-  file: WebFile | undefined,
+  file: WebFile[] | undefined,
   proponent: IdentificationModulesKey,
-  setSnackbar: React.Dispatch<React.SetStateAction<any>>,
+  setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   event.preventDefault();
   handleStartLoading(setLoading)();
-  const archive: any = file;
+
   if (!file) {
     return setSnackbar({
       message: "Anexe o comprovante de residência",
@@ -22,23 +25,63 @@ export const handleSubmit = async (
       severity: "warning",
     });
   }
+
+  const formData = createFormData(event, file, proponent);
+  const token = await getCookie("token");
+
+  const createEnrollment =
+    proponent !== "PF"
+      ? enrollmentService.createPj
+      : enrollmentService.createPf;
+
+  try {
+    const res = await createEnrollment(formData, token);
+    uploadFileAndShowSnackbar(
+      file,
+      res.data.signedUrl,
+      setSnackbar,
+      setLoading
+    );
+  } catch (error) {
+    handleError(setSnackbar, error);
+  } finally {
+    handleStopLoading(setLoading)();
+  }
+};
+
+const createFormData = (
+  event: FormEvent<HTMLFormElement>,
+  file: WebFile[],
+  proponent: IdentificationModulesKey
+) => {
   const data = new FormData(event.currentTarget);
   const formData: any = {};
   for (const [key, value] of data.entries()) {
     formData[key] = value as string;
   }
+  delete formData.cultura;
   formData.proponent = proponent;
   formData.public = formData.public === "on";
-  formData.cultura = formData.cultura === "on";
+  formData.programs = [formData.cultura ? "cultura" : ""];
   formData.upload = {
-    name: file?.name,
-    contentType: archive[0].type,
+    name: file[0].name,
+    contentType: file[0].type,
   };
-  console.log(formData);
-  if (formData.proponent !== "PF") {
-    console.log("deu nulo");
-  }
-//   const token = await getCookie("token");
+  return formData;
+};
+
+const uploadFileAndShowSnackbar = async (
+  file: WebFile[],
+  signedUrl: string,
+  setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  uploadService.upload(file, signedUrl, file[0].type);
+  setSnackbar({
+    message: "cadastro criado com sucesso!",
+    open: true,
+    severity: "success",
+  });
 };
 
 export const handleStartLoading =
@@ -51,18 +94,19 @@ export const handleStopLoading =
     setLoading(false);
   };
 
-export const handleError =
-  (setSnackbar: React.Dispatch<React.SetStateAction<any>>) =>
-  (error: CulturalizeApiError) => {
-    let message = "";
-    if (error.response.status === 400) {
-      message = filterErrors(error);
-    } else {
-      message = error.response.data.message;
-    }
-    return setSnackbar({
-      open: true,
-      severity: "error",
-      message: message,
-    });
-  };
+export const handleError = (
+  setSnackbar: React.Dispatch<React.SetStateAction<any>>,
+  error: any
+) => {
+  let message = "";
+  if (error.response.status === 400) {
+    message = filterErrors(error);
+  } else {
+    message = error.response.data;
+  }
+  return setSnackbar({
+    open: true,
+    severity: "warning",
+    message: message,
+  });
+};

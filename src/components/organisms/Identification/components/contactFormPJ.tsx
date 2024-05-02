@@ -1,8 +1,11 @@
-import { FormTitleSection } from "@/components/atoms";
+import {
+  FormTitleSection,
+  fixedTel,
+  phoneDdiMask,
+  phoneMask,
+} from "@/components/atoms";
 import { StyledPaper, TextFieldWrapper, StyledTextField } from "../styles";
-import { phoneDdiMask } from "@/components/atoms/masks/ddiPhone";
 import MaskedInput from "react-text-mask";
-import { useState } from "react";
 
 export default function ContactFormPJ() {
   return (
@@ -50,19 +53,35 @@ export default function ContactFormPJ() {
         />
       </TextFieldWrapper>
       <TextFieldWrapper>
-        <StyledTextField
-          label="Telefone fixo"
-          required
-          name="tel"
-          fullWidth
-          margin="dense"
+        <MaskedInput
+          mask={fixedTel}
+          render={(ref, props) => (
+            <StyledTextField
+              inputRef={ref}
+              {...props}
+              label="Telefone fixo"
+              required
+              name="tel"
+              fullWidth
+              margin="dense"
+            />
+          )}
         />
-        <StyledTextField
-          label="Telefone alternativo"
-          required
-          name="alternativeTel"
-          fullWidth
-          margin="dense"
+
+        <MaskedInput
+          mask={phoneMask}
+          render={(ref, props) => (
+            <StyledTextField
+              inputRef={ref}
+              {...props}
+              label="Telefone alternativo"
+              required
+              name="alternativeTel"
+              fullWidth
+              margin="dense"
+              autoComplete="tel"
+            />
+          )}
         />
       </TextFieldWrapper>
     </StyledPaper>

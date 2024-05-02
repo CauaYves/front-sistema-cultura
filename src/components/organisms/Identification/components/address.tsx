@@ -29,7 +29,7 @@ export default function AddressForm() {
       </TextFieldWrapper>
       <TextFieldWrapper>
         <StyledTextField
-          name="neighboorhod"
+          name="neighboorhood"
           label="Bairro"
           fullWidth
           required

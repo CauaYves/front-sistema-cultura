@@ -39,7 +39,7 @@ export default function Indentification({
   router,
   setSelectedModule,
 }: Readonly<IdentificationProps>) {
-  const [file, setFile] = useState<WebFile>();
+  const [file, setFile] = useState<WebFile[]>();
   const [loading, setLoading] = useState(false);
   const { setSnackbar } = useSnackbar();
   const [session, setSession] = useState<any>(null);
@@ -49,15 +49,7 @@ export default function Indentification({
     await handleSubmit(event, file, proponent, setSnackbar, setLoading);
   };
 
-  useEffect(() => {
-    const sessionData = appLocalStore.getData("session");
-    setSession(sessionData);
-    if (session) {
-      const { email } = session.session.user;
-      setEmail(email);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const sessionData = appLocalStore.getData("session");
   const handleChange = (event: SelectChangeEvent) => {
     setProponent(event.target.value as IdentificationModulesKey);
   };
@@ -90,7 +82,7 @@ export default function Indentification({
           </Typography>
         </Box>
         <PapersContainer>
-          <IdentificationForm email={email} />
+          <IdentificationForm email={sessionData.session.user.email} />
           <ProponentForm handleChange={handleChange} proponent={proponent} />
           {proponentModule[proponent]}
           {contactModule[proponent]}
