@@ -27,6 +27,7 @@ export const handleSubmit = async (
   }
 
   const formData = createFormData(event, file, proponent);
+  console.log(formData);
   const token = await getCookie("token");
 
   const createEnrollment =
@@ -62,7 +63,8 @@ const createFormData = (
   delete formData.cultura;
   formData.proponent = proponent;
   formData.public = formData.public === "on";
-  formData.programs = [formData.cultura ? "cultura" : ""];
+  console.log(formData.cultura);
+  formData.programs = [formData.cultura === "on " ? "cultura" : ""];
   formData.upload = {
     name: file[0].name,
     contentType: file[0].type,

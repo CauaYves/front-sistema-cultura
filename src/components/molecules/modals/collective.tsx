@@ -1,6 +1,6 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useSnackbar } from "@/context/snackbar-context";
-import { getCookie, getUserData } from "@/hooks";
+import { appLocalStore, getCookie, getUserData } from "@/hooks";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -29,21 +29,10 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
   const { setSnackbar } = useSnackbar();
   const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [userData, setUserData] = useState<UserData>({
-    id: "",
-    cpf: "",
-    email: "",
-    emailConfirmed: "",
-    name: "",
-    token: "",
-  });
-  useEffect(() => {
-    async function fetchData() {
-      const userDataCookie = await getUserData();
-      setUserData(userDataCookie);
-    }
-    fetchData();
-  }, []);
+
+  const sessionData = appLocalStore.getData("session");
+  const { id, name } = sessionData.session.user;
+
   const handleStartLoading = () => setLoading(true);
   const handleStopLoading = () => setLoading(false);
   const handleError = (error: CulturalizeApiError) => {
@@ -73,8 +62,8 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
       cep: data.get("cep") as unknown as string,
       complement: data.get("complement") as unknown as string,
       county: data.get("county") as unknown as string,
-      responsible: userData.name,
-      userId: userData.id as unknown as number,
+      responsible: name,
+      userId: id,
     };
 
     return body;

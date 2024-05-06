@@ -1,4 +1,4 @@
-import { Button, Dialog, styled } from "@mui/material";
+import { Button, Dialog, Paper, styled } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
@@ -72,7 +72,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
     selectedRow,
   });
   return (
-    <div>
+    <Paper sx={{ padding: "10px" }}>
       <Button
         onClick={() => setCreationModalOpen(true)}
         variant="outlined"
@@ -101,7 +101,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
       <Dialog open={modalEditionOpen} onClose={handleCloseEditModal}>
         <EditCollectiveModal close={setModalEditionOpen} row={selectedRow} />
       </Dialog>
-    </div>
+    </Paper>
   );
 }
 

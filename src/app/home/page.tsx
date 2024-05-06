@@ -57,7 +57,7 @@ export type ModulesKey =
 
 export default function Dashboard() {
   const router = useRouter();
-  const [selectedModule, setSelectedModule] = useState<ModulesKey>("homePage");
+  const [selectedModule, setSelectedModule] = useState<ModulesKey>("notices");
   const [openDrawer, setOpenDrawer] = useState(true);
   const { message, open, severity, setSnackbar } = useSnackbar();
 

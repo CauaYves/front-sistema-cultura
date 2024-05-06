@@ -42,9 +42,7 @@ export default function Indentification({
   const [file, setFile] = useState<WebFile[]>();
   const [loading, setLoading] = useState(false);
   const { setSnackbar } = useSnackbar();
-  const [session, setSession] = useState<any>(null);
   const [proponent, setProponent] = useState<IdentificationModulesKey>("PF");
-  const [email, setEmail] = useState("");
   const handleSubmitWrapper = async (event: FormEvent<HTMLFormElement>) => {
     await handleSubmit(event, file, proponent, setSnackbar, setLoading);
   };

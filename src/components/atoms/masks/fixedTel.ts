@@ -1,2 +1,17 @@
-const fixedTel = [/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
+const fixedTel = [
+  "(",
+  /\d/,
+  /\d/,
+  ")",
+  " ",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  "-",
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+];
 export { fixedTel };

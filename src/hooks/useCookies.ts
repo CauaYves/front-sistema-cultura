@@ -16,7 +16,8 @@ export async function getCookie(name: string) {
 }
 
 export async function getUserData() {
-  const jsonUserData = cookies().get("userData")!;
+  const jsonUserData = cookies().get("session")!;
+  if (!jsonUserData) return;
   const userData = JSON.parse(jsonUserData?.value);
   return userData.user;
 }
