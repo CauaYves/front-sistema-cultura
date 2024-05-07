@@ -1,9 +1,10 @@
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      var latitude = position.coords.latitude;
-      var longitude = position.coords.longitude;
-
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      console.log("lat: ", latitude);
+      console.log("long: ", longitude);
       const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
       fetch(
@@ -12,12 +13,12 @@ function getLocation() {
         .then((response) => response.json())
         .then((data) => {
           if (data.status === "OK" && data.results.length > 0) {
-            // Procura pelo componente "locality" no resultado da geocodificação
             const location = data.plus_code.compound_code;
             const locationComma = location.indexOf(",");
             const county = location.slice(8, locationComma);
             alert(county);
           } else {
+            console.log(data);
             console.error(
               "Não foi possível encontrar o endereço para as coordenadas fornecidas."
             );
