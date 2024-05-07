@@ -27,6 +27,7 @@ import ProponentForm from "./components/proponentType";
 import AddressForm from "./components/address";
 import InterestAreaForm from "./components/interestArea";
 import ButtonsContainerComp from "./components/buttonsContainer";
+import { getLocation } from "@/lib";
 
 export type IdentificationModulesKey = "PF" | "PJ" | "MEI" | "PJSFL";
 
@@ -47,6 +48,9 @@ export default function Indentification({
     await handleSubmit(event, file, proponent, setSnackbar, setLoading);
   };
 
+  useEffect(() => {
+    getLocation();
+  });
   const sessionData = appLocalStore.getData("session");
   const handleChange = (event: SelectChangeEvent) => {
     setProponent(event.target.value as IdentificationModulesKey);

@@ -2,8 +2,11 @@ import { FormTitleSection, cpfMask } from "@/components/atoms";
 import { StyledPaper, TextFieldWrapper, StyledTextField } from "../styles";
 import { inputProps } from "@/types";
 import MaskedInput from "react-text-mask";
+import { appLocalStore } from "@/hooks";
 
 export default function FisicPersonData() {
+  const sessionData = appLocalStore.getData("session");
+
   return (
     <StyledPaper>
       <FormTitleSection title="Pessoa física" />
@@ -12,7 +15,8 @@ export default function FisicPersonData() {
           label="Nome"
           name="name"
           sx={{ width: "65%" }}
-          required
+          value={sessionData.session.user.name}
+          disabled
         />
         <MaskedInput
           mask={cpfMask}
@@ -20,8 +24,9 @@ export default function FisicPersonData() {
             <StyledTextField
               {...props}
               sx={{ width: "35%" }}
-              required
               inputRef={ref}
+              value={sessionData.session.user.cpf}
+              disabled
               name="cpf"
               label="CPF"
             />
