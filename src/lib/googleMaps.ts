@@ -3,8 +3,6 @@ function getLocation() {
     navigator.geolocation.getCurrentPosition(function (position) {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
-      console.log("lat: ", latitude);
-      console.log("long: ", longitude);
       const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
       fetch(
@@ -16,7 +14,7 @@ function getLocation() {
             const location = data.plus_code.compound_code;
             const locationComma = location.indexOf(",");
             const county = location.slice(8, locationComma);
-            alert(county);
+            alert(location);
           } else {
             console.log(data);
             console.error(
