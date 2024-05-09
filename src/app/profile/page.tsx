@@ -76,7 +76,7 @@ export default function Profile() {
           </Typography>
         </PessoalInformationBox>
         <EditableUserInformations onSubmit={handleSubmit}>
-          <Typography variant="h6">Alterar informações de usuário</Typography>
+          <Typography variant="h6">Alterar informações de Usuário</Typography>
           <EditingFormProfileContainer>
             <TextFieldWrapper>
               <TextField
