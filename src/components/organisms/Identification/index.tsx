@@ -17,7 +17,6 @@ import { PapersContainer, StyledPaper } from "./styles";
 import CompanyData from "./components/companyData";
 import FisicPersonData from "./components/fisicPersonData";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { ModulesKey } from "@/app/home/page";
 import ContactFormPF from "./components/contactFormPF";
 import ContactFormPJ from "./components/contactFormPJ";
 import FileInput, { WebFile } from "@/components/molecules/fileUpload";
@@ -27,7 +26,7 @@ import ProponentForm from "./components/proponentType";
 import AddressForm from "./components/address";
 import InterestAreaForm from "./components/interestArea";
 import ButtonsContainerComp from "./components/buttonsContainer";
-import { getLocation } from "@/lib";
+import { ModulesKey } from "@/app/home/types";
 
 export type IdentificationModulesKey = "PF" | "PJ" | "MEI" | "PJSFL";
 
@@ -48,9 +47,6 @@ export default function Indentification({
     await handleSubmit(event, file, proponent, setSnackbar, setLoading);
   };
 
-  useEffect(() => {
-    getLocation();
-  });
   const sessionData = appLocalStore.getData("session");
   const handleChange = (event: SelectChangeEvent) => {
     setProponent(event.target.value as IdentificationModulesKey);

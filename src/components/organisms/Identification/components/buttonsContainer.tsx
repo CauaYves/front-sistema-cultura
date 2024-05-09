@@ -5,8 +5,8 @@ import {
 } from "@/components/atoms/form-components/buttons";
 import { Box, FormControlLabel, Checkbox } from "@mui/material";
 import { ButtonsContainer } from "../styles";
-import { ModulesKey } from "@/app/home/page";
 import { Dispatch, SetStateAction } from "react";
+import { ModulesKey } from "@/app/home/types";
 
 interface ButtonsContainerCompProps {
   setSelectedModule: Dispatch<SetStateAction<ModulesKey>>;

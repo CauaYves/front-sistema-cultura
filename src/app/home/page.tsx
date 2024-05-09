@@ -1,10 +1,7 @@
 "use client";
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -23,37 +20,9 @@ import { useState } from "react";
 import Notices from "@/components/organisms/Notices";
 import LegalActs from "@/components/organisms/LegalActs";
 import HomePage from "@/components/organisms/Home";
-import ProfileBar from "@/components/molecules/profile";
-
-const drawerWidth: number = 285;
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-interface OrganismObjects {
-  [key: string]: React.ReactNode;
-}
-
-export type ModulesKey =
-  | "homePage"
-  | "identification"
-  | "myProjects"
-  | "counterpart"
-  | "noticesClosed"
-  | "culturalColective"
-  | "notices"
-  | "billings"
-  | "alreadyIncentived"
-  | "searchProject"
-  | "queue"
-  | "support"
-  | "metometer"
-  | "about"
-  | "advice"
-  | "legislation"
-  | "cultUnitys"
-  | "cultCalendar";
+import ProfileBar from "@/components/organisms/profile";
+import { ModulesKey, OrganismObjects } from "./types";
+import { Drawer, AppBar } from "./styles";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -177,47 +146,3 @@ export default function Dashboard() {
     </Box>
   );
 }
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  "& .MuiDrawer-paper": {
-    position: "relative",
-    whiteSpace: "nowrap",
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    boxSizing: "border-box",
-    ...(!open && {
-      overflowX: "hidden",
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9),
-      },
-    }),
-  },
-}));

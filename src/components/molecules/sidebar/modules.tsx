@@ -23,10 +23,10 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import { SubModule } from "@/components/atoms";
-import { ModulesKey } from "@/app/home/page";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import FolderCopyIcon from "@mui/icons-material/FolderCopy";
 import EventBusyIcon from "@mui/icons-material/EventBusy";
+import { ModulesKey } from "@/app/home/types";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />

@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material/styles";
-import { ModulesKey } from "@/app/home/page";
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { ReactNode } from "react";
+import { ModulesKey } from "@/app/home/types";
 
 interface SubModuleProps {
   children: ReactNode;
