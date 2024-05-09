@@ -5,24 +5,28 @@ import Subscription from "./Info";
 import { Typography } from "@mui/material";
 import Proposal from "./proposal";
 import Enrollment from "./enrollment";
+import { useEffect, useState } from "react";
+import { getLocation } from "@/app/api";
+import noticesFunctions from "./functions";
 
 export default function Notices() {
   const { module } = useNotices();
+  const [city, setCity] = useState<string | null>(null);
 
-  const modules = {
-    list: <NoticesList />,
-    subscription: <Subscription />,
-    proposal: <Proposal />,
-    enrollment: <Enrollment />,
-  };
-  const moduleComponent = modules[module as keyof typeof modules];
+  useEffect(() => {
+    async function fetchData() {
+      if (!city) return noticesFunctions.fetchUserCity(setCity);
+    }
+    fetchData();
+  }, [city]);
+
+  console.log("cidade atual: ", city);
 
   return (
     <div>
       <Typography variant="body1" sx={{ mb: "10px" }}>
         Arraiá Cultural RJ 4
       </Typography>
-      {moduleComponent}
     </div>
   );
 }

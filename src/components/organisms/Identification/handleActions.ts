@@ -63,7 +63,6 @@ const createFormData = (
   delete formData.cultura;
   formData.proponent = proponent;
   formData.public = formData.public === "on";
-  console.log(formData.cultura);
   formData.programs = [formData.cultura === "on " ? "cultura" : ""];
   formData.upload = {
     name: file[0].name,
