@@ -26,8 +26,8 @@ function createPj(formData: CulturalUser, token: string) {
   return promise;
 }
 
-function get(token: string) {
-  const promise: any = instance.get(`/enrollment/identification`, {
+function getPF(token: string) {
+  const promise: any = instance.get(`/enrollment/identification-pf`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -35,10 +35,19 @@ function get(token: string) {
   return promise;
 }
 
+function getPJ(token: string) {
+  const promise: any = instance.get(`/enrollment/identification-pj`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return promise;
+}
 const enrollmentService = {
   createPf,
   createPj,
-  get,
+  getPF,
+  getPJ,
 };
 
 export default enrollmentService;

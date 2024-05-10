@@ -6,7 +6,7 @@ export type SnackbarState = {
   open: boolean;
 };
 
-type SetSnackbar = React.Dispatch<React.SetStateAction<SnackbarState>>;
+export type SetSnackbar = React.Dispatch<React.SetStateAction<SnackbarState>>;
 
 type SnackbarContextType = SnackbarState & {
   setSnackbar: SetSnackbar;
