@@ -1,7 +1,6 @@
-import { CulturalUser } from "@/types";
 import instance from "./api";
 
-function createPf(formData: CulturalUser, token: string) {
+function createPf(formData: any, token: string) {
   const promise: any = instance.post(
     `/enrollment/identification-pf`,
     formData,
@@ -13,7 +12,7 @@ function createPf(formData: CulturalUser, token: string) {
   );
   return promise;
 }
-function createPj(formData: CulturalUser, token: string) {
+function createPj(formData: any, token: string) {
   const promise: any = instance.post(
     `/enrollment/identification-pj`,
     formData,
@@ -26,8 +25,8 @@ function createPj(formData: CulturalUser, token: string) {
   return promise;
 }
 
-function get(token: string) {
-  const promise: any = instance.get(`/enrollment/identification`, {
+function getPF(token: string) {
+  const promise: any = instance.get(`/enrollment/identification-pf`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -35,10 +34,19 @@ function get(token: string) {
   return promise;
 }
 
+function getPJ(token: string) {
+  const promise: any = instance.get(`/enrollment/identification-pj`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return promise;
+}
 const enrollmentService = {
   createPf,
   createPj,
-  get,
+  getPF,
+  getPJ,
 };
 
 export default enrollmentService;

@@ -22,7 +22,7 @@ import { LoadingButton } from "@mui/lab";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { appLocalStore, createCookie } from "@/hooks";
+import { appLocalStore } from "@/hooks";
 import authService from "./api/auth";
 import { inputProps } from "@/types";
 import { CulturalizeApiError } from "@/protocols";
@@ -47,8 +47,7 @@ export default function SignIn() {
     promise
       .then((response: AxiosResponse) => {
         setSeverity("success");
-        createCookie("token", response.data.token);
-        appLocalStore.SetData("session", response.data);
+        appLocalStore.create("session", response.data);
 
         setRequestMessage("Login efetuado com sucesso!");
         setTimeout(() => router.push("/home"), 1500);

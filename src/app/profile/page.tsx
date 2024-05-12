@@ -1,35 +1,33 @@
 "use client";
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Drawer,
-  IconButton,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
 import { useRouter } from "next/navigation";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
-  PessoalInformationBox,
+  CulturalAgentsWrapper,
   ProfileContainer,
   ProfileMainContent,
-  EditableUserInformations,
-  TextFieldWrapper,
-  EditingFormProfileContainer,
-  LoadingButtonSx,
-  ButtonWrapper,
 } from "./styles";
-import { blue } from "@mui/material/colors";
 import { appLocalStore } from "@/hooks";
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import EditableUserInformations from "./editableInforUserForm";
+import PessoalInformation from "./PessoalInformation";
+import ProfileAppBar from "./appBar";
+import { useSnackbar } from "@/context/snackbar-context";
+import CulturalAgentPJ from "./culturalAgentPJ";
+import CulturalAgentPF from "./culturalAgentPF";
+import { UserData } from "@/types";
 
 export default function Profile() {
+  const [session, setSession] = useState<any>();
   const router = useRouter();
-  const { session } = appLocalStore.getData("session");
-  const { id, email, name, cpf } = session.user;
+  const { setSnackbar } = useSnackbar();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedSession = appLocalStore.get("session");
+      if (storedSession) {
+        setSession(storedSession.session);
+      }
+    }
+  }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,81 +39,36 @@ export default function Profile() {
     console.log(formData);
   };
 
+  if (!session) {
+    return <div>Loading...</div>; // or any other loading indicator
+  }
+
+  const { token, user } = session;
+  const { id, email, name, cpf } = user;
+
   return (
     <ProfileContainer>
-      <AppBar position="absolute" sx={{ maxHeight: "70px" }}>
-        <Toolbar
-          sx={{
-            pr: "24px",
-          }}
-        >
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => router.push("/home")}
-          >
-            <ArrowBackIcon />
-            <Typography component="h4" variant="body1" color="white">
-              Voltar
-            </Typography>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+      <ProfileAppBar router={router} />
       <ProfileMainContent>
-        <PessoalInformationBox>
-          <Avatar sx={{ bgcolor: blue[500], width: 74, height: 74 }}>
-            {name[0]}
-            {name[1]}
-          </Avatar>
-          <Typography variant="h5" sx={{ color: "white" }}>
-            {name}
-          </Typography>
-          <Typography variant="body1" sx={{ color: "white" }}>
-            {email}
-          </Typography>
-        </PessoalInformationBox>
-        <EditableUserInformations onSubmit={handleSubmit}>
-          <Typography variant="h6">Alterar informações de Usuário</Typography>
-          <EditingFormProfileContainer>
-            <TextFieldWrapper>
-              <TextField
-                name="name"
-                label="Nome"
-                required
-                fullWidth
-                defaultValue={name}
-              />
-            </TextFieldWrapper>
-            <TextFieldWrapper>
-              <TextField
-                name="cpf"
-                label="CPF"
-                required
-                fullWidth
-                defaultValue={cpf}
-              />
-            </TextFieldWrapper>
-            <TextFieldWrapper>
-              <TextField
-                name="email"
-                label="E-mail"
-                required
-                fullWidth
-                defaultValue={email}
-              />
-            </TextFieldWrapper>
-            <TextFieldWrapper>
-              <TextField name="password" label="Senha" required fullWidth />
-            </TextFieldWrapper>
-          </EditingFormProfileContainer>
-          <ButtonWrapper>
-            <LoadingButtonSx variant="contained" type="submit">
-              Salvar
-            </LoadingButtonSx>
-          </ButtonWrapper>
-        </EditableUserInformations>
-        <Box></Box>
+        <PessoalInformation name={name} email={email} />
+        <EditableUserInformations
+          name={name}
+          email={email}
+          cpf={cpf}
+          handleSubmit={handleSubmit}
+        />
+        <CulturalAgentsWrapper>
+          <CulturalAgentPF
+            token={token}
+            router={router}
+            setSnackbar={setSnackbar}
+          />
+          <CulturalAgentPJ
+            token={token}
+            router={router}
+            setSnackbar={setSnackbar}
+          />
+        </CulturalAgentsWrapper>
       </ProfileMainContent>
     </ProfileContainer>
   );

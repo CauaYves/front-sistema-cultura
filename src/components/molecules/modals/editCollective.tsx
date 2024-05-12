@@ -1,6 +1,5 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useSnackbar } from "@/context/snackbar-context";
-import { getCookie, getUserData } from "@/hooks";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -22,6 +21,7 @@ import { filterErrors } from "@/utils/filterErrorMessages";
 import MaskedInput from "react-text-mask";
 import { cepMask, phoneMask } from "@/components/atoms";
 import dayjs from "dayjs";
+import { appLocalStore } from "@/hooks";
 
 interface EditModalProps {
   close: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,12 +43,13 @@ export default function EditCollectiveModal({
     name: "",
     token: "",
   });
+  const token = userData.token;
   const formattedDate = dayjs(row.opening, "DD/MM/YYYY").format("YYYY/MM/DD");
 
   useEffect(() => {
     async function fetchData() {
-      const userDataCookie = await getUserData();
-      setUserData(userDataCookie);
+      const sessionData = appLocalStore.get("session");
+      setUserData(sessionData);
     }
     fetchData();
   }, []);
@@ -101,7 +102,6 @@ export default function EditCollectiveModal({
       });
     }
 
-    const token = await getCookie("token");
     const promise = collectiveService.update(body, token, row.id);
     promise
       .then((res) => {

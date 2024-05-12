@@ -1,9 +1,6 @@
 "use client";
 import * as React from "react";
 import {
-  TextField,
-  Link,
-  Grid,
   Box,
   Typography,
   Container,
@@ -13,12 +10,9 @@ import {
 } from "@mui/material";
 import { Copyright } from "@/components/atoms";
 import { useState } from "react";
-import { LoadingButton } from "@mui/lab";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { createCookie } from "@/hooks";
-import { inputProps } from "@/types";
 import { CulturalizeApiError } from "@/protocols";
 import authService from "../api/auth";
 import RecoverEmailBox from "./emailBox";

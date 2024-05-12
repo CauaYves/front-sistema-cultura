@@ -2,7 +2,6 @@ import { Button, Dialog, Paper, styled } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { deleteCookie, getCookie } from "@/hooks";
 import { useSnackbar } from "@/context/snackbar-context";
 import { useCollective } from "@/context/collective-context";
 import { Collective } from "@/types";
@@ -13,6 +12,7 @@ import CollectiveCollumns from "./collumns";
 import { handleDeleteCollective } from "./collectiveUtils";
 import EditCollectiveModal from "@/components/molecules/modals/editCollective";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { appLocalStore } from "@/hooks";
 
 interface TableCollectiveRow extends Collective {
   createdAt: string;
@@ -34,7 +34,8 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
 
   useEffect(() => {
     const fetchContact = async () => {
-      const token = await getCookie("token");
+      const session = appLocalStore.get("session");
+      const { token } = session.session;
       const promise = collectiveService.get(token);
       promise
         .then((res) => setCollective(res.data))
@@ -51,7 +52,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
         open: true,
         severity: "warning",
       });
-      await deleteCookie("token");
+      appLocalStore.remove("session");
       router.push("/");
     }
   };

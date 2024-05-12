@@ -22,13 +22,14 @@ export const PessoalInformationBox = styled(Box)({
   backgroundImage: "linear-gradient(45deg, #FFFFFF, #1976d2, #FFFFFF)",
 });
 
-export const EditableUserInformations = styled("form")(({ theme }) => ({
+export const EditableUserInformationsBox = styled("form")(({ theme }) => ({
   borderRadius: "5px",
   padding: "10px",
   border: "1px solid #00000025",
   display: "flex",
   flexDirection: "column",
   minHeight: "180px",
+  marginBottom: "10px",
 
   [theme.breakpoints.down("md")]: {},
 }));
@@ -62,4 +63,40 @@ export const LoadingButtonSx = styled(LoadingButton)({
 export const ButtonWrapper = styled(Box)({
   display: "flex",
   justifyContent: "center",
+});
+
+export const CulturalAgentInfosBox = styled(Box)(({ theme }) => ({
+  width: "100%",
+  borderRadius: "5px",
+  padding: "10px",
+  border: "1px solid #00000025",
+
+  display: "flex",
+  [theme.breakpoints.down("md")]: {
+    display: "block",
+  },
+
+  div: {
+    width: "50%",
+  },
+  "&:first-of-type": {
+    marginRight: "10px",
+  },
+  "div:first-of-type": {
+    BorderRight: "1px solid #00000025",
+  },
+}));
+
+export const BolderText = styled("span")({
+  fontWeight: 600,
+});
+
+export const CulturalAgentInfoData = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+});
+
+export const CulturalAgentsWrapper = styled(Box)({
+  display: "flex",
+  justifyContent: "space-around",
 });

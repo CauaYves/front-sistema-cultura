@@ -1,5 +1,5 @@
 import collectiveService from "@/app/api/collective";
-import { getCookie } from "@/hooks";
+import { appLocalStore } from "@/hooks";
 
 export const handleDeleteCollective = async (
   params: any,
@@ -9,7 +9,9 @@ export const handleDeleteCollective = async (
   setDelLoading: any
 ) => {
   const collectiveId = params.id as string;
-  const token = await getCookie("token");
+  const session = appLocalStore.get("session");
+  const { token } = session;
+
   setDelLoading(true);
   const promise = collectiveService.deleteOne(token, collectiveId);
   promise

@@ -1,12 +1,11 @@
 import { WebFile } from "@/components/molecules/fileUpload";
-import { getCookie } from "@/hooks";
-import { ApiResponse, CulturalizeApiError } from "@/protocols";
 import { filterErrors } from "@/utils/filterErrorMessages";
 import { FormEvent } from "react";
 import { IdentificationModulesKey } from ".";
 import enrollmentService from "@/app/api/enrollment";
 import { SnackbarState } from "@/context/snackbar-context";
 import uploadService, { uploadResponseData } from "@/app/api/upload";
+import { appLocalStore } from "@/hooks";
 
 export const handleSubmit = async (
   event: FormEvent<HTMLFormElement>,
@@ -27,8 +26,8 @@ export const handleSubmit = async (
   }
 
   const formData = createFormData(event, file, proponent);
-  console.log(formData);
-  const token = await getCookie("token");
+  const session = appLocalStore.get("session");
+  const { token } = session;
 
   const createEnrollment =
     proponent !== "PF"
