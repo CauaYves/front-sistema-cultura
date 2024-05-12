@@ -1,29 +1,36 @@
 "use client";
-function SetData(key: string, value: string) {
-  const data = { [key]: value };
 
-  const jsonData = JSON.stringify(data);
+function create(key: string, value: string) {
+  if (typeof window !== "undefined") {
+    const data = { [key]: value };
 
-  localStorage.setItem(key, jsonData);
-}
+    const jsonData = JSON.stringify(data);
 
-function getData(key: string) {
-  const storedData = localStorage.getItem(key);
-
-  if (storedData) {
-    return JSON.parse(storedData);
-  } else {
-    return null;
+    localStorage.setItem(key, jsonData);
   }
 }
-function removeData(key: string) {
-  localStorage.removeItem(key);
+
+function get(key: string) {
+  if (typeof window !== "undefined") {
+    const storedData = localStorage.getItem(key);
+
+    if (storedData) {
+      return JSON.parse(storedData);
+    } else {
+      return null;
+    }
+  }
+}
+function remove(key: string) {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem(key);
+  }
 }
 
 const appLocalStore = {
-  SetData,
-  getData,
-  removeData,
+  create,
+  get,
+  remove,
 };
 
 export { appLocalStore };

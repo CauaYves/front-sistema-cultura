@@ -11,7 +11,6 @@ import Indentification from "@/components/organisms/Identification";
 import SidebarModules from "@/components/molecules/sidebar/modules";
 import SubModules from "../../components/molecules/sidebar/sub-modules";
 import Localization from "@/components/organisms/Localization";
-import Contacts from "@/components/organisms/Contacts";
 import { useSnackbar } from "@/context/snackbar-context";
 import { Alert, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
@@ -36,7 +35,6 @@ export default function Dashboard() {
       <Indentification router={router} setSelectedModule={setSelectedModule} />
     ),
     location: <Localization />,
-    contacts: <Contacts />,
     professionalData: <p>professionalData</p>,
     culturalColective: <Collective router={router} />,
     imagesAndLinks: <p>imagesAndLinks</p>,

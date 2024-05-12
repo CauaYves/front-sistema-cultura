@@ -1,7 +1,6 @@
-import { CulturalUser } from "@/types";
 import instance from "./api";
 
-function createPf(formData: CulturalUser, token: string) {
+function createPf(formData: any, token: string) {
   const promise: any = instance.post(
     `/enrollment/identification-pf`,
     formData,
@@ -13,7 +12,7 @@ function createPf(formData: CulturalUser, token: string) {
   );
   return promise;
 }
-function createPj(formData: CulturalUser, token: string) {
+function createPj(formData: any, token: string) {
   const promise: any = instance.post(
     `/enrollment/identification-pj`,
     formData,

@@ -16,7 +16,7 @@ export default function ProfileBar({ router }: Readonly<ProfileBarProps>) {
   const [session, setSession] = useState<any>(null);
 
   useEffect(() => {
-    const sessionData = appLocalStore.getData("session");
+    const sessionData = appLocalStore.get("session");
     setSession(sessionData);
   }, []);
 

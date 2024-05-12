@@ -5,7 +5,7 @@ import MaskedInput from "react-text-mask";
 import { appLocalStore } from "@/hooks";
 
 export default function FisicPersonData() {
-  const sessionData = appLocalStore.getData("session");
+  const sessionData = appLocalStore.get("session");
 
   return (
     <StyledPaper>

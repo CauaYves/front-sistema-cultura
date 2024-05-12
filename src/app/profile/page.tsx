@@ -1,28 +1,34 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ProfileContainer, ProfileMainContent } from "./styles";
-import { appLocalStore, getCookie } from "@/hooks";
+import {
+  CulturalAgentsWrapper,
+  ProfileContainer,
+  ProfileMainContent,
+} from "./styles";
+import { appLocalStore } from "@/hooks";
 import { FormEvent, useEffect, useState } from "react";
 import EditableUserInformations from "./editableInforUserForm";
 import PessoalInformation from "./PessoalInformation";
 import ProfileAppBar from "./appBar";
-import CulturalAgentInfos from "./CulturalAgentInfos";
 import { useSnackbar } from "@/context/snackbar-context";
+import CulturalAgentPJ from "./culturalAgentPJ";
+import CulturalAgentPF from "./culturalAgentPF";
+import { UserData } from "@/types";
 
 export default function Profile() {
+  const [session, setSession] = useState<any>();
   const router = useRouter();
-  const { session } = appLocalStore.getData("session");
-  const { id, email, name, cpf } = session.user;
-  const [token, setToken] = useState("");
   const { setSnackbar } = useSnackbar();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const cookieToken = await getCookie("token");
-      setToken(cookieToken);
-    };
-    fetchData();
+    if (typeof window !== "undefined") {
+      const storedSession = appLocalStore.get("session");
+      if (storedSession) {
+        setSession(storedSession.session);
+      }
+    }
   }, []);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formValues = new FormData(event.currentTarget);
@@ -33,6 +39,13 @@ export default function Profile() {
     console.log(formData);
   };
 
+  if (!session) {
+    return <div>Loading...</div>; // or any other loading indicator
+  }
+
+  const { token, user } = session;
+  const { id, email, name, cpf } = user;
+
   return (
     <ProfileContainer>
       <ProfileAppBar router={router} />
@@ -40,15 +53,22 @@ export default function Profile() {
         <PessoalInformation name={name} email={email} />
         <EditableUserInformations
           name={name}
-          email={name}
+          email={email}
           cpf={cpf}
           handleSubmit={handleSubmit}
         />
-        <CulturalAgentInfos
-          token={token}
-          router={router}
-          setSnackbar={setSnackbar}
-        />
+        <CulturalAgentsWrapper>
+          <CulturalAgentPF
+            token={token}
+            router={router}
+            setSnackbar={setSnackbar}
+          />
+          <CulturalAgentPJ
+            token={token}
+            router={router}
+            setSnackbar={setSnackbar}
+          />
+        </CulturalAgentsWrapper>
       </ProfileMainContent>
     </ProfileContainer>
   );

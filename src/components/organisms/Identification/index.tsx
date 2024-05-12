@@ -47,7 +47,7 @@ export default function Indentification({
     await handleSubmit(event, file, proponent, setSnackbar, setLoading);
   };
 
-  const sessionData = appLocalStore.getData("session");
+  const sessionData = appLocalStore.get("session");
   const handleChange = (event: SelectChangeEvent) => {
     setProponent(event.target.value as IdentificationModulesKey);
   };

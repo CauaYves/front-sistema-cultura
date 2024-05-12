@@ -1,6 +1,6 @@
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useSnackbar } from "@/context/snackbar-context";
-import { appLocalStore, getCookie, getUserData } from "@/hooks";
+import { appLocalStore } from "@/hooks";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -30,7 +30,8 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
   const [contact, setContact] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const sessionData = appLocalStore.getData("session");
+  const sessionData = appLocalStore.get("session");
+  const { token } = sessionData.session;
   const { id, name } = sessionData.session.user;
 
   const handleStartLoading = () => setLoading(true);
@@ -82,7 +83,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
         open: true,
       });
     }
-    const token = await getCookie("token");
+
     const promise = collectiveService.create(body, token);
     promise
       .then((res) => {

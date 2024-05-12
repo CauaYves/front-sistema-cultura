@@ -43,6 +43,47 @@ type InputProps = {
   required: boolean;
 };
 
+export type CulturalAgentPf = {
+  alternativeTel: string;
+  cep: string;
+  complement: string;
+  county: string;
+  cpf: string;
+  email: string;
+  houseNumber: string;
+  name: string;
+  neighboorhood: string;
+  phone: string;
+  programs: string[];
+  proponent: string;
+  public: boolean;
+  publicPlace: string;
+  tel: string;
+  uf: string;
+};
+
+export type CulturalAgentPj = {
+  alternativeTel: string;
+  cep: string;
+  cnpj: string;
+  complement: string;
+  county: string;
+  email: string;
+  fantasyName: string;
+  houseNumber: string;
+  job: string;
+  neighboorhood: string;
+  phone: string;
+  programs: string[];
+  proponent: string;
+  public: boolean;
+  publicPlace: string;
+  responsible: string;
+  socialReason: string;
+  tel: string;
+  uf: string;
+  website: string;
+};
 const inputProps: InputProps = {
   fullWidth: true,
   required: true,
