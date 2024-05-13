@@ -23,7 +23,6 @@ export default function CulturalAgentPJ({
   setSnackbar,
 }: CulturalAgentPJProps) {
   const [agentPJ, setAgent] = useState<CulturalAgentPj>();
-  console.log(agentPJ);
   useEffect(() => {
     const fetchData = async () => {
       const promise = enrollmentService.getPJ(token);
@@ -37,6 +36,9 @@ export default function CulturalAgentPJ({
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const programs = agentPJ?.programs.forEach((program) => {
+    return program + ", ";
+  });
   return (
     <CulturalAgentInfosBox>
       <CulturalAgentInfoData>
@@ -47,16 +49,17 @@ export default function CulturalAgentPJ({
           <BolderText>{agentPJ?.alternativeTel}</BolderText>
         </Typography>
         <Typography>
-          cep: <BolderText>{agentPJ?.cep}</BolderText>
+          CEP: <BolderText>{agentPJ?.cep}</BolderText>
         </Typography>
         <Typography>
-          cnpj: <BolderText>{agentPJ?.cnpj}</BolderText>
+          CNPJ: <BolderText>{agentPJ?.cnpj}</BolderText>
         </Typography>
         <Typography>
-          complement: <BolderText>{agentPJ?.complement}</BolderText>
+          Complemento de endereço:{" "}
+          <BolderText>{agentPJ?.complement}</BolderText>
         </Typography>
         <Typography>
-          county: <BolderText>{agentPJ?.county}</BolderText>
+          Município: <BolderText>{agentPJ?.county}</BolderText>
         </Typography>
         <Typography>
           E-mail: <BolderText>{agentPJ?.email}</BolderText>
@@ -79,7 +82,7 @@ export default function CulturalAgentPJ({
         </Typography>
 
         <Typography>
-          Programas: <BolderText>{agentPJ?.programs[0]}</BolderText>
+          Programas: <BolderText>{programs ? programs : "Nenhum"}</BolderText>
         </Typography>
 
         <Typography>

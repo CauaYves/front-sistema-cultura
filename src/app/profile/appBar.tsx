@@ -21,9 +21,6 @@ export default function ProfileAppBar({ router }: ProfileAppBarProps) {
           onClick={() => router.push("/home")}
         >
           <ArrowBackIcon />
-          <Typography component="h4" variant="body1" color="white">
-            Voltar
-          </Typography>
         </IconButton>
       </Toolbar>
     </AppBar>

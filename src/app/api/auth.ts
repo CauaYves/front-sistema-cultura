@@ -44,6 +44,15 @@ function getUserData(token: string) {
   return promise;
 }
 
+function update(token: string, body: User) {
+  const promise: any = instance.put("/auth/", body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return promise;
+}
+
 const authService = {
   login,
   getUserData,
@@ -51,6 +60,7 @@ const authService = {
   confirmRegistration,
   recoverPassword,
   updatePassword,
+  update,
 };
 
 export default authService;

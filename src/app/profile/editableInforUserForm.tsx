@@ -7,13 +7,14 @@ import {
   LoadingButtonSx,
   EditableUserInformationsBox,
 } from "./styles";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 type EditableUserInformationsProps = {
   cpf: string;
   email: string;
   name: string;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  loading: boolean;
 };
 
 export default function EditableUserInformations({
@@ -21,7 +22,11 @@ export default function EditableUserInformations({
   email,
   name,
   handleSubmit,
+  loading,
 }: EditableUserInformationsProps) {
+  const [password, setPassword] = useState("");
+  const isInputDisabled = password.length === 0;
+
   return (
     <EditableUserInformationsBox onSubmit={handleSubmit}>
       <Typography variant="h6">Alterar informações de Usuário</Typography>
@@ -54,11 +59,23 @@ export default function EditableUserInformations({
           />
         </TextFieldWrapper>
         <TextFieldWrapper>
-          <TextField name="password" label="Senha" required fullWidth />
+          <TextField
+            name="password"
+            label="Senha atual"
+            required
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </TextFieldWrapper>
       </EditingFormProfileContainer>
       <ButtonWrapper>
-        <LoadingButtonSx variant="contained" type="submit">
+        <LoadingButtonSx
+          variant="contained"
+          type="submit"
+          disabled={isInputDisabled}
+          loading={loading}
+        >
           Salvar
         </LoadingButtonSx>
       </ButtonWrapper>

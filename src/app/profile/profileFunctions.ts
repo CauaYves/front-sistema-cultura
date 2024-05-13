@@ -1,0 +1,61 @@
+// profileFunctions.ts
+import { useState, useEffect, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { appLocalStore } from "@/hooks";
+import authService from "../api/auth";
+import { ApiResponse, CulturalizeApiError } from "@/protocols";
+
+export function useSession() {
+  const [session, setSession] = useState<any>();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedSession = appLocalStore.get("session");
+      if (storedSession) {
+        setSession(storedSession.session);
+      }
+    }
+  }, []);
+
+  return session;
+}
+
+export function useLoading() {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleLoading = () => setLoading(true);
+  const handleStopLoading = () => setLoading(false);
+
+  return { loading, handleLoading, handleStopLoading };
+}
+
+export function useFormSubmit(token: string, setSnackbar: Function) {
+  const handleOpenSnack = (message: string, severity: "error" | "success") => {
+    setSnackbar({
+      message,
+      open: true,
+      severity,
+    });
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleLoading();
+    const formValues = new FormData(event.currentTarget);
+    const formData: any = {};
+    for (const [key, value] of formValues.entries()) {
+      formData[key] = value as string;
+    }
+    const promise = authService.update(token, formData);
+    promise
+      .then((res: ApiResponse<string>) => {
+        handleOpenSnack("Cadastro alterado com sucesso", "success");
+      })
+      .catch((error: CulturalizeApiError) => {
+        handleOpenSnack("Senha incorreta", "error");
+      })
+      .finally(() => handleStopLoading());
+  };
+
+  return handleSubmit;
+}
