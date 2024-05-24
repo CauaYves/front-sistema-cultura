@@ -3,9 +3,9 @@ import {
   fixedTel,
   phoneDdiMask,
   phoneMask,
-} from "@/components/atoms";
-import { StyledPaper, TextFieldWrapper, StyledTextField } from "../styles";
-import MaskedInput from "react-text-mask";
+} from '@/components/atoms';
+import { StyledPaper, TextFieldWrapper, StyledTextField } from '../styles';
+import MaskedInput from 'react-text-mask';
 
 export default function ContactFormPF() {
   return (
@@ -21,11 +21,14 @@ export default function ContactFormPF() {
           autoComplete="email"
         />
         <MaskedInput
+          style={{
+            width: '100%',
+          }}
           mask={phoneDdiMask}
           render={(ref, props) => (
             <StyledTextField
               {...props}
-              sx={{ width: "50%" }}
+              sx={{ width: '50%' }}
               inputRef={ref}
               name="phone"
               label="Celular"

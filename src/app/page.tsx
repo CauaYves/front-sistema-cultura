@@ -13,72 +13,25 @@ import {
   IconButton,
   Alert,
   Snackbar,
-  AlertColor,
 } from "@mui/material";
 import { Copyright } from "@/components/atoms";
-import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
-import { AxiosResponse } from "axios";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { appLocalStore } from "@/hooks";
-import authService from "./api/auth";
 import { inputProps } from "@/types";
-import { CulturalizeApiError } from "@/protocols";
+import useSignInHandlers from "./services";
 
 export default function SignIn() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [requestMessage, setRequestMessage] = useState("");
-  const [severity, setSeverity] = useState<AlertColor>("warning");
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const userData = {
-      email: data.get("email") as string,
-      password: data.get("password") as string,
-    };
-    setLoading(true);
-    const promise = authService.login(userData);
-    promise
-      .then((response: AxiosResponse) => {
-        setSeverity("success");
-        appLocalStore.create("session", response.data);
-
-        setRequestMessage("Login efetuado com sucesso!");
-        setTimeout(() => router.push("/home"), 1500);
-      })
-      .catch(({ response }: CulturalizeApiError) => {
-        const { status, data } = response;
-        let errorMessage = "";
-
-        if (status === 422) {
-          errorMessage = `${data}`;
-        } else if (status === 404) {
-          errorMessage = "Usuário não encontrado";
-        } else {
-          errorMessage = `${data.details}`;
-        }
-
-        setSeverity("error");
-        setRequestMessage(errorMessage);
-      })
-
-      .finally(() => {
-        setLoading(false);
-        setOpen(true);
-      });
-  };
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const {
+    loading,
+    open,
+    requestMessage,
+    severity,
+    showPassword,
+    handleSubmit,
+    handleTogglePasswordVisibility,
+    handleClose,
+  } = useSignInHandlers();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -88,7 +41,7 @@ export default function SignIn() {
         autoHideDuration={6000}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <Alert severity={severity}>{requestMessage} </Alert>
+        <Alert severity={severity}>{requestMessage}</Alert>
       </Snackbar>
       <Box
         sx={{

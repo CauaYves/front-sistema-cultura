@@ -32,7 +32,7 @@ export function UserDataProvider({
 
   const contextValue = useMemo(
     () => ({ userData, setUserData }),
-    [userData, setUserData]
+    [userData, setUserData],
   );
 
   return (

@@ -10,6 +10,7 @@ import { handleDealWithPromise } from "./functions";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { SetSnackbar } from "@/context/snackbar-context";
 import { CulturalAgentPf } from "@/types";
+import { FormTitleSection } from "@/components/atoms";
 
 interface CulturalAgentPFProps {
   token: string;
@@ -40,10 +41,9 @@ export default function CulturalAgentPF({
   return (
     <CulturalAgentInfosBox>
       <CulturalAgentInfoData>
-        <Typography variant="h6">Agente cultural Pessoa Física</Typography>
-
+        <FormTitleSection title="Agente cultural Pessoa Física" />
         <Typography>
-          Telefone alternativo:{" "}
+          Telefone alternativo:
           <BolderText>{agentPF?.alternativeTel}</BolderText>
         </Typography>
         <Typography>

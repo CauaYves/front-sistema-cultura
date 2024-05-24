@@ -16,6 +16,7 @@ export default function SubModules() {
       <ListItemButton
         onClick={async () => {
           appLocalStore.remove("session");
+          document.cookie = "session=''";
           router.push("/");
         }}
       >

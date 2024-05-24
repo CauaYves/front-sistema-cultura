@@ -1,9 +1,18 @@
-import { FormTitleSection, cepMask } from "@/components/atoms";
-import { inputProps } from "@/types";
-import MaskedInput from "react-text-mask";
-import { StyledPaper, TextFieldWrapper, StyledTextField } from "../styles";
+import { FormTitleSection, cepMask } from '@/components/atoms';
+import { inputProps } from '@/types';
+import MaskedInput from 'react-text-mask';
+import {
+  StyledPaper,
+  TextFieldWrapper,
+  StyledTextField,
+  SelectFormControl,
+} from '../styles';
+import UfSelectInput from '@/components/atoms/ufSelectInput';
+import { useState } from 'react';
+import CountySelectInput from '@/components/atoms/countySelectInput';
 
 export default function AddressForm() {
+  const [uf, setUf] = useState('');
   return (
     <StyledPaper>
       <FormTitleSection title="Endereço" />
@@ -27,6 +36,11 @@ export default function AddressForm() {
         <StyledTextField name="houseNumber" label="Numero" fullWidth />
         <StyledTextField name="complement" label="Complemento" fullWidth />
       </TextFieldWrapper>
+
+      <TextFieldWrapper>
+        <UfSelectInput setUf={setUf} uf={uf} />
+        <CountySelectInput uf={uf} />
+      </TextFieldWrapper>
       <TextFieldWrapper>
         <StyledTextField
           name="neighboorhood"
@@ -34,10 +48,7 @@ export default function AddressForm() {
           fullWidth
           required
         />
-        <StyledTextField name="county" label="Município" fullWidth required />
       </TextFieldWrapper>
-
-      <StyledTextField name="uf" label="UF" fullWidth required />
     </StyledPaper>
   );
 }

@@ -22,7 +22,7 @@ export function ContactsProvider({
 
   const contextData = useMemo(
     () => ({ contacts, setContacts }),
-    [contacts, setContacts]
+    [contacts, setContacts],
   );
 
   return (

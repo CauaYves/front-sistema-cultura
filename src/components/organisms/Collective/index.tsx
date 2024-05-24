@@ -1,18 +1,18 @@
-import { Button, Dialog, Paper, styled } from "@mui/material";
-import * as React from "react";
-import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { useSnackbar } from "@/context/snackbar-context";
-import { useCollective } from "@/context/collective-context";
-import { Collective } from "@/types";
-import collectiveService from "@/app/api/collective";
-import CollectiveModal from "@/components/molecules/modals/collective";
-import { CulturalizeApiError } from "@/protocols";
-import CollectiveCollumns from "./collumns";
-import { handleDeleteCollective } from "./collectiveUtils";
-import EditCollectiveModal from "@/components/molecules/modals/editCollective";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { appLocalStore } from "@/hooks";
+import { Button, Dialog, Paper, styled } from '@mui/material';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { useSnackbar } from '@/context/snackbar-context';
+import { useCollective } from '@/context/collective-context';
+import { Collective } from '@/types';
+import collectiveService from '@/app/api/collective';
+import CollectiveModal from '@/components/molecules/modals/collective';
+import { CulturalizeApiError } from '@/protocols';
+import CollectiveCollumns from './collumns';
+import { handleDeleteCollective } from './collectiveUtils';
+import EditCollectiveModal from '@/components/molecules/modals/editCollective';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { appLocalStore } from '@/hooks';
 
 interface TableCollectiveRow extends Collective {
   createdAt: string;
@@ -34,7 +34,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
 
   useEffect(() => {
     const fetchContact = async () => {
-      const session = appLocalStore.get("session");
+      const session = appLocalStore.get('session');
       const { token } = session.session;
       const promise = collectiveService.get(token);
       promise
@@ -48,12 +48,12 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
   const handleError = async (error: CulturalizeApiError) => {
     if (error.response.status === 401) {
       setSnackbar({
-        message: "Token de acesso expirado, faça login novamente! ",
+        message: 'Token de acesso expirado, faça login novamente! ',
         open: true,
-        severity: "warning",
+        severity: 'warning',
       });
-      appLocalStore.remove("session");
-      router.push("/");
+      appLocalStore.remove('session');
+      router.push('/');
     }
   };
   const handleClose = () => setCreationModalOpen(false);
@@ -67,18 +67,18 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
         setSnackbar,
         handleError,
         setRefreshTable,
-        setDelLoading
+        setDelLoading,
       ),
     delLoading,
     selectedRow,
   });
   return (
-    <Paper sx={{ padding: "10px" }}>
+    <Paper sx={{ padding: '10px' }}>
       <Button
         onClick={() => setCreationModalOpen(true)}
         variant="outlined"
         sx={{
-          margin: "10px 0px",
+          margin: '10px 0px',
         }}
       >
         Criar Coletivo Cultural

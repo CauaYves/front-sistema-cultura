@@ -6,7 +6,7 @@ export const handleDeleteCollective = async (
   setSnackbar: any,
   handleError: any,
   setRefreshTable: any,
-  setDelLoading: any
+  setDelLoading: any,
 ) => {
   const collectiveId = params.id as string;
   const session = appLocalStore.get("session");

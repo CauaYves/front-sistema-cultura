@@ -1,31 +1,31 @@
-"use client";
-import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import Indentification from "@/components/organisms/Identification";
-import SidebarModules from "@/components/molecules/sidebar/modules";
-import SubModules from "../../components/molecules/sidebar/sub-modules";
-import Localization from "@/components/organisms/Localization";
-import { useSnackbar } from "@/context/snackbar-context";
-import { Alert, Snackbar } from "@mui/material";
-import Collective from "@/components/organisms/Collective";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Notices from "@/components/organisms/Notices";
-import LegalActs from "@/components/organisms/LegalActs";
-import HomePage from "@/components/organisms/Home";
-import ProfileBar from "@/components/organisms/profile";
-import { ModulesKey, OrganismObjects } from "./types";
-import { Drawer, AppBar } from "./styles";
+'use client';
+import React, { useState } from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import Indentification from '@/components/organisms/Identification';
+import SidebarModules from '@/components/molecules/sidebar/modules';
+import SubModules from '../../components/molecules/sidebar/sub-modules';
+import Localization from '@/components/organisms/Localization';
+import { useSnackbar } from '@/context/snackbar-context';
+import { Alert, Snackbar } from '@mui/material';
+import Collective from '@/components/organisms/Collective';
+import Notices from '@/components/organisms/Notices';
+import LegalActs from '@/components/organisms/LegalActs';
+import HomePage from '@/components/organisms/Home';
+import ProfileBar from '@/components/organisms/profile';
+import { ModulesKey, OrganismObjects } from './types';
+import { Drawer, AppBar } from './styles';
+import { useRouter } from 'next/navigation';
+import { Session } from '@/types';
 
-export default function Dashboard() {
+const Dashboard = () => {
   const router = useRouter();
-  const [selectedModule, setSelectedModule] = useState<ModulesKey>("notices");
+  const [selectedModule, setSelectedModule] = useState<ModulesKey>('notices');
   const [openDrawer, setOpenDrawer] = useState(true);
   const { message, open, severity, setSnackbar } = useSnackbar();
 
@@ -62,22 +62,23 @@ export default function Dashboard() {
       open: false,
     });
   };
+
   return (
-    <Box sx={{ display: "flex", background: "#eeeeee", minHeight: "100vh" }}>
+    <Box sx={{ display: 'flex', background: '#eeeeee', minHeight: '100vh' }}>
       <CssBaseline />
       <Snackbar
         onClose={handleClose}
         open={open}
         autoHideDuration={6000}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert severity={severity}>{message} </Alert>
       </Snackbar>
       <CssBaseline />
-      <AppBar position="absolute" open={openDrawer} sx={{ maxHeight: "70px" }}>
+      <AppBar position="absolute" open={openDrawer} sx={{ maxHeight: '70px' }}>
         <Toolbar
           sx={{
-            pr: "24px",
+            pr: '24px',
           }}
         >
           <IconButton
@@ -86,8 +87,8 @@ export default function Dashboard() {
             aria-label="open drawer"
             onClick={toggleDrawer}
             sx={{
-              marginRight: "36px",
-              ...(openDrawer && { display: "none" }),
+              marginRight: '36px',
+              ...(openDrawer && { display: 'none' }),
             }}
           >
             <MenuIcon />
@@ -108,9 +109,9 @@ export default function Dashboard() {
       <Drawer variant="permanent" open={openDrawer}>
         <Toolbar
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-around",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-around',
             px: [1],
           }}
         >
@@ -134,13 +135,15 @@ export default function Dashboard() {
         component="main"
         sx={{
           flexGrow: 1,
-          overflow: "auto",
-          margin: "100px auto auto auto",
-          padding: "10px",
+          overflow: 'auto',
+          margin: '100px auto auto auto',
+          padding: '10px',
         }}
       >
         {organismObjects[selectedModule]}
       </Box>
     </Box>
   );
-}
+};
+
+export default Dashboard;
