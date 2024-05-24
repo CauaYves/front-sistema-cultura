@@ -50,10 +50,8 @@ const ButtonsContainer = styled(Box)`
 `;
 
 const SelectFormControl = styled(FormControl)`
-  margin: 10px 5px 10px 0px;
-  padding: 10px;
-  max-width: 78%;
-  width: 100%;
+  margin: 0px 5px 5px 0px;
+  max-width: 70%;
   @media (max-width: ${mobalBreakpoint}) {
     width: 100%;
     max-width: none;

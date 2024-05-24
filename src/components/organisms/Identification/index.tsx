@@ -48,7 +48,6 @@ export default function Indentification({
   };
 
   const sessionData = appLocalStore.get("session");
-  console.log(sessionData)
   const handleChange = (event: SelectChangeEvent) => {
     setProponent(event.target.value as IdentificationModulesKey);
   };

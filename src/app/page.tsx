@@ -19,7 +19,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import Image from "next/image";
 import { inputProps } from "@/types";
-import useSignInHandlers from "./useSignInHandlers";
+import useSignInHandlers from "./services";
 
 export default function SignIn() {
   const {
