@@ -25,7 +25,7 @@ export function NoticesProvider({
 
   const contextData = useMemo(
     () => ({ module, setModule }),
-    [module, setModule]
+    [module, setModule],
   );
 
   return (

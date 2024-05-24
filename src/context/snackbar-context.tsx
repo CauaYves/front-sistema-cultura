@@ -36,7 +36,7 @@ export function SnackbarProvider({
 
   const contextData = useMemo(
     () => ({ message, severity, open, setSnackbar }),
-    [message, severity, open, setSnackbar]
+    [message, severity, open, setSnackbar],
   );
 
   return (

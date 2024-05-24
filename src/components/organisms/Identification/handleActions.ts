@@ -12,7 +12,7 @@ export const handleSubmit = async (
   file: WebFile[] | undefined,
   proponent: IdentificationModulesKey,
   setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   event.preventDefault();
   handleStartLoading(setLoading)();
@@ -40,7 +40,7 @@ export const handleSubmit = async (
       file,
       res.data.signedUrl,
       setSnackbar,
-      setLoading
+      setLoading,
     );
   } catch (error) {
     handleError(setSnackbar, error);
@@ -52,7 +52,7 @@ export const handleSubmit = async (
 const createFormData = (
   event: FormEvent<HTMLFormElement>,
   file: WebFile[],
-  proponent: IdentificationModulesKey
+  proponent: IdentificationModulesKey,
 ) => {
   const data = new FormData(event.currentTarget);
   const formData: any = {};
@@ -74,7 +74,7 @@ const uploadFileAndShowSnackbar = async (
   file: WebFile[],
   signedUrl: string,
   setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   uploadService.upload(file, signedUrl, file[0].type);
   setSnackbar({
@@ -96,7 +96,7 @@ export const handleStopLoading =
 
 export const handleError = (
   setSnackbar: React.Dispatch<React.SetStateAction<any>>,
-  error: any
+  error: any,
 ) => {
   let message = "";
   if (error.response.status === 400) {

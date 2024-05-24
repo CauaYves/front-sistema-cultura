@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from 'react';
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,16 +14,16 @@ import Localization from "@/components/organisms/Localization";
 import { useSnackbar } from "@/context/snackbar-context";
 import { Alert, Snackbar } from "@mui/material";
 import Collective from "@/components/organisms/Collective";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Notices from "@/components/organisms/Notices";
 import LegalActs from "@/components/organisms/LegalActs";
 import HomePage from "@/components/organisms/Home";
 import ProfileBar from "@/components/organisms/profile";
 import { ModulesKey, OrganismObjects } from "./types";
 import { Drawer, AppBar } from "./styles";
+import { useRouter } from 'next/navigation';
+import { Session } from '@/types';
 
-export default function Dashboard() {
+const Dashboard = ({ session }: { session?: Session }) => {
   const router = useRouter();
   const [selectedModule, setSelectedModule] = useState<ModulesKey>("notices");
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -62,6 +62,7 @@ export default function Dashboard() {
       open: false,
     });
   };
+
   return (
     <Box sx={{ display: "flex", background: "#eeeeee", minHeight: "100vh" }}>
       <CssBaseline />
@@ -143,4 +144,6 @@ export default function Dashboard() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Dashboard;

@@ -8,7 +8,7 @@ function createPf(formData: any, token: string) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   return promise;
 }
@@ -20,7 +20,7 @@ function createPj(formData: any, token: string) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    }
+    },
   );
   return promise;
 }

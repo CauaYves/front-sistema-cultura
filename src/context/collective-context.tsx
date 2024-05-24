@@ -22,7 +22,7 @@ export function CollectiveProvider({
 
   const contextData = useMemo(
     () => ({ collective, setCollective }),
-    [collective, setCollective]
+    [collective, setCollective],
   );
 
   return (

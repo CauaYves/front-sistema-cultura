@@ -10,6 +10,7 @@ import { handleDealWithPromise } from "./functions";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { SetSnackbar } from "@/context/snackbar-context";
 import { CulturalAgentPj } from "@/types";
+import { FormTitleSection } from "@/components/atoms";
 
 interface CulturalAgentPJProps {
   token: string;
@@ -42,7 +43,7 @@ export default function CulturalAgentPJ({
   return (
     <CulturalAgentInfosBox>
       <CulturalAgentInfoData>
-        <Typography variant="h6">Agente cultural Pessoa Jurídica</Typography>
+        <FormTitleSection title="Agente cultural Pessoa Jurídica" />
 
         <Typography>
           Telefone alternativo:

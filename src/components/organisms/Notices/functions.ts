@@ -2,7 +2,7 @@ import { getLocation } from "@/app/api";
 import { Dispatch, SetStateAction } from "react";
 
 const fetchUserCity = (
-  setStateCity: Dispatch<SetStateAction<string | null>>
+  setStateCity: Dispatch<SetStateAction<string | null>>,
 ) => {
   navigator.geolocation.getCurrentPosition((position) => {
     const promise = getLocation(position);
@@ -14,7 +14,7 @@ const fetchUserCity = (
       .catch((error) => {
         console.error(
           "não foi possível identificar a cidade em que se encontra. ",
-          error
+          error,
         );
         return "";
       });

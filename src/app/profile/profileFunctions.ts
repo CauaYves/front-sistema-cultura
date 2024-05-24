@@ -1,6 +1,5 @@
 // profileFunctions.ts
 import { useState, useEffect, FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { appLocalStore } from "@/hooks";
 import authService from "../api/auth";
 import { ApiResponse, CulturalizeApiError } from "@/protocols";
@@ -26,10 +25,15 @@ export function useLoading() {
   const handleLoading = () => setLoading(true);
   const handleStopLoading = () => setLoading(false);
 
-  return { loading, handleLoading, handleStopLoading };
+  return { loading, handleLoading, handleStopLoading }; // Retorne as funções aqui
 }
 
-export function useFormSubmit(token: string, setSnackbar: Function) {
+export function useFormSubmit(
+  token: string,
+  setSnackbar: Function,
+  { handleLoading, handleStopLoading }: any,
+) {
+  // Adicione handleLoading e handleStopLoading como parâmetros
   const handleOpenSnack = (message: string, severity: "error" | "success") => {
     setSnackbar({
       message,
@@ -40,7 +44,7 @@ export function useFormSubmit(token: string, setSnackbar: Function) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleLoading();
+    handleLoading(); // Use handleLoading fornecido como parâmetro
     const formValues = new FormData(event.currentTarget);
     const formData: any = {};
     for (const [key, value] of formValues.entries()) {
@@ -54,7 +58,7 @@ export function useFormSubmit(token: string, setSnackbar: Function) {
       .catch((error: CulturalizeApiError) => {
         handleOpenSnack("Senha incorreta", "error");
       })
-      .finally(() => handleStopLoading());
+      .finally(() => handleStopLoading()); // Use handleStopLoading fornecido como parâmetro
   };
 
   return handleSubmit;

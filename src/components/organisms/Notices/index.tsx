@@ -20,8 +20,6 @@ export default function Notices() {
     fetchData();
   }, [city]);
 
-  console.log("cidade atual: ", city);
-
   return (
     <div>
       <Typography variant="body1" sx={{ mb: "10px" }}>

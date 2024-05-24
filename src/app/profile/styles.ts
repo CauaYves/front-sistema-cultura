@@ -70,15 +70,13 @@ export const CulturalAgentInfosBox = styled(Box)(({ theme }) => ({
   borderRadius: "5px",
   padding: "10px",
   border: "1px solid #00000025",
+  marginBottom: "10px",
 
   display: "flex",
   [theme.breakpoints.down("md")]: {
     display: "block",
   },
 
-  div: {
-    width: "50%",
-  },
   "&:first-of-type": {
     marginRight: "10px",
   },
@@ -89,14 +87,19 @@ export const CulturalAgentInfosBox = styled(Box)(({ theme }) => ({
 
 export const BolderText = styled("span")({
   fontWeight: 600,
+  textAlign: "end",
 });
 
 export const CulturalAgentInfoData = styled(Box)({
   display: "flex",
   flexDirection: "column",
+  width: "100%",
 });
 
-export const CulturalAgentsWrapper = styled(Box)({
+export const CulturalAgentsWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "space-around",
-});
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+  },
+}));

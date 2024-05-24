@@ -1,30 +1,16 @@
-"use client";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { appLocalStore } from "./hooks";
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export async function middleware(request: NextRequest) {
-  if (typeof window !== "undefined") {
-    const localStorage = appLocalStore.get("session");
-
-    const { session } = localStorage;
-
-    const url = request.url;
-    const signInURL = new URL("/", url).toString();
-    const homeUrl = new URL("/home", url);
-    const actualUrl = url.substring(url.lastIndexOf("/"), url.length);
-
-    if (actualUrl === "/" && session) {
-      return NextResponse.redirect(homeUrl);
-    } else if (actualUrl === "/home" && !session) {
-      return NextResponse.redirect(signInURL);
-    } else {
-    }
-    return NextResponse.next();
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('session');
+  const tokenLength = +token?.value.length!
+  if (tokenLength < 3) {
+    return NextResponse.redirect(new URL('/', request.url));
   }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/home", "/"],
+  matcher: ['/home'], 
 };

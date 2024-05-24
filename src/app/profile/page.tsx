@@ -1,56 +1,47 @@
 "use client";
+import React, { useState } from "react";
+import { Snackbar, Alert, AlertColor } from "@mui/material";
 import { useRouter } from "next/navigation";
 import {
   CulturalAgentsWrapper,
   ProfileContainer,
   ProfileMainContent,
 } from "./styles";
-import { appLocalStore } from "@/hooks";
-import { FormEvent, useEffect, useState } from "react";
+import { useSession, useLoading, useFormSubmit } from "./profileFunctions";
 import EditableUserInformations from "./editableInforUserForm";
 import PessoalInformation from "./PessoalInformation";
 import ProfileAppBar from "./appBar";
-import { SnackbarState } from "@/context/snackbar-context";
 import CulturalAgentPJ from "./culturalAgentPJ";
 import CulturalAgentPF from "./culturalAgentPF";
 import LoadingScreen from "@/components/atoms/loaders/screenLoading";
-import authService from "../api/auth";
-import { ApiResponse, CulturalizeApiError } from "@/protocols";
-import { Snackbar, Alert } from "@mui/material";
+
+interface SnackBarProps {
+  open: boolean;
+  message: string;
+  severity: AlertColor;
+}
 
 export default function Profile() {
   const router = useRouter();
-  const [session, setSession] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [snackbar, setSnackbar] = useState<SnackbarState>({
+  const session = useSession();
+  const { loading, handleLoading, handleStopLoading } = useLoading();
+  const [snackbar, setSnackbar] = useState<SnackBarProps>({
     open: false,
     message: "",
     severity: "warning",
   });
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedSession = appLocalStore.get("session");
-      if (storedSession) {
-        setSession(storedSession.session);
-      }
-    }
-  }, []);
 
+  const handleSubmit = useFormSubmit(session?.token, setSnackbar, {
+    handleLoading,
+    handleStopLoading,
+  });
   if (!session) {
     return <LoadingScreen open={true} />;
   }
-  const { token, user } = session;
-  const { id, email, name, cpf } = user;
 
-  const handleOpenSnack = (message: string, severity: "error" | "success") => {
-    setSnackbar({
-      message,
-      open: true,
-      severity,
-    });
-  };
-  const handleLoading = () => setLoading(true);
-  const handleStopLoading = () => setLoading(false);
+  const { token, user } = session;
+  const { name, email, cpf } = user;
+
   const handleClose = () => {
     setSnackbar({
       message: snackbar.message,
@@ -58,26 +49,6 @@ export default function Profile() {
       severity: snackbar.severity,
     });
   };
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    handleLoading();
-    const formValues = new FormData(event.currentTarget);
-    const formData: any = {};
-    for (const [key, value] of formValues.entries()) {
-      formData[key] = value as string;
-    }
-    console.log(formData);
-    const promise = authService.update(token, formData);
-    promise
-      .then((res: ApiResponse<string>) => {
-        handleOpenSnack("Cadastro alterado com sucesso", "success");
-      })
-      .catch((error: CulturalizeApiError) => {
-        handleOpenSnack("Senha incorreta", "error");
-      })
-      .finally(() => handleStopLoading());
-  };
-  console.log(snackbar);
 
   return (
     <ProfileContainer>

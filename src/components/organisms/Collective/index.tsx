@@ -67,7 +67,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
         setSnackbar,
         handleError,
         setRefreshTable,
-        setDelLoading
+        setDelLoading,
       ),
     delLoading,
     selectedRow,

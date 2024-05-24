@@ -62,7 +62,7 @@ export default function SignUp() {
         setRequestMessage(
           error.response.status === 400
             ? `${error.response?.data?.details}`
-            : `${error.response.data}`
+            : `${error.response.data}`,
         );
       })
       .finally(() => {

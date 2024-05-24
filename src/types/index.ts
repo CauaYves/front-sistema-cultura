@@ -4,7 +4,16 @@ export type User = {
   email: string;
   password: string;
 };
-
+export type Session = {
+  user: {
+    id: number
+    name: string
+    email: string
+    cpf: string
+    emailConfirme: boolean
+  };
+  token: string
+};
 export type UserData = {
   id: string;
   name: string;
