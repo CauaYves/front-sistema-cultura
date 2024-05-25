@@ -1,38 +1,38 @@
-import React, { createContext, useMemo, useState, useContext } from "react";
+import React, { createContext, useMemo, useState, useContext } from 'react';
 
-export type NoticesKeys = "list" | "subscription" | "proposal" | "enrollment";
+export type NoticesKeys = 'list' | 'subscription' | 'proposal' | 'enrollment';
 
 type SetModule = React.Dispatch<React.SetStateAction<NoticesKeys>>;
 
 type NoticesContextType = {
-  module: string;
-  setModule: SetModule;
+    module: string;
+    setModule: SetModule;
 };
 
 const NoticesContext = createContext<NoticesContextType>({
-  module: "list",
-  setModule: () => {},
+    module: 'list',
+    setModule: () => {},
 });
 
 export function useNotices() {
-  return useContext(NoticesContext);
+    return useContext(NoticesContext);
 }
 
 export function NoticesProvider({
-  children,
+    children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [module, setModule] = useState<NoticesKeys>("list");
+    const [module, setModule] = useState<NoticesKeys>('list');
 
-  const contextData = useMemo(
-    () => ({ module, setModule }),
-    [module, setModule],
-  );
+    const contextData = useMemo(
+        () => ({ module, setModule }),
+        [module, setModule],
+    );
 
-  return (
-    <NoticesContext.Provider value={contextData}>
-      {children}
-    </NoticesContext.Provider>
-  );
+    return (
+        <NoticesContext.Provider value={contextData}>
+            {children}
+        </NoticesContext.Provider>
+    );
 }
 
 export default NoticesContext;
