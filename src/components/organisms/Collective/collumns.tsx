@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { GridColDef } from '@mui/x-data-grid';
 import formatDatetime from '@/utils/formatDatetime';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -5,8 +6,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import { CircularProgress, IconButton } from '@mui/material';
 
 interface ColumnProps {
-    setModalEditionOpen: () => void;
-    handleDeleteCollective: () => void;
+    // eslint-disable-next-line no-unused-vars
+    setModalEditionOpen: (open: boolean) => void;
+    // eslint-disable-next-line no-unused-vars
+    handleDeleteCollective: (params: any) => void;
     delLoading: boolean;
     selectedRow: any;
 }
@@ -23,7 +26,7 @@ const CollectiveCollumns = ({
             sortable: false,
             width: 10,
             renderCell: () => (
-                <IconButton onClick={() => setModalEditionOpen()}>
+                <IconButton onClick={() => setModalEditionOpen(true)}>
                     <EditIcon fontSize="small" color="info" />
                 </IconButton>
             ),
@@ -34,7 +37,7 @@ const CollectiveCollumns = ({
             sortable: false,
             width: 70,
             renderCell: (params) => (
-                <IconButton onClick={() => handleDeleteCollective()}>
+                <IconButton onClick={() => handleDeleteCollective(params)}>
                     {delLoading && selectedRow?.id === params.id ? (
                         <CircularProgress size={20} />
                     ) : (

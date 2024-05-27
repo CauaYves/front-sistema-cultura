@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import collectiveService from '@/app/api/collective';
 import { appLocalStore } from '@/hooks';
 
@@ -9,7 +10,8 @@ export const handleDeleteCollective = async (
 ) => {
     const collectiveId = params.id as string;
     const session = appLocalStore.get('session');
-    const { token } = session;
+    console.log(session);
+    const { token } = session.session;
 
     setDelLoading(true);
     const promise = collectiveService.deleteOne(token, collectiveId);
@@ -22,9 +24,10 @@ export const handleDeleteCollective = async (
             });
             setRefreshTable((prev: boolean) => !prev);
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error(error.response.data);
             setSnackbar({
-                message: 'Falha ao excluir Coletivo cultural . ',
+                message: `Falha ao excluir Coletivo cultural . ${error.response.data}`,
                 open: true,
                 severity: 'error',
             });

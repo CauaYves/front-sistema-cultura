@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Button, Dialog, Paper, styled } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
@@ -8,11 +9,11 @@ import { Collective } from '@/types';
 import collectiveService from '@/app/api/collective';
 import CollectiveModal from '@/components/molecules/modals/collective';
 import { CulturalizeApiError } from '@/protocols';
-import CollectiveCollumns from './collumns';
 import { handleDeleteCollective } from './collectiveUtils';
 import EditCollectiveModal from '@/components/molecules/modals/editCollective';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { appLocalStore } from '@/hooks';
+import CollectiveCollumns from './collumns';
 
 interface TableCollectiveRow extends Collective {
     createdAt: string;
@@ -65,7 +66,6 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
             handleDeleteCollective(
                 params,
                 setSnackbar,
-                handleError,
                 setRefreshTable,
                 setDelLoading,
             ),
