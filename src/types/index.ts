@@ -15,11 +15,13 @@ export type Session = {
     token: string;
 };
 export type UserData = {
-    id: string;
-    name: string;
-    cpf: string;
-    email: string;
-    emailConfirmed: string;
+    user: {
+        id: string;
+        name: string;
+        cpf: string;
+        email: string;
+        emailConfirmed: string;
+    };
     token: string;
 };
 

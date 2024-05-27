@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Button, Dialog, Paper, styled } from '@mui/material';
+import { Button, Dialog, Paper } from '@mui/material';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
@@ -83,7 +83,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
             >
                 Criar Coletivo Cultural
             </Button>
-            <StyledTable
+            <DataGrid
                 rows={collective}
                 columns={columns}
                 initialState={{
@@ -108,7 +108,3 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
         </Paper>
     );
 }
-
-const StyledTable = styled(DataGrid)`
-    width: 100%;
-`;

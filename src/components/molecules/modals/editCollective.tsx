@@ -36,20 +36,23 @@ export default function EditCollectiveModal({
     const { setSnackbar } = useSnackbar();
     const [loading, setLoading] = useState(false);
     const [userData, setUserData] = useState<UserData>({
-        id: '',
-        cpf: '',
-        email: '',
-        emailConfirmed: '',
-        name: '',
         token: '',
+        user: {
+            id: '',
+            cpf: '',
+            email: '',
+            emailConfirmed: '',
+            name: '',
+        },
     });
     const token = userData.token;
     const formattedDate = dayjs(row.opening, 'DD/MM/YYYY').format('YYYY/MM/DD');
-
+    console.log(userData);
     useEffect(() => {
         async function fetchData() {
             const sessionData = appLocalStore.get('session');
-            setUserData(sessionData);
+            console.log(sessionData);
+            setUserData(sessionData.session);
         }
         fetchData();
     }, []);
@@ -57,6 +60,7 @@ export default function EditCollectiveModal({
     const handleStartLoading = () => setLoading(true);
     const handleStopLoading = () => setLoading(false);
     const handleError = (error: CulturalizeApiError) => {
+        console.error(error);
         let message = '';
         if (error.response.status === 400) {
             message = filterErrors(error);
@@ -82,10 +86,10 @@ export default function EditCollectiveModal({
             cep: data.get('cep') as unknown as string,
             complement: data.get('complement') as unknown as string,
             county: data.get('county') as unknown as string,
-            responsible: userData.name,
-            userId: userData.id as unknown as number,
+            responsible: userData.user.name,
+            userId: userData.user.id as unknown as number,
         };
-
+        console.log(body);
         return body;
     };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
