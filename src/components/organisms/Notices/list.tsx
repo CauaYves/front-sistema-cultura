@@ -1,11 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Paper, styled, Divider } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Divider } from '@mui/material';
 import NoticesListItem from './listItem';
-import notices from './notices';
+import { StyledPaper, StrongTypo } from './styles';
+import { NoticePreviewList } from '.';
 
-export default function NoticesList() {
+type NoticesListProps = {
+    notices: NoticePreviewList[];
+};
+export default function NoticesList({ notices }: NoticesListProps) {
     return (
         <Box sx={{ width: '95%', bgcolor: 'background.paper' }}>
             <StyledPaper sx={{ padding: '10px' }}>
@@ -15,31 +18,33 @@ export default function NoticesList() {
                     <StrongTypo>Data de encerramento</StrongTypo>
                 </Box>
                 <Divider sx={{ margin: '10px 0px' }} />
-                {notices.map(({ closing, id, opening, title }) => {
-                    return (
-                        <NoticesListItem
-                            key={id}
-                            title={title}
-                            ending={closing}
-                            opening={opening}
-                        />
-                    );
-                })}
+                {notices.map(
+                    ({
+                        id,
+                        name,
+                        observations,
+                        openingDate,
+                        endDate,
+                        city,
+                        createdAt,
+                        updatedAt,
+                    }) => {
+                        return (
+                            <NoticesListItem
+                                key={id}
+                                id={id}
+                                name={name}
+                                observations={observations}
+                                openingDate={openingDate}
+                                endDate={endDate}
+                                city={city}
+                                createdAt={createdAt}
+                                updatedAt={updatedAt}
+                            />
+                        );
+                    },
+                )}
             </StyledPaper>
         </Box>
     );
 }
-
-const StyledPaper = styled(Paper)`
-    display: flex;
-    flex-direction: column;
-    div {
-        display: grid;
-        grid-template-columns: 1.3fr 1fr 1fr 0.7fr;
-        margin: 5px 0px;
-    }
-`;
-
-const StrongTypo = styled(Typography)`
-    font-weight: 600;
-`;

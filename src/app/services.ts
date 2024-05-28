@@ -5,6 +5,7 @@ import { AlertColor } from '@mui/material';
 import authService from './api/auth';
 import { CulturalizeApiError } from '@/protocols';
 import { appLocalStore } from '@/hooks';
+import { useUserData } from '@/context/user-context';
 
 const useSignInHandlers = () => {
     const router = useRouter();
@@ -13,7 +14,7 @@ const useSignInHandlers = () => {
     const [requestMessage, setRequestMessage] = useState('');
     const [severity, setSeverity] = useState<AlertColor>('warning');
     const [showPassword, setShowPassword] = useState(false);
-
+    const { setUserData } = useUserData();
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -29,6 +30,12 @@ const useSignInHandlers = () => {
                 const sessionData = response.data;
                 appLocalStore.create('session', response.data);
                 document.cookie = `session=${JSON.stringify(sessionData)}; path=/; max-age=${7 * 24 * 60 * 60}; secure; samesite=strict`;
+                delete response.data.user.emailConfirmed;
+                const userData = {
+                    token: response.data.token,
+                    ...response.data.user,
+                };
+                setUserData(userData);
                 setRequestMessage('Login efetuado com sucesso!');
                 setTimeout(() => router.push('/home'), 1500);
             })

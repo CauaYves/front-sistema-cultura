@@ -16,20 +16,18 @@ import { Alert, Snackbar } from '@mui/material';
 import Collective from '@/components/organisms/Collective';
 import Notices from '@/components/organisms/Notices';
 import LegalActs from '@/components/organisms/LegalActs';
-import HomePage from '@/components/organisms/Home';
 import ProfileBar from '@/components/organisms/profile';
 import { ModulesKey, OrganismObjects } from './types';
 import { Drawer, AppBar } from './styles';
 import { useRouter } from 'next/navigation';
 
-const Dashboard = () => {
+export default function Dashboard() {
     const router = useRouter();
     const [selectedModule, setSelectedModule] = useState<ModulesKey>('notices');
     const [openDrawer, setOpenDrawer] = useState(true);
     const { message, open, severity, setSnackbar } = useSnackbar();
 
     const organismObjects: OrganismObjects = {
-        homePage: <HomePage />,
         identification: (
             <Indentification
                 router={router}
@@ -53,7 +51,6 @@ const Dashboard = () => {
         legislation: <LegalActs />,
         metometer: <p>metometer</p>,
     };
-
     const toggleDrawer = () => {
         setOpenDrawer(!openDrawer);
     };
@@ -161,6 +158,4 @@ const Dashboard = () => {
             </Box>
         </Box>
     );
-};
-
-export default Dashboard;
+}

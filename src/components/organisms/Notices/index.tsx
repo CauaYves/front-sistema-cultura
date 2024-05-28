@@ -1,11 +1,29 @@
-'use strict';
-import { Typography } from '@mui/material';
+import { noticePreviewService } from '@/app/api/noticePreview';
+import { useEffect, useState } from 'react';
+import NoticesList from './list';
+
+export type NoticePreviewList = {
+    id: number;
+    name: string;
+    observations: string;
+    openingDate: string;
+    endDate: string;
+    city: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
 export default function Notices() {
-    return (
-        <div>
-            <Typography variant="body1" sx={{ mb: '10px' }}>
-                Arraiá Cultural RJ 4
-            </Typography>
-        </div>
-    );
+    const [noticeList, setNoticeList] = useState<NoticePreviewList[]>([]);
+
+    useEffect(() => {
+        async function fetchNoticesPreviews() {
+            const fetchedNoticePrevieList =
+                await noticePreviewService.get('Volta Redonda');
+            setNoticeList(fetchedNoticePrevieList);
+        }
+        fetchNoticesPreviews();
+    }, []);
+
+    return <NoticesList notices={noticeList} />;
 }

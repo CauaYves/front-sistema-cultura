@@ -1,9 +1,11 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
 export type UserDataType = {
+    id: string;
     cpf: string;
     email: string;
     name: string;
+    token: string;
 };
 
 type UserContextType = {
@@ -25,9 +27,11 @@ export function UserDataProvider({
     children,
 }: Readonly<{ children: React.ReactNode }>) {
     const [userData, setUserData] = useState<UserDataType>({
+        id: '',
         cpf: '',
         email: '',
         name: '',
+        token: '',
     });
 
     const contextValue = useMemo(
