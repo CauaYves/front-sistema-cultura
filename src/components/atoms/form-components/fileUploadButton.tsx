@@ -2,7 +2,7 @@ import React, { useRef, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 
 interface FileUploadButtonProps {
-    onChange: () => void;
+    onChange: any;
 }
 
 const FileUploadButton: React.FC<FileUploadButtonProps> = ({ onChange }) => {

@@ -12,7 +12,7 @@ type EditableUserInformationsProps = {
     cpf: string;
     email: string;
     name: string;
-    handleSubmit: () => void;
+    handleSubmit: any;
     loading: boolean;
 };
 
