@@ -1,24 +1,24 @@
-"use server";
-import { cookies } from "next/headers";
+'use server';
+import { cookies } from 'next/headers';
 
 export const setServerCookie = async (
-  key: string,
-  value: any,
-  options = {},
+    key: string,
+    value: any,
+    options = {},
 ) => {
-  const valueStringified = JSON.stringify(value);
-  const cookieStore = cookies();
-  cookieStore.set(key, valueStringified, {
-    path: "/",
-    maxAge: 7 * 24 * 60 * 60,
-    ...options,
-  });
+    const valueStringified = JSON.stringify(value);
+    const cookieStore = cookies();
+    cookieStore.set(key, valueStringified, {
+        path: '/',
+        maxAge: 7 * 24 * 60 * 60,
+        ...options,
+    });
 };
 
 export const getServerCookie = async (key: string) => {
-  const cookieStore = cookies();
-  const cookie = cookieStore.get(key);
-  return cookie ? JSON.parse(cookie.value) : null;
+    const cookieStore = cookies();
+    const cookie = cookieStore.get(key);
+    return cookie ? JSON.parse(cookie.value) : null;
 };
 
 // export const deleteServerCookie = async (key: string) => {
@@ -27,5 +27,5 @@ export const getServerCookie = async (key: string) => {
 // };
 
 export const cookieKeys = {
-  session: "session",
+    session: 'session',
 };

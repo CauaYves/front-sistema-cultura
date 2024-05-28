@@ -1,66 +1,42 @@
-import {
-  Box,
-  BoxProps,
-  Button,
-  colors,
-  styled,
-  Typography,
-} from "@mui/material";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import dayjs from "dayjs";
-import { useNotices } from "@/context/notices-context";
-
-type ListItemProps = {
-  title: string;
-  opening: string;
-  ending: string;
-};
-
-interface StyledBox extends BoxProps {
-  available: boolean;
-}
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import dayjs from 'dayjs';
+import { StyledBox, StyledBtn, StyledTypo } from './styles';
+import { NoticePreviewList } from '.';
 
 export default function NoticesListItem({
-  title,
-  opening,
-  ending,
-}: Readonly<ListItemProps>) {
-  const { setModule } = useNotices();
-  function isDateGreaterThanToday(dateString: string) {
-    const inputDate = dayjs(dateString, "DD/MM/YYYY");
-    const today = dayjs();
-    return inputDate.isAfter(today);
-  }
-  const available = isDateGreaterThanToday(opening);
+    name,
+    openingDate,
+    endDate,
+}: Readonly<NoticePreviewList>) {
+    function isDateGreaterThanToday(dateString: string): boolean {
+        const inputDate = dayjs(dateString);
+        const today = dayjs();
+        console.log(inputDate.isAfter(today));
+        return inputDate.isAfter(today);
+    }
+    function formatISODate(ISODate: string) {
+        const slicedDate = ISODate.slice(0, 10);
+        const year = slicedDate.slice(0, 4);
+        const month = slicedDate.slice(5, 7);
+        const day = slicedDate.slice(8, 10);
+        const formatedDate = `${day}/${month}/${year}`;
+        return formatedDate;
+    }
 
-  return (
-    <StyledBox available={available}>
-      <StyledTypo>{title}</StyledTypo>
-      <StyledTypo>{opening}</StyledTypo>
-      <StyledTypo>{ending}</StyledTypo>
-      <Button
-        variant="contained"
-        endIcon={<KeyboardArrowRightIcon />}
-        disabled={available}
-        onClick={() => {
-          setModule("subscription");
-        }}
-      >
-        Inscrever-se
-      </Button>
-    </StyledBox>
-  );
+    const available = isDateGreaterThanToday(endDate);
+
+    return (
+        <StyledBox available={available ? 1 : 0}>
+            <StyledTypo>{name}</StyledTypo>
+            <StyledTypo>{formatISODate(openingDate)}</StyledTypo>
+            <StyledTypo>{formatISODate(endDate)}</StyledTypo>
+            <StyledBtn
+                variant="contained"
+                endIcon={<KeyboardArrowRightIcon />}
+                disabled={!available}
+            >
+                Ir
+            </StyledBtn>
+        </StyledBox>
+    );
 }
-
-const StyledBox = styled(Box)<StyledBox>`
-  padding: 10px;
-  align-items: center;
-  background-color: ${(props) =>
-    props.available ? colors.grey[100] : colors.green[50]};
-`;
-
-const StyledTypo = styled(Typography)`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;

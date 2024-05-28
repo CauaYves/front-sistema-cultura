@@ -1,5 +1,3 @@
-const useNoticesService = () => {
-    
-}
+const useNoticesService = () => {};
 
-export default useNoticesService
+export default useNoticesService;
