@@ -1,19 +1,9 @@
 import { noticePreviewService } from '@/app/api/noticePreview';
 import { useEffect, useState } from 'react';
-import NoticesList from './list';
+import NoticesList from './components/list';
+import { NoticePreviewList, NoticesProps } from './types';
 
-export type NoticePreviewList = {
-    id: number;
-    name: string;
-    observations: string;
-    openingDate: string;
-    endDate: string;
-    city: string;
-    createdAt: string;
-    updatedAt: string;
-};
-
-export default function Notices() {
+export default function Notices({ router }: NoticesProps) {
     const [noticeList, setNoticeList] = useState<NoticePreviewList[]>([]);
 
     useEffect(() => {
@@ -25,5 +15,5 @@ export default function Notices() {
         fetchNoticesPreviews();
     }, []);
 
-    return <NoticesList notices={noticeList} />;
+    return <NoticesList notices={noticeList} router={router} />;
 }

@@ -1,6 +1,6 @@
 import { Box, SelectChangeEvent, Typography } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { appLocalStore } from '@/hooks';
 import 'dayjs/locale/pt-br';
@@ -10,7 +10,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import { PapersContainer, StyledPaper } from './styles';
 import CompanyData from './components/companyData';
 import FisicPersonData from './components/fisicPersonData';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import ContactFormPF from './components/contactFormPF';
 import ContactFormPJ from './components/contactFormPJ';
 import FileInput, { WebFile } from '@/components/molecules/fileUpload';
@@ -20,14 +19,7 @@ import ProponentForm from './components/proponentType';
 import AddressForm from './components/address';
 import InterestAreaForm from './components/interestArea';
 import ButtonsContainerComp from './components/buttonsContainer';
-import { ModulesKey } from '@/app/home/types';
-
-export type IdentificationModulesKey = 'PF' | 'PJ' | 'MEI' | 'PJSFL';
-
-export interface IdentificationProps {
-    router: AppRouterInstance;
-    setSelectedModule: Dispatch<SetStateAction<ModulesKey>>;
-}
+import { IdentificationProps, IdentificationModulesKey } from './types';
 
 export default function Indentification({
     setSelectedModule,

@@ -1,11 +1,11 @@
 import { WebFile } from '@/components/molecules/fileUpload';
 import { filterErrors } from '@/utils/filterErrorMessages';
 import { FormEvent } from 'react';
-import { IdentificationModulesKey } from '.';
 import enrollmentService from '@/app/api/enrollment';
 import { SnackbarState } from '@/context/snackbar-context';
 import uploadService from '@/app/api/upload';
 import { appLocalStore } from '@/hooks';
+import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,
