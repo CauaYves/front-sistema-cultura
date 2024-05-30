@@ -47,11 +47,9 @@ export default function EditCollectiveModal({
     });
     const token = userData.token;
     const formattedDate = dayjs(row.opening, 'DD/MM/YYYY').format('YYYY/MM/DD');
-    console.log(userData);
     useEffect(() => {
         async function fetchData() {
             const sessionData = appLocalStore.get('session');
-            console.log(sessionData);
             setUserData(sessionData.session);
         }
         fetchData();
@@ -89,7 +87,6 @@ export default function EditCollectiveModal({
             responsible: userData.user.name,
             userId: userData.user.id as unknown as number,
         };
-        console.log(body);
         return body;
     };
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

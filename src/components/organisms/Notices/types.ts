@@ -15,6 +15,7 @@ export type NoticePreviewList = {
 export type NoticesListProps = {
     notices: NoticePreviewList[];
     router: AppRouterInstance;
+    isLoading: boolean;
 };
 
 export interface NoticesProps {

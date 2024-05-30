@@ -34,7 +34,6 @@ export const handleSubmit = async (
             ? enrollmentService.createPj
             : enrollmentService.createPf;
 
-    console.log(formData);
     try {
         const res = await createEnrollment(formData, token);
         uploadFileAndShowSnackbar(file, res.data.signedUrl, setSnackbar);

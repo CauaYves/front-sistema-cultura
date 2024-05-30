@@ -4,3 +4,5 @@ export * from './upload';
 export * from './auth';
 export * from './collective';
 export * from './contacts';
+export * from './noticePreview';
+export * from './notices';

@@ -4,7 +4,6 @@ const useNoticesService = {
     isDateGreaterThanToday(dateString: string): boolean {
         const inputDate = dayjs(dateString);
         const today = dayjs();
-        console.log(inputDate.isAfter(today));
         return inputDate.isAfter(today);
     },
     formatISODate(ISODate: string) {
@@ -14,6 +13,9 @@ const useNoticesService = {
         const day = slicedDate.slice(8, 10);
         const formatedDate = `${day}/${month}/${year}`;
         return formatedDate;
+    },
+    handleSetIsLoading(setLoading: any, bool: boolean) {
+        setLoading(bool);
     },
 };
 

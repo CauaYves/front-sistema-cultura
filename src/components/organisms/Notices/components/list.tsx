@@ -5,7 +5,11 @@ import NoticesListItem from './listItem';
 import { StyledPaper, StrongTypo } from '../styles';
 import { NoticesListProps } from '../types';
 
-export default function NoticesList({ notices, router }: NoticesListProps) {
+export default function NoticesList({
+    notices,
+    router,
+    isLoading,
+}: NoticesListProps) {
     return (
         <Box sx={{ width: '95%', bgcolor: 'background.paper' }}>
             <StyledPaper sx={{ padding: '10px' }}>
@@ -16,7 +20,7 @@ export default function NoticesList({ notices, router }: NoticesListProps) {
                 </Box>
                 <Divider sx={{ margin: '10px 0px' }} />
 
-                {notices.length === 0 ? (
+                {!isLoading && notices.length === 0 ? (
                     <Typography>
                         Não há editais publicados nessa região
                     </Typography>

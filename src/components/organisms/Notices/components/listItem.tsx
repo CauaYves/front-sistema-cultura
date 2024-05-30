@@ -22,7 +22,7 @@ export default function NoticesListItem({
                 variant="contained"
                 endIcon={<KeyboardArrowRightIcon />}
                 disabled={!available}
-                onClick={() => router.push(`/home/notices/${id}`)}
+                onClick={() => router.push(`/home/notices/${id}?activeStep=0`)}
             >
                 Ir
             </StyledBtn>
