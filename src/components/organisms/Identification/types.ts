@@ -1,4 +1,5 @@
 import { ModulesKey } from '@/app/home/types';
+import { SelectChangeEvent } from '@mui/material';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -15,6 +16,6 @@ export interface ButtonsContainerCompProps {
 }
 
 export interface ProponentFormProps {
-    handleChange: () => void;
+    handleChange: (event: SelectChangeEvent) => void;
     proponent: string;
 }
