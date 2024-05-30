@@ -1,12 +1,8 @@
 import { FormTitleSection } from '@/components/atoms';
-import { InputLabel, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { InputLabel, Select, MenuItem } from '@mui/material';
 import { StyledPaper, SelectFormControl } from '../styles';
+import { ProponentFormProps } from '../types';
 
-interface ProponentFormProps {
-    // eslint-disable-next-line no-unused-vars
-    handleChange: (event: SelectChangeEvent) => void;
-    proponent: string;
-}
 export default function ProponentForm({
     handleChange,
     proponent,

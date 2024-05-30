@@ -24,7 +24,6 @@ export default function CulturalAgentPF({
     setSnackbar,
 }: CulturalAgentPFProps) {
     const [agentPF, setAgent] = useState<CulturalAgentPf>();
-    console.log(agentPF);
     useEffect(() => {
         const fetchData = async () => {
             const promise = enrollmentService.getPF(token);

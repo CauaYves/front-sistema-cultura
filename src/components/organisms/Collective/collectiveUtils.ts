@@ -10,7 +10,6 @@ export const handleDeleteCollective = async (
 ) => {
     const collectiveId = params.id as string;
     const session = appLocalStore.get('session');
-    console.log(session);
     const { token } = session.session;
 
     setDelLoading(true);

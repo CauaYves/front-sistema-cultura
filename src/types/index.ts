@@ -10,7 +10,7 @@ export type Session = {
         name: string;
         email: string;
         cpf: string;
-        emailConfirme: boolean;
+        emailConfirmed: boolean;
     };
     token: string;
 };
@@ -55,6 +55,7 @@ type InputProps = {
 };
 
 export type CulturalAgentPf = {
+    id: number;
     alternativeTel: string;
     cep: string;
     complement: string;
@@ -74,6 +75,7 @@ export type CulturalAgentPf = {
 };
 
 export type CulturalAgentPj = {
+    id: number;
     alternativeTel: string;
     cep: string;
     cnpj: string;

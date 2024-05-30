@@ -1,11 +1,11 @@
 import { WebFile } from '@/components/molecules/fileUpload';
 import { filterErrors } from '@/utils/filterErrorMessages';
 import { FormEvent } from 'react';
-import { IdentificationModulesKey } from '.';
 import enrollmentService from '@/app/api/enrollment';
 import { SnackbarState } from '@/context/snackbar-context';
 import uploadService from '@/app/api/upload';
 import { appLocalStore } from '@/hooks';
+import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,
@@ -34,7 +34,6 @@ export const handleSubmit = async (
             ? enrollmentService.createPj
             : enrollmentService.createPf;
 
-    console.log(formData);
     try {
         const res = await createEnrollment(formData, token);
         uploadFileAndShowSnackbar(file, res.data.signedUrl, setSnackbar);
