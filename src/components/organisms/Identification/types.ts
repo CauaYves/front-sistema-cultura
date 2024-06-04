@@ -16,6 +16,7 @@ export interface ButtonsContainerCompProps {
 }
 
 export interface ProponentFormProps {
+    // eslint-disable-next-line no-unused-vars
     handleChange: (event: SelectChangeEvent) => void;
     proponent: string;
 }

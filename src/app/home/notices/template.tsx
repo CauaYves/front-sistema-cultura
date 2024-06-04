@@ -21,6 +21,6 @@ export default function Template({
     );
 }
 
-const RootTemplate = styled(Box)(({ theme }) => ({
+const RootTemplate = styled(Box)({
     background: '#eeeeee',
-}));
+});
