@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { noticeSlugServices } from './services';
 import { steps } from '../components/steps';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
+import ProposalInfo from '../components/proposalInfo';
 
 export default function NoticeDetails({
     params,
@@ -20,10 +21,9 @@ export default function NoticeDetails({
     const [loading, setLoading] = useState(false);
     const [userPF, setUserPF] = useState<CulturalAgentPf | undefined>();
     const [userPJ, setUserPJ] = useState<CulturalAgentPj | undefined>();
-    const { session } = appLocalStore.get('session');
-    const { calculateAtualStep, getNoticeDetails, getUserPFandPJ } =
-        noticeSlugServices;
     const router = useRouter();
+    const { session } = appLocalStore.get('session');
+    const { getNoticeDetails, getUserPFandPJ } = noticeSlugServices;
 
     const handleLoading = (bool: boolean) => setLoading(bool);
 
@@ -40,28 +40,27 @@ export default function NoticeDetails({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params.id]);
 
-    if (loading) return <LoadingScreen open={true} />;
-    return (
-        //Cada tela deve ser exibida com base no activeStep recebido pela url
-        <RootBox>
-            <StepperComp
-                steps={steps}
-                activeStep={calculateAtualStep(searchParams.personType)}
+    if (loading) return <LoadingScreen open />;
+
+    const pages: { [key: number]: JSX.Element } = {
+        0: (
+            <NoticesInfo
+                notice={details}
+                router={router}
+                userPF={userPF}
+                userPJ={userPJ}
+                isloading={loading}
             />
+        ),
+        1: <ProposalInfo router={router} urlSearchParams={searchParams} />,
+        2: <p>terceira pagina</p>,
+    };
+
+    return (
+        <RootBox>
+            <StepperComp steps={steps} activeStep={+searchParams.activeStep} />
             <Box mt={5}>
-                {searchParams.culturalAgentId ? (
-                    ''
-                ) : (
-                    //proxima tela será aqui
-                    <NoticesInfo
-                        notice={details}
-                        urlSearchParams={searchParams}
-                        router={router}
-                        userPF={userPF}
-                        userPJ={userPJ}
-                        isloading={loading}
-                    />
-                )}
+                {pages[searchParams.activeStep as unknown as number]}
             </Box>
         </RootBox>
     );

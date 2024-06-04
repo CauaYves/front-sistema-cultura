@@ -1,5 +1,8 @@
 export const steps = [
-    'escolha como se inscrever',
-    'Create an ad group',
-    'Create an ad',
+    'Escolha como se inscrever',
+    'Inserir dados da proposta',
+    'Inserir dados do responsável',
+    'Inserir dados do coordenador',
+    'Enviar arquivos',
+    'Revisar dados e Confirmar',
 ];

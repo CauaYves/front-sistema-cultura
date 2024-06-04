@@ -7,7 +7,6 @@ import LoadingScreen from '@/components/atoms/loaders/screenLoading';
 
 export default function NoticesInfo({
     notice,
-    urlSearchParams,
     router,
     userPF,
     userPJ,
@@ -17,6 +16,7 @@ export default function NoticesInfo({
     const { incrementAtualStep } = noticeSlugServices;
     const haveUserPF = !userPF ? true : false;
     const haveUserPJ = !userPJ ? true : false;
+
     return (
         <FlexibleBox>
             <Info>
@@ -35,13 +35,10 @@ export default function NoticesInfo({
                 <Button
                     disabled={haveUserPF}
                     onClick={() =>
-                        incrementAtualStep(
-                            urlSearchParams.activeStep,
-                            'pf',
-                            userPF?.id!,
-                            searchParams,
-                            router,
-                        )
+                        incrementAtualStep('0', searchParams, router, {
+                            culturalAgentId: `${userPF?.id}`,
+                            personType: 'pf',
+                        })
                     }
                 >
                     pessoa fisica
@@ -49,13 +46,10 @@ export default function NoticesInfo({
                 <Button
                     disabled={haveUserPJ}
                     onClick={() =>
-                        incrementAtualStep(
-                            urlSearchParams.activeStep,
-                            'pj',
-                            userPJ?.id!,
-                            searchParams,
-                            router,
-                        )
+                        incrementAtualStep('0', searchParams, router, {
+                            culturalAgentId: `${userPJ?.id}`,
+                            personType: 'pf',
+                        })
                     }
                 >
                     pessoa juridica
