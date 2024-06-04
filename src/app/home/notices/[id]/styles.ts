@@ -16,3 +16,9 @@ export const FlexibleBox = styled(Box)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
 }));
+
+export const NoticesForm = styled('form')(({ theme }) => ({
+    background: '#ffffff',
+    padding: theme.spacing(2),
+    borderRadius: '5px',
+}));

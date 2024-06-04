@@ -18,8 +18,7 @@ import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
 import 'dayjs/locale/pt-br';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
-import { FormTitleSection } from '@/components/atoms';
-import FileUploadButton from '@/components/atoms/form-components/fileUploadButton';
+import { FileUploadButton, FormTitleSection } from '@/components/atoms';
 
 export default function LegalActs() {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -32,7 +31,6 @@ export default function LegalActs() {
     };
     const handleFileChange = (file: File) => {
         setSelectedFile(file);
-        // Faça o que você precisa com o arquivo selecionado aqui
     };
     return (
         <PaddingBox>

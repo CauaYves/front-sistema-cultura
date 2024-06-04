@@ -15,11 +15,11 @@ export type Notice = {
 export type UrlsearchParamsProps = {
     activeStep: string;
     personType?: string;
+    culturalAgentId?: string;
 };
 
 export type NoticesInfoProps = {
     notice: Notice | undefined;
-    urlSearchParams: UrlsearchParamsProps;
     router: AppRouterInstance;
     userPF: CulturalAgentPf | undefined;
     userPJ: CulturalAgentPj | undefined;
@@ -28,9 +28,16 @@ export type NoticesInfoProps = {
 
 export interface NoticeDetailsProps {
     params: { id: string };
-    searchParams: {
-        activeStep: string;
-        personType?: string;
-        culturalAgentId: string;
-    };
+    searchParams: SearchParams;
 }
+
+export type SearchParams = {
+    activeStep: string;
+    personType?: string;
+    culturalAgentId: string;
+};
+
+export type ProposalInfoProps = {
+    router: AppRouterInstance;
+    urlSearchParams: UrlsearchParamsProps;
+};

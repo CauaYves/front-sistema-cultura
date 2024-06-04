@@ -17,7 +17,7 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ onChange }) => {
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            onChange();
+            onChange(file);
         }
     };
 
@@ -30,10 +30,10 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ onChange }) => {
                 onChange={handleFileChange}
             />
             <Button variant="contained" onClick={handleClick}>
-                Upload File
+                Enviar Arquivo
             </Button>
         </div>
     );
 };
 
-export default FileUploadButton;
+export { FileUploadButton };
