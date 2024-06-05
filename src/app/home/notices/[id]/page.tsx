@@ -12,6 +12,7 @@ import { noticeSlugServices } from './services';
 import { steps } from '../components/steps';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
 import ProposalInfo from '../components/proposalInfo';
+import ResponsibleInfo from '../components/responsibleInfo';
 
 export default function NoticeDetails({
     params,
@@ -24,7 +25,6 @@ export default function NoticeDetails({
     const router = useRouter();
     const { session } = appLocalStore.get('session');
     const { getNoticeDetails, getUserPFandPJ } = noticeSlugServices;
-
     const handleLoading = (bool: boolean) => setLoading(bool);
 
     useEffect(() => {
@@ -53,7 +53,7 @@ export default function NoticeDetails({
             />
         ),
         1: <ProposalInfo router={router} urlSearchParams={searchParams} />,
-        2: <p>terceira pagina</p>,
+        2: <ResponsibleInfo router={router} urlSearchParams={searchParams} />,
     };
 
     return (

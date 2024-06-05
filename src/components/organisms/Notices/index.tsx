@@ -5,7 +5,7 @@ import { NoticePreviewList, NoticesProps } from './types';
 import useNoticesService from './services';
 import LoadingScreen from '@/components/atoms/loaders/screenLoading';
 
-export default function Notices({ router }: NoticesProps) {
+export default function Notices({ router, setSelectedModule }: NoticesProps) {
     const [noticeList, setNoticeList] = useState<NoticePreviewList[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const { handleSetIsLoading } = useNoticesService;
@@ -28,6 +28,7 @@ export default function Notices({ router }: NoticesProps) {
                 notices={noticeList}
                 router={router}
                 isLoading={isLoading}
+                setSelectedModule={setSelectedModule}
             />
         </>
     );

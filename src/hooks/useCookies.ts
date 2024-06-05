@@ -22,8 +22,8 @@ export const getServerCookie = async (key: string) => {
 };
 
 // export const deleteServerCookie = async (key: string) => {
-//   const cookieStore = cookies();
-//   await cookieStore.delete(key, { path: '/' });
+//     const cookieStore = cookies();
+//     cookieStore.delete(key, { path: '/' });
 // };
 
 export const cookieKeys = {

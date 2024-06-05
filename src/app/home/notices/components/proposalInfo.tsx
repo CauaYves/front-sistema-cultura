@@ -23,9 +23,6 @@ export default function ProposalInfo({ router }: ProposalInfoProps) {
                 value.toString(),
             ]),
         );
-
-        console.log('Form Data:', formValues);
-
         incrementAtualStep('1', searchParams, router, formValues);
     }
 
