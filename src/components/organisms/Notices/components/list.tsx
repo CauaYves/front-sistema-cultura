@@ -10,6 +10,8 @@ export default function NoticesList({
     router,
     isLoading,
     setSelectedModule,
+    userPJ,
+    userPF,
 }: NoticesListProps) {
     return (
         <Box sx={{ width: '95%', bgcolor: 'background.paper' }}>
@@ -50,6 +52,8 @@ export default function NoticesList({
                                     updatedAt={updatedAt}
                                     router={router}
                                     setSelectedModule={setSelectedModule}
+                                    userPJ={userPJ}
+                                    userPF={userPF}
                                 />
                             );
                         },

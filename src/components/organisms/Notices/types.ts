@@ -1,4 +1,5 @@
 import { ModulesKey } from '@/app/home/types';
+import { CulturalAgentPf, CulturalAgentPj } from '@/types';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -13,6 +14,8 @@ export type NoticePreviewList = {
     updatedAt: string;
     router: AppRouterInstance;
     setSelectedModule: Dispatch<SetStateAction<ModulesKey>>;
+    userPJ: CulturalAgentPj | undefined;
+    userPF: CulturalAgentPf | undefined;
 };
 
 export type NoticesListProps = {
@@ -20,6 +23,8 @@ export type NoticesListProps = {
     router: AppRouterInstance;
     isLoading: boolean;
     setSelectedModule: Dispatch<SetStateAction<ModulesKey>>;
+    userPJ: CulturalAgentPj | undefined;
+    userPF: CulturalAgentPf | undefined;
 };
 
 export interface NoticesProps {
