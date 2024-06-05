@@ -4,7 +4,6 @@ import { FormEvent } from 'react';
 import enrollmentService from '@/app/api/enrollment';
 import { SnackbarState } from '@/context/snackbar-context';
 import uploadService from '@/app/api/upload';
-import { appLocalStore } from '@/hooks';
 import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
@@ -16,6 +15,8 @@ export const handleSubmit = async (
 ) => {
     event.preventDefault();
     handleStartLoading(setLoading)();
+    const storedData = localStorage.getItem('session') || '';
+    const { session } = JSON.parse(storedData);
 
     if (!file) {
         return setSnackbar({
@@ -26,8 +27,8 @@ export const handleSubmit = async (
     }
 
     const formData = createFormData(event, file, proponent);
-    const session = appLocalStore.get('session');
-    const { token } = session;
+    formData.cpf = session.user.cpf;
+    formData.name = session.user.name;
 
     const createEnrollment =
         proponent !== 'PF'
@@ -35,7 +36,7 @@ export const handleSubmit = async (
             : enrollmentService.createPf;
 
     try {
-        const res = await createEnrollment(formData, token);
+        const res = await createEnrollment(formData, session.token);
         uploadFileAndShowSnackbar(file, res.data.signedUrl, setSnackbar);
     } catch (error) {
         handleError(setSnackbar, error);
