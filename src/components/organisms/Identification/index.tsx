@@ -2,7 +2,6 @@ import { Box, SelectChangeEvent, Typography } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { FormEvent, useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { appLocalStore } from '@/hooks';
 import 'dayjs/locale/pt-br';
 import Link from 'next/link';
 import { useSnackbar } from '@/context/snackbar-context';
@@ -20,6 +19,7 @@ import AddressForm from './components/address';
 import InterestAreaForm from './components/interestArea';
 import ButtonsContainerComp from './components/buttonsContainer';
 import { IdentificationProps, IdentificationModulesKey } from './types';
+import { appLocalStore } from '@/hooks';
 
 export default function Indentification({
     setSelectedModule,
