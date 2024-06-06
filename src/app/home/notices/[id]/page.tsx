@@ -13,6 +13,8 @@ import { steps } from '../components/steps';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
 import ProposalInfo from '../components/proposalInfo';
 import ResponsibleInfo from '../components/responsibleInfo';
+import { BackButton } from '@/components';
+import { FlexibleBox } from './styles';
 
 export default function NoticeDetails({
     params,
@@ -58,10 +60,18 @@ export default function NoticeDetails({
 
     return (
         <RootBox>
-            <StepperComp steps={steps} activeStep={+searchParams.activeStep} />
-            <Box mt={5}>
-                {pages[searchParams.activeStep as unknown as number]}
-            </Box>
+            <FlexibleBox sx={{ display: 'block' }}>
+                <StepperComp
+                    steps={steps}
+                    activeStep={+searchParams.activeStep}
+                />
+                <Box mt={5}>
+                    {pages[searchParams.activeStep as unknown as number]}
+                </Box>
+                <BackButton sx={{ marginTop: '10px', marginLeft: '15px' }}>
+                    Voltar
+                </BackButton>
+            </FlexibleBox>
         </RootBox>
     );
 }

@@ -3,6 +3,5 @@ export const steps = [
     'Inserir dados da proposta',
     'Inserir dados do responsável',
     'Inserir dados do coordenador',
-    'Enviar arquivos',
     'Revisar dados e Confirmar',
 ];
