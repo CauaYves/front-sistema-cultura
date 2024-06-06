@@ -20,12 +20,17 @@ export default function Notices({ router, setSelectedModule }: NoticesProps) {
     useEffect(() => {
         handleSetIsLoading(setIsLoading, true);
         const sessionJSON = localStorage.getItem('session');
+
         if (!sessionJSON) {
             setSnackbar({
                 message: 'token expirado, faça login novamente',
                 open: true,
                 severity: 'warning',
             });
+            // throw new Error('unauthorizedError', {
+            //     cause: 'invalid_token',
+            // });
+
             return router.push('/');
         }
         const { session } = JSON.parse(sessionJSON);
