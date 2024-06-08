@@ -10,7 +10,7 @@ import { noticeSlugServices } from '../[id]/services';
 import { NoticesForm } from '../[id]/styles';
 import { ProposalInfoProps } from '../types';
 
-export default function ResponsibleInfo({ router }: ProposalInfoProps) {
+export default function CoordinatorInfo({ router }: ProposalInfoProps) {
     const searchParams = useSearchParams();
     const { incrementAtualStep } = noticeSlugServices;
 
@@ -24,26 +24,24 @@ export default function ResponsibleInfo({ router }: ProposalInfoProps) {
             ]),
         );
 
-        console.log('Form Data:', formValues);
-
-        incrementAtualStep('2', searchParams, router, formValues);
+        incrementAtualStep('3', searchParams, router, formValues);
     }
 
     return (
         <NoticesForm onSubmit={submitForm}>
-            <TextInput name="res.name" label="Nome" />
-            <TextInput name="res.cpf" label="CPF" />
-            <TextInput name="res.rg" label="RG" />
-            <TextInput name="res.issuingBody" label="Órgão expedidor" />
-            <TextInput name="res.email" label="E-mail" />
-            <TextInput name="res.tel" label="Telefone" />
-            <TextInput name="res.cep" label="CEP" />
-            <TextInput name="res.address" label="Endereço" />
-            <TextInput name="res.number" label="Número" />
-            <TextInput name="res.complement" label="Complemento" />
-            <TextInput name="res.neighboorHood" label="Bairro" />
-            <TextInput name="res.uf" label="UF" />
-            <TextInput name="res.county" label="Município" />
+            <TextInput name="cord.name" label="Nome" />
+            <TextInput name="cord.cpf" label="CPF" />
+            <TextInput name="cord.rg" label="RG" />
+            <TextInput name="cord.issuingBody" label="Órgão expedidor" />
+            <TextInput name="cord.email" label="E-mail" />
+            <TextInput name="cord.tel" label="Telefone" />
+            <TextInput name="cord.cep" label="CEP" />
+            <TextInput name="cord.address" label="Endereço" />
+            <TextInput name="cord.number" label="Número" />
+            <TextInput name="cord.complement" label="Complemento" />
+            <TextInput name="cord.neighboorHood" label="Bairro" />
+            <TextInput name="cord.uf" label="UF" />
+            <TextInput name="cord.county" label="Município" />
             <TextInput
                 name="activiesOnLastTwoYears"
                 label="Atividades nos últimos dois anos(até 500 caracteres)"
