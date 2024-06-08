@@ -1,19 +1,21 @@
 'use client';
+import { BackButton } from '@/components';
 import RootBox from '@/components/atoms/boxes/rootBox';
+import LoadingScreen from '@/components/atoms/loaders/screenLoading';
 import StepperComp from '@/components/molecules/stepper';
 import { appLocalStore } from '@/hooks';
-import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Notice, NoticeDetailsProps } from '../types';
-import LoadingScreen from '@/components/atoms/loaders/screenLoading';
-import NoticesInfo from '../components/noticesInfo';
-import { useRouter } from 'next/navigation';
-import { noticeSlugServices } from './services';
-import { steps } from '../components/steps';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
+import { Box } from '@mui/material';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import CoordinatorInfo from '../components/coordinatorInfo';
+import NoticesInfo from '../components/noticesInfo';
 import ProposalInfo from '../components/proposalInfo';
 import ResponsibleInfo from '../components/responsibleInfo';
-import { BackButton } from '@/components';
+import ReviewInfo from '../components/reviewInfo';
+import { Notice, NoticeDetailsProps } from '../types';
+import { steps } from './contants';
+import { noticeSlugServices } from './services';
 import { FlexibleBox } from './styles';
 
 export default function NoticeDetails({
@@ -56,6 +58,8 @@ export default function NoticeDetails({
         ),
         1: <ProposalInfo router={router} urlSearchParams={searchParams} />,
         2: <ResponsibleInfo router={router} urlSearchParams={searchParams} />,
+        3: <CoordinatorInfo router={router} urlSearchParams={searchParams} />,
+        4: <ReviewInfo />,
     };
 
     return (
