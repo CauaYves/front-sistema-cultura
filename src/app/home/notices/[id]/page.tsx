@@ -59,7 +59,7 @@ export default function NoticeDetails({
         1: <ProposalInfo router={router} urlSearchParams={searchParams} />,
         2: <ResponsibleInfo router={router} urlSearchParams={searchParams} />,
         3: <CoordinatorInfo router={router} urlSearchParams={searchParams} />,
-        4: <ReviewInfo />,
+        4: <ReviewInfo urlSearchParams={searchParams} notice={details} />,
     };
 
     return (
