@@ -1,3 +1,4 @@
+import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ArticleIcon from '@mui/icons-material/Article';
 import PeopleIcon from '@mui/icons-material/People';
 import Person4Icon from '@mui/icons-material/Person4';
@@ -67,6 +68,7 @@ function ColorlibStepIcon(props: StepIconProps) {
         3: <Person4Icon />,
         4: <Person4Icon />,
         5: <RateReviewIcon />,
+        6: <AnalyticsIcon />,
     };
 
     return (

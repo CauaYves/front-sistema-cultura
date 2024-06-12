@@ -1,6 +1,13 @@
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
+export interface SubscriptionProps {
+    router: AppRouterInstance;
+    userPF: CulturalAgentPf | undefined;
+    userPJ: CulturalAgentPj | undefined;
+    searchParams: any;
+}
+
 export type Notice = {
     city: string;
     createdAt: string;

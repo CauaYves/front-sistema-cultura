@@ -1,4 +1,4 @@
-import { Container, CssBaseline, styled } from '@mui/material';
+import { Box, CssBaseline, styled } from '@mui/material';
 import { ReactNode } from 'react';
 
 export default function RootBox({ children }: { children: ReactNode }) {
@@ -10,9 +10,10 @@ export default function RootBox({ children }: { children: ReactNode }) {
     );
 }
 
-const MainContainer = styled(Container)(({ theme }) => ({
+const MainContainer = styled(Box)(({ theme }) => ({
     maxWidth: theme.breakpoints.values.xl,
-    background: '#eeeeee',
+    background: '#eeee',
+    margin: 'auto',
     minHeight: '100vh',
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
