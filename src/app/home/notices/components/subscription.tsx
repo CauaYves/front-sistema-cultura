@@ -122,37 +122,34 @@ export default function Subscription({
                         Passo a passo
                     </AccordionSummaryStld>
                     <AccordionDetails>
-                        <Typography variant="body2">
-                            <ul>
-                                <li>Faça download do Manual do Proponente</li>
-                                <li>
-                                    Tenha em mãos os dados do proponente e do
-                                    projeto
-                                </li>
-                                <li>Faça o Cadastro do Proponente</li>
-                                <li>
-                                    Selecione o perfil do proponente (pessoa
-                                    física ou pessoa jurídica)
-                                </li>
-                                <li>
-                                    Depois acesse “Iniciar processo de
-                                    inscrição”
-                                </li>
-                                <li>
-                                    Anexe os Documentos Obrigatórios e a
-                                    Documentação Complementar
-                                </li>
-                                <li>
-                                    Clique em {'Concluir'} para enviar a
-                                    inscrição do projeto;
-                                </li>
-                                <li>
-                                    Imprima o comprovante de inscrição e os
-                                    cadastros do proponente e do projeto para
-                                    seu arquivo
-                                </li>
-                            </ul>
-                        </Typography>
+                        <ul>
+                            <li>Faça download do Manual do Proponente</li>
+                            <li>
+                                Tenha em mãos os dados do proponente e do
+                                projeto
+                            </li>
+                            <li>Faça o Cadastro do Proponente</li>
+                            <li>
+                                Selecione o perfil do proponente (pessoa física
+                                ou pessoa jurídica)
+                            </li>
+                            <li>
+                                Depois acesse “Iniciar processo de inscrição”
+                            </li>
+                            <li>
+                                Anexe os Documentos Obrigatórios e a
+                                Documentação Complementar
+                            </li>
+                            <li>
+                                Clique em {'Concluir'} para enviar a inscrição
+                                do projeto;
+                            </li>
+                            <li>
+                                Imprima o comprovante de inscrição e os
+                                cadastros do proponente e do projeto para seu
+                                arquivo
+                            </li>
+                        </ul>
                     </AccordionDetails>
                 </Accordion>
                 <Typography mt={2} mb={2}>
@@ -172,32 +169,29 @@ export default function Subscription({
                         Documentação do Proponente Pessoa Física
                     </AccordionSummaryStld>
                     <AccordionDetails>
-                        <Typography variant="body2">
-                            <ol>
-                                <li>RG e CPF;</li>
-                                <li>
-                                    Comprovante de residência dos últimos 3
-                                    (três) meses;
-                                </li>
-                                <li>
-                                    Certidão negativa ou positiva com efeitos de
-                                    negativa da Procuradoria Geral do Estado;
-                                </li>
-                                <li>
-                                    Certidão de Regularidade Fiscal emitida pela
-                                    Secretaria de Estado de Fazenda e
-                                    Planejamento;
-                                </li>
-                                <li>
-                                    Certidão Negativa de Débitos Trabalhistas
-                                    (CNDT);
-                                </li>
-                                <li>
-                                    Certidão Negativa de Débitos Relativos aos
-                                    Tributos Federais e à Dívida Ativa da União;
-                                </li>
-                            </ol>
-                        </Typography>
+                        <ol>
+                            <li>RG e CPF;</li>
+                            <li>
+                                Comprovante de residência dos últimos 3 (três)
+                                meses;
+                            </li>
+                            <li>
+                                Certidão negativa ou positiva com efeitos de
+                                negativa da Procuradoria Geral do Estado;
+                            </li>
+                            <li>
+                                Certidão de Regularidade Fiscal emitida pela
+                                Secretaria de Estado de Fazenda e Planejamento;
+                            </li>
+                            <li>
+                                Certidão Negativa de Débitos Trabalhistas
+                                (CNDT);
+                            </li>
+                            <li>
+                                Certidão Negativa de Débitos Relativos aos
+                                Tributos Federais e à Dívida Ativa da União;
+                            </li>
+                        </ol>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion
@@ -214,43 +208,40 @@ export default function Subscription({
                         Documentação do Proponente Pessoa Jurídica
                     </AccordionSummaryStld>
                     <AccordionDetails>
-                        <Typography variant="body2">
-                            <ol>
-                                <li>
-                                    Cópia do Contrato Social ou Estatuto Social
-                                    com última alteração/última ata;
-                                </li>
-                                <li>
-                                    Cópia do RG e CPF do dirigente ou
-                                    representante legal do proponente;
-                                </li>
-                                <li>
-                                    Comprovante de inscrição e de situação
-                                    cadastral no CNPJ;
-                                </li>
-                                <li>
-                                    Certificado de regularidade de situação
-                                    relativa ao FGTS;
-                                </li>
-                                <li>
-                                    Certidão negativa ou positiva com efeitos de
-                                    negativa da Procuradoria Geral do Estado;
-                                </li>
-                                <li>
-                                    Certidão de Regularidade Fiscal emitida pela
-                                    Secretaria de Estado de Fazenda e
-                                    Planejamento;
-                                </li>
-                                <li>
-                                    Certidão Negativa de Débitos Trabalhistas
-                                    (CNDT);
-                                </li>
-                                <li>
-                                    Certidão Negativa de Débitos Relativos aos
-                                    Tributos Federais e à Dívida Ativa da União
-                                </li>
-                            </ol>
-                        </Typography>
+                        <ol>
+                            <li>
+                                Cópia do Contrato Social ou Estatuto Social com
+                                última alteração/última ata;
+                            </li>
+                            <li>
+                                Cópia do RG e CPF do dirigente ou representante
+                                legal do proponente;
+                            </li>
+                            <li>
+                                Comprovante de inscrição e de situação cadastral
+                                no CNPJ;
+                            </li>
+                            <li>
+                                Certificado de regularidade de situação relativa
+                                ao FGTS;
+                            </li>
+                            <li>
+                                Certidão negativa ou positiva com efeitos de
+                                negativa da Procuradoria Geral do Estado;
+                            </li>
+                            <li>
+                                Certidão de Regularidade Fiscal emitida pela
+                                Secretaria de Estado de Fazenda e Planejamento;
+                            </li>
+                            <li>
+                                Certidão Negativa de Débitos Trabalhistas
+                                (CNDT);
+                            </li>
+                            <li>
+                                Certidão Negativa de Débitos Relativos aos
+                                Tributos Federais e à Dívida Ativa da União
+                            </li>
+                        </ol>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion
@@ -267,67 +258,65 @@ export default function Subscription({
                         Documentação do Projeto – Modelos em downloads
                     </AccordionSummaryStld>
                     <AccordionDetails>
-                        <Typography variant="body2">
-                            <ol>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/12JtAS2Rx-BuQjBp8EbEyFWIopb2A_KVV/view"
-                                    >
-                                        Planilha orçamentária
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/1xF8jyF9huCHkcTgfJq0QIa9SUZBKByOj/view"
-                                    >
-                                        Cronograma
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/1wkvJoQS1cx3qy5V6c5bCjLCOtsCQL-7H/view"
-                                    >
-                                        Plano de distribuição
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/1h5pnAEtIq2ZvyzVd5Vij8jfiTI_xCepJ/view"
-                                    >
-                                        Plano de divulgação
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/1o59g9IdeUJf5gzeK1C6U4LeM3G93uPup/view"
-                                    >
-                                        Plano Metodológico (Projetos Continuados
-                                        e Projetos acima de R$ 1,5 milhão)
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/13j4KxlZKl3C_ZBDhka_5ex6XbgqhB-X3/view"
-                                    >
-                                        Declaração de intenção de patrocínio
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        target="_blank"
-                                        href="https://drive.google.com/file/d/1M1juh4EHR6yRRyaTRaKKkBI3EuSI_cAZ/view"
-                                    >
-                                        Declaração de patrocínio
-                                    </Link>
-                                </li>
-                            </ol>
-                        </Typography>
+                        <ol>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/12JtAS2Rx-BuQjBp8EbEyFWIopb2A_KVV/view"
+                                >
+                                    Planilha orçamentária
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/1xF8jyF9huCHkcTgfJq0QIa9SUZBKByOj/view"
+                                >
+                                    Cronograma
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/1wkvJoQS1cx3qy5V6c5bCjLCOtsCQL-7H/view"
+                                >
+                                    Plano de distribuição
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/1h5pnAEtIq2ZvyzVd5Vij8jfiTI_xCepJ/view"
+                                >
+                                    Plano de divulgação
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/1o59g9IdeUJf5gzeK1C6U4LeM3G93uPup/view"
+                                >
+                                    Plano Metodológico (Projetos Continuados e
+                                    Projetos acima de R$ 1,5 milhão)
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/13j4KxlZKl3C_ZBDhka_5ex6XbgqhB-X3/view"
+                                >
+                                    Declaração de intenção de patrocínio
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    target="_blank"
+                                    href="https://drive.google.com/file/d/1M1juh4EHR6yRRyaTRaKKkBI3EuSI_cAZ/view"
+                                >
+                                    Declaração de patrocínio
+                                </Link>
+                            </li>
+                        </ol>
                     </AccordionDetails>
                 </Accordion>
                 <Accordion
@@ -344,107 +333,101 @@ export default function Subscription({
                         Documentação do Projeto
                     </AccordionSummaryStld>
                     <AccordionDetails>
-                        <Typography variant="body2">
-                            <ol>
-                                <li>
-                                    Documentos que comprovem a anuência de
-                                    artistas envolvidos no projeto;
-                                </li>
-                                <li>
-                                    Autorização dos órgãos competentes para a
-                                    liberação de espaço, no caso de projeto que
-                                    se realize em locais públicos;
-                                </li>
-                                <li>
-                                    Documentos que comprovem a anuência de
-                                    espaços culturais privados, tais como
-                                    teatros, casas de shows, centros culturais e
-                                    afins, no caso de projeto que se realize
-                                    nesses espaços;
-                                </li>
-                                <li>
-                                    Contrato de agenciamento, no caso de projeto
-                                    que preveja despesas relativas à captação de
-                                    recursos, acompanhado de contrato social e
-                                    currículo da empresa prestadora do serviço,
-                                    ou documentação de identificação (RG e CPF)
-                                    e currículo da pessoa física contratada;
-                                </li>
-                                <li>
-                                    Autorização dos órgãos responsáveis pelo
-                                    tombamento ou preservação, no caso de obra
-                                    de restauração e conservação;
-                                </li>
-                                <li>
-                                    Autorização do proprietário, no caso de
-                                    aquisição de obras, coleções e acervos e
-                                    projetos de obra de restauração de
-                                    patrimônio tombado;
-                                </li>
-                                <li>
-                                    Autorização da instituição pública que irá
-                                    receber a doação de obras, coleções e
-                                    acervos através da Lei Estadual de Incentivo
-                                    à Cultura;
-                                </li>
-                                <li>
-                                    Autorização dos proprietários dos direitos
-                                    autorais e conexos pertinentes à realização
-                                    do projeto cultural, quando for o caso;
-                                </li>
-                                <li>
-                                    Documento de posse ou de direito de uso do
-                                    imóvel, no caso de implantação de
-                                    equipamento cultural;
-                                </li>
-                                <li>
-                                    Inventário acompanhado de laudo técnico, no
-                                    caso de aquisição de obras, coleções e
-                                    acervos;
-                                </li>
-                                <li>
-                                    Planejamento metodológico de formação
-                                    cultural, no caso de projeto que envolva
-                                    atividades de formação na área de Cultura;
-                                </li>
-                                <li>
-                                    No caso de receita líquida totalmente
-                                    revertida para o espaço de realização do
-                                    projeto, conforme previsto no item 8.3.2,
-                                    deverá ser apresentado contrato demonstrando
-                                    os acordos entre as partes.;
-                                </li>
-                                <li>
-                                    Contrato de locação de imóvel, registrado em
-                                    cartório, no caso de despesa prevista para
-                                    projetos de programação anual e/ou
-                                    manutenção de equipamento cultural;
-                                </li>
-                                <li>
-                                    Todos os projetos de produção audiovisual
-                                    financiados com recursos públicos federais
-                                    geridos pela ANCINE deverão anexar o
-                                    orçamento aprovado no campo documentação
-                                    complementar da ficha de inscrição do
-                                    projeto;
-                                </li>
-                                <li>
-                                    Anteprojeto da obra contendo, no mínimo,
-                                    planta de situação, plantas de todos os
-                                    pavimentos, planta de cobertura, corte
-                                    transversal e longitudinal e fachadas
-                                    diferenciando partes a demolir, a manter e a
-                                    construir no caso de projetos de obras de
-                                    restauração de patrimônio tombado;
-                                </li>
-                                <li>
-                                    Memorial descritivo, diagnóstico do estado
-                                    de conservação do bem, incluindo mapeamento
-                                    de danos no caso de projetos de obras de
-                                    restauração de patrimônio tombado;
-                                </li>
-                            </ol>
-                        </Typography>
+                        <ol>
+                            <li>
+                                Documentos que comprovem a anuência de artistas
+                                envolvidos no projeto;
+                            </li>
+                            <li>
+                                Autorização dos órgãos competentes para a
+                                liberação de espaço, no caso de projeto que se
+                                realize em locais públicos;
+                            </li>
+                            <li>
+                                Documentos que comprovem a anuência de espaços
+                                culturais privados, tais como teatros, casas de
+                                shows, centros culturais e afins, no caso de
+                                projeto que se realize nesses espaços;
+                            </li>
+                            <li>
+                                Contrato de agenciamento, no caso de projeto que
+                                preveja despesas relativas à captação de
+                                recursos, acompanhado de contrato social e
+                                currículo da empresa prestadora do serviço, ou
+                                documentação de identificação (RG e CPF) e
+                                currículo da pessoa física contratada;
+                            </li>
+                            <li>
+                                Autorização dos órgãos responsáveis pelo
+                                tombamento ou preservação, no caso de obra de
+                                restauração e conservação;
+                            </li>
+                            <li>
+                                Autorização do proprietário, no caso de
+                                aquisição de obras, coleções e acervos e
+                                projetos de obra de restauração de patrimônio
+                                tombado;
+                            </li>
+                            <li>
+                                Autorização da instituição pública que irá
+                                receber a doação de obras, coleções e acervos
+                                através da Lei Estadual de Incentivo à Cultura;
+                            </li>
+                            <li>
+                                Autorização dos proprietários dos direitos
+                                autorais e conexos pertinentes à realização do
+                                projeto cultural, quando for o caso;
+                            </li>
+                            <li>
+                                Documento de posse ou de direito de uso do
+                                imóvel, no caso de implantação de equipamento
+                                cultural;
+                            </li>
+                            <li>
+                                Inventário acompanhado de laudo técnico, no caso
+                                de aquisição de obras, coleções e acervos;
+                            </li>
+                            <li>
+                                Planejamento metodológico de formação cultural,
+                                no caso de projeto que envolva atividades de
+                                formação na área de Cultura;
+                            </li>
+                            <li>
+                                No caso de receita líquida totalmente revertida
+                                para o espaço de realização do projeto, conforme
+                                previsto no item 8.3.2, deverá ser apresentado
+                                contrato demonstrando os acordos entre as
+                                partes.;
+                            </li>
+                            <li>
+                                Contrato de locação de imóvel, registrado em
+                                cartório, no caso de despesa prevista para
+                                projetos de programação anual e/ou manutenção de
+                                equipamento cultural;
+                            </li>
+                            <li>
+                                Todos os projetos de produção audiovisual
+                                financiados com recursos públicos federais
+                                geridos pela ANCINE deverão anexar o orçamento
+                                aprovado no campo documentação complementar da
+                                ficha de inscrição do projeto;
+                            </li>
+                            <li>
+                                Anteprojeto da obra contendo, no mínimo, planta
+                                de situação, plantas de todos os pavimentos,
+                                planta de cobertura, corte transversal e
+                                longitudinal e fachadas diferenciando partes a
+                                demolir, a manter e a construir no caso de
+                                projetos de obras de restauração de patrimônio
+                                tombado;
+                            </li>
+                            <li>
+                                Memorial descritivo, diagnóstico do estado de
+                                conservação do bem, incluindo mapeamento de
+                                danos no caso de projetos de obras de
+                                restauração de patrimônio tombado;
+                            </li>
+                        </ol>
                     </AccordionDetails>
                 </Accordion>
             </StyledBox>

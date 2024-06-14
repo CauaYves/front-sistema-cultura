@@ -44,8 +44,8 @@ const steps = [
     'Inserir dados da proposta',
     'Inserir dados do responsável',
     'Inserir dados do coordenador',
-    'Revisar dados e Confirmar',
-    'Indicadores PMC',
+    'Enviar arquivos e Confirmar',
+    'Indicadores PMC (OPCIONAL)',
 ];
 
 export { steps, subscriptionInformation };

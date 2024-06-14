@@ -48,3 +48,43 @@ export type ProposalInfoProps = {
     router: AppRouterInstance;
     urlSearchParams: UrlsearchParamsProps;
 };
+
+interface Proposal {
+    name: string;
+    description: string;
+    justification: string;
+    accessibility: string;
+    accessDemocratization: string;
+    executionPlace: string;
+    publicServed: string;
+    attachments: any[];
+}
+
+interface Connections {
+    noticePreviewId: string;
+    [key: string]: number | string;
+}
+
+interface Person {
+    name: string;
+    cpf: string;
+    rg: string;
+    issuingBody: string;
+    email: string;
+    tel: string;
+    cep: string;
+    address: string;
+    number: string;
+    complement: string;
+    neighboorHood: string;
+    county: string;
+    uf: string;
+    activiesOnLastTwoYears: string;
+}
+
+export interface TransformedObject {
+    proposal: Proposal;
+    connections: Connections;
+    responsible: Person;
+    coordinator: Person;
+}

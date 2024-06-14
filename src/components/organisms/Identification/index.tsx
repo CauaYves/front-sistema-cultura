@@ -1,25 +1,25 @@
+import { FileInput, WebFile } from '@/components/molecules';
+import { useSnackbar } from '@/context/snackbar-context';
+import { appLocalStore } from '@/hooks';
+import PersonIcon from '@mui/icons-material/Person';
 import { Box, SelectChangeEvent, Typography } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { FormEvent, useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/pt-br';
 import Link from 'next/link';
-import { useSnackbar } from '@/context/snackbar-context';
-import PersonIcon from '@mui/icons-material/Person';
-import { PapersContainer, StyledPaper } from './styles';
+import { FormEvent, useState } from 'react';
+import IdentificationForm from './components/Identification';
+import AddressForm from './components/address';
+import ButtonsContainerComp from './components/buttonsContainer';
 import CompanyData from './components/companyData';
-import FisicPersonData from './components/fisicPersonData';
 import ContactFormPF from './components/contactFormPF';
 import ContactFormPJ from './components/contactFormPJ';
-import FileInput, { WebFile } from '@/components/molecules/fileUpload';
-import { handleSubmit } from './services';
-import IdentificationForm from './components/Identification';
-import ProponentForm from './components/proponentType';
-import AddressForm from './components/address';
+import FisicPersonData from './components/fisicPersonData';
 import InterestAreaForm from './components/interestArea';
-import ButtonsContainerComp from './components/buttonsContainer';
-import { IdentificationProps, IdentificationModulesKey } from './types';
-import { appLocalStore } from '@/hooks';
+import ProponentForm from './components/proponentType';
+import { handleSubmit } from './services';
+import { PapersContainer, StyledPaper } from './styles';
+import { IdentificationModulesKey, IdentificationProps } from './types';
 
 export default function Indentification({
     setSelectedModule,
@@ -81,7 +81,11 @@ export default function Indentification({
                     <AddressForm />
                     <InterestAreaForm />
                     <StyledPaper>
-                        <FileInput file={file} setFile={setFile} />
+                        <FileInput
+                            file={file}
+                            setFile={setFile}
+                            caption="Envie o comprovante de residência"
+                        />
                     </StyledPaper>
                 </PapersContainer>
                 <ButtonsContainerComp

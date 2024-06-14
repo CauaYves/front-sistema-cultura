@@ -1,7 +1,7 @@
 import { noticeService } from '@/app/api';
 import enrollmentService from '@/app/api/enrollment';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { SearchParams } from '../types';
+import { TransformedObject } from '../types';
 
 async function getNoticeDetails(
     id: string,
@@ -17,7 +17,7 @@ async function getNoticeDetails(
 
 function incrementAtualStep(
     atualStep: string,
-    searchParams: SearchParams,
+    searchParams: any,
     router: AppRouterInstance,
     paramsToAdd: { [key: string]: string },
 ) {
@@ -37,7 +37,16 @@ async function getUserPFandPJ(token: string) {
     const userPJ = await enrollmentService.getPJNoPromise(token);
     return [userPF, userPJ];
 }
-function transformObject(urlSearchParams: any, noticeId: string) {
+function transformObject(
+    urlSearchParams: any,
+    noticeId: string,
+): TransformedObject {
+    let culturalAgent;
+    if (urlSearchParams.personType === 'pf') {
+        culturalAgent = 'culturalAgentPFId';
+    } else {
+        culturalAgent = 'culturalAgentPJId';
+    }
     return {
         proposal: {
             name: urlSearchParams.name,
@@ -47,9 +56,11 @@ function transformObject(urlSearchParams: any, noticeId: string) {
             accessDemocratization: urlSearchParams.accessDemocratization,
             executionPlace: urlSearchParams.executionPlace,
             publicServed: urlSearchParams.publicServed,
+            attachments: [],
         },
         connections: {
             noticePreviewId: noticeId,
+            [culturalAgent]: Number(urlSearchParams.culturalAgentId),
         },
         responsible: {
             name: urlSearchParams['res.name'],

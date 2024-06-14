@@ -4,8 +4,14 @@ import {
     ButtonWrapper,
     SaveBtn,
     TextInput,
+    cepMask,
+    cpfMask,
+    phoneMask,
 } from '@/components';
+import { StyledTextField } from '@/components/organisms/Identification/styles';
+import { TextField } from '@mui/material';
 import { useSearchParams } from 'next/navigation';
+import MaskedInput from 'react-text-mask';
 import { noticeSlugServices } from '../[id]/services';
 import { NoticesForm } from '../[id]/styles';
 import { ProposalInfoProps } from '../types';
@@ -30,12 +36,49 @@ export default function CoordinatorInfo({ router }: ProposalInfoProps) {
     return (
         <NoticesForm onSubmit={submitForm}>
             <TextInput name="cord.name" label="Nome" />
-            <TextInput name="cord.cpf" label="CPF" />
+            <MaskedInput
+                mask={cpfMask}
+                render={(ref, props) => (
+                    <StyledTextField
+                        {...props}
+                        inputRef={ref}
+                        name="cord.cpf"
+                        label="CPF"
+                    />
+                )}
+            />
             <TextInput name="cord.rg" label="RG" />
             <TextInput name="cord.issuingBody" label="Órgão expedidor" />
-            <TextInput name="cord.email" label="E-mail" />
-            <TextInput name="cord.tel" label="Telefone" />
-            <TextInput name="cord.cep" label="CEP" />
+            <TextInput
+                name="cord.email"
+                label="E-mail"
+                autoComplete="email"
+                required
+                type="email"
+            />
+            <MaskedInput
+                mask={phoneMask}
+                render={(ref, props) => (
+                    <TextField
+                        {...props}
+                        inputRef={ref}
+                        name="cord.tel"
+                        label="Telefone"
+                    />
+                )}
+            />
+            <MaskedInput
+                mask={cepMask}
+                render={(ref, props) => (
+                    <TextField
+                        {...props}
+                        inputRef={ref}
+                        name="cord.cep"
+                        label="CEP"
+                        autoComplete="postal-code"
+                    />
+                )}
+            />
             <TextInput name="cord.address" label="Endereço" />
             <TextInput name="cord.number" label="Número" />
             <TextInput name="cord.complement" label="Complemento" />

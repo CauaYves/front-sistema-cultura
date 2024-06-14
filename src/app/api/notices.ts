@@ -1,3 +1,4 @@
+import { TransformedObject } from '../home/notices/types';
 import instance from './api';
 
 async function getOneById(id: string | number, token: string) {
@@ -14,6 +15,21 @@ async function getOneById(id: string | number, token: string) {
     }
 }
 
+async function createNotice(token: string, body: TransformedObject) {
+    try {
+        console.log(token);
+        const response = await instance.post('/notice', body, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const noticeService = {
     getOneById,
+    createNotice,
 };
