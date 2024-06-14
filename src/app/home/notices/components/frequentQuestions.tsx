@@ -1,4 +1,4 @@
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Link } from '@mui/material';
 
 const frequentQuestionsList = [
     {
@@ -36,24 +36,15 @@ export default function FrequentQuestions() {
         <Box sx={{ paddingLeft: '10px', width: '100%' }}>
             <ol>
                 <li>
-                    <Typography variant="body1">
-                        COMO INSCREVER O PROJETO CULTURAL?
-                    </Typography>
-                    <Typography variant="caption">
-                        O projeto deverá ser inscrito através do sistema
-                        desenvolve cultural –{' '}
-                        <Link href="/home">Clique aqui</Link>
-                    </Typography>
+                    COMO INSCREVER O PROJETO CULTURAL? O projeto deverá ser
+                    inscrito através do sistema desenvolve cultural –{' '}
+                    <Link href="/home">Clique aqui</Link>
                 </li>
                 {frequentQuestionsList.map((question) => {
                     return (
                         <li key={question.title}>
-                            <Typography variant="body1">
-                                {question.title}
-                            </Typography>
-                            <Typography variant="caption">
-                                {question.answer}
-                            </Typography>
+                            {question.title}
+                            {question.answer}
                         </li>
                     );
                 })}

@@ -1,6 +1,11 @@
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import collectiveService from '@/app/api/collective';
+import { cepMask, phoneMask } from '@/components/atoms';
+import { useCollective } from '@/context/collective-context';
 import { useSnackbar } from '@/context/snackbar-context';
 import { appLocalStore } from '@/hooks';
+import { CulturalizeApiError } from '@/protocols';
+import { Collective, inputProps } from '@/types';
+import { filterErrors } from '@/utils/filterErrorMessages';
 import { LoadingButton } from '@mui/lab';
 import {
     Box,
@@ -13,12 +18,8 @@ import {
     Typography,
 } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
-import { Collective, inputProps } from '@/types';
-import collectiveService from '@/app/api/collective';
-import { useCollective } from '@/context/collective-context';
-import { CulturalizeApiError } from '@/protocols';
-import { filterErrors } from '@/utils/filterErrorMessages';
 import MaskedInput from 'react-text-mask';
 
 interface EditModalProps {
@@ -150,23 +151,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
                         />
                     </FormControl>
                     <MaskedInput
-                        mask={[
-                            '(',
-                            /\d/,
-                            /\d/,
-                            ')',
-                            ' ',
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            '-',
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                        ]}
+                        mask={phoneMask}
                         render={(ref, props) => (
                             <TextField
                                 {...props}
@@ -174,7 +159,6 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
                                 name="phone"
                                 {...inputProps}
                                 label="Telefone"
-                                autoComplete="postal-code"
                             />
                         )}
                     />
@@ -202,17 +186,7 @@ export default function CollectiveModal({ close }: Readonly<EditModalProps>) {
                         required={false}
                     />
                     <MaskedInput
-                        mask={[
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                            '-',
-                            /\d/,
-                            /\d/,
-                            /\d/,
-                        ]}
+                        mask={cepMask}
                         render={(ref, props) => (
                             <TextField
                                 {...props}

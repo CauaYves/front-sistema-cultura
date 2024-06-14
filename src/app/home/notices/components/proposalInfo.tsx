@@ -5,10 +5,10 @@ import {
     SaveBtn,
     TextInput,
 } from '@/components';
-import { ProposalInfoProps } from '../types';
 import { useSearchParams } from 'next/navigation';
 import { noticeSlugServices } from '../[id]/services';
 import { NoticesForm } from '../[id]/styles';
+import { ProposalInfoProps } from '../types';
 
 export default function ProposalInfo({ router }: ProposalInfoProps) {
     const searchParams = useSearchParams();
@@ -51,6 +51,11 @@ export default function ProposalInfo({ router }: ProposalInfoProps) {
             <TextInput
                 name="accessDemocratization"
                 label="Descreva as medidas de democratização do acesso da proposta (até 500 caracteres)"
+                multiline
+            />
+            <TextInput
+                name="publicServed"
+                label="Descreva para qual tipo de público está destinado sua proposta (até 500 caracteres)"
                 multiline
             />
             <ButtonBox>

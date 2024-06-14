@@ -72,7 +72,10 @@ export default function NoticeDetails({
                 <Box mt={5}>
                     {pages[searchParams.activeStep as unknown as number]}
                 </Box>
-                <BackButton sx={{ marginTop: '10px', marginLeft: '15px' }}>
+                <BackButton
+                    sx={{ marginTop: '10px', marginLeft: '15px' }}
+                    onClick={() => router.push('/home')}
+                >
                     Voltar
                 </BackButton>
             </FlexibleBox>
