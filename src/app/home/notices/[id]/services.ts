@@ -1,5 +1,7 @@
 import { noticeService } from '@/app/api';
 import enrollmentService from '@/app/api/enrollment';
+import { CulturalizeApiError } from '@/protocols';
+import { filterErrors } from '@/utils/filterErrorMessages';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { TransformedObject } from '../types';
 
@@ -32,11 +34,13 @@ function incrementAtualStep(
 
     router.push(`${window.location.pathname}?${currentParams.toString()}`);
 }
+
 async function getUserPFandPJ(token: string) {
     const userPF = await enrollmentService.getPFNoPromise(token);
     const userPJ = await enrollmentService.getPJNoPromise(token);
     return [userPF, userPJ];
 }
+
 function transformObject(
     urlSearchParams: any,
     noticeId: string,
@@ -97,9 +101,22 @@ function transformObject(
     };
 }
 
+function handleError(error: CulturalizeApiError<any>) {
+    const { response } = error;
+    const status = response.status;
+    let message = '';
+    if (status === 409 || 422) {
+        message = response.data;
+    } else if (status === 400) {
+        message = filterErrors(response.data.details);
+    }
+    return message;
+}
+
 export const noticeSlugServices = {
     getNoticeDetails,
     incrementAtualStep,
     getUserPFandPJ,
     transformObject,
+    handleError,
 };

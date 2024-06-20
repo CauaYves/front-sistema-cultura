@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState, useContext } from 'react';
+import React, { createContext, useContext, useMemo, useState } from 'react';
 
 export type SnackbarState = {
     message: string;
@@ -20,6 +20,10 @@ const SnackbarContext = createContext<SnackbarContextType>({
 });
 
 export function useSnackbar() {
+    const context = useContext(SnackbarContext);
+    if (!context) {
+        throw new Error('useUserData must be used within a UserDataProvider');
+    }
     return useContext(SnackbarContext);
 }
 

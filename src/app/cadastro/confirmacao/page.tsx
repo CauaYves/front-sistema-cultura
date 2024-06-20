@@ -1,27 +1,22 @@
 'use client';
+import authService from '@/app/api/auth';
+import { Copyright } from '@/components/atoms';
+import { SnackbarState } from '@/context/snackbar-context';
+import { LoadingButton } from '@mui/lab';
 import {
+    Alert,
     Box,
     Container,
     Grid,
     Link,
-    TextField,
     Snackbar,
-    Alert,
+    TextField,
     Typography,
 } from '@mui/material';
-import Image from 'next/image';
-import { Copyright } from '@/components/atoms';
-import { LoadingButton } from '@mui/lab';
-import { useState } from 'react';
 import { AxiosError, AxiosResponse } from 'axios';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import authService from '@/app/api/auth';
-
-interface SnackbarState {
-    message: string;
-    severity: 'success' | 'error' | 'info' | 'warning';
-    open: boolean;
-}
+import { useState } from 'react';
 
 export default function Confirmacao() {
     const router = useRouter();

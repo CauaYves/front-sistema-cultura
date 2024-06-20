@@ -1,5 +1,11 @@
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import collectiveService from '@/app/api/collective';
+import { cepMask, phoneMask } from '@/components/atoms';
+import { useCollective } from '@/context/collective-context';
 import { useSnackbar } from '@/context/snackbar-context';
+import { appLocalStore } from '@/hooks';
+import { CulturalizeApiError, DataFields } from '@/protocols';
+import { Collective, UserData, inputProps } from '@/types';
+import { filterErrors } from '@/utils/filterErrorMessages';
 import { LoadingButton } from '@mui/lab';
 import {
     Box,
@@ -12,16 +18,10 @@ import {
     Typography,
 } from '@mui/material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { useEffect, useState } from 'react';
-import { Collective, inputProps, UserData } from '@/types';
-import collectiveService from '@/app/api/collective';
-import { useCollective } from '@/context/collective-context';
-import { CulturalizeApiError } from '@/protocols';
-import { filterErrors } from '@/utils/filterErrorMessages';
-import MaskedInput from 'react-text-mask';
-import { cepMask, phoneMask } from '@/components/atoms';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { appLocalStore } from '@/hooks';
+import { useEffect, useState } from 'react';
+import MaskedInput from 'react-text-mask';
 
 interface EditModalProps {
     close: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,11 +57,11 @@ export default function EditCollectiveModal({
 
     const handleStartLoading = () => setLoading(true);
     const handleStopLoading = () => setLoading(false);
-    const handleError = (error: CulturalizeApiError) => {
+    const handleError = (error: CulturalizeApiError<DataFields>) => {
         console.error(error);
         let message = '';
         if (error.response.status === 400) {
-            message = filterErrors(error);
+            message = filterErrors(error.response.data.details);
         } else {
             message = error.response.data.message;
         }

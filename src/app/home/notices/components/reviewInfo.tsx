@@ -13,17 +13,25 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { noticeSlugServices } from '../[id]/services';
+import { ReviewInfoProps } from '../types';
 
-export default function ReviewInfo({ urlSearchParams, notice }: any) {
-    const { transformObject } = noticeSlugServices;
+export default function ReviewInfo({
+    urlSearchParams,
+    notice,
+    setSnackbar,
+}: ReviewInfoProps) {
+    const { transformObject, handleError } = noticeSlugServices;
     const [files, setFiles] = useState<WebFile[][]>([]);
-
+    const [loading, setLoading] = useState(false);
     if (!notice) return <LoadingScreen open />;
     const searchParamsParsed = transformObject(urlSearchParams, notice.id);
     const handleFilesChange = (index: number, newFiles: WebFile[]) => {
         const updatedFiles = [...files];
         updatedFiles[index] = newFiles;
         setFiles(updatedFiles);
+    };
+    const handleLoading = (bool: boolean) => {
+        setLoading(bool);
     };
     async function handleSubmit() {
         const body = searchParamsParsed;
@@ -38,8 +46,28 @@ export default function ReviewInfo({ urlSearchParams, notice }: any) {
         if (sessionJSON) {
             const { session } = JSON.parse(sessionJSON);
             const { token } = session;
-            const response = await noticeService.createNotice(token, body);
-            console.log(response);
+            handleLoading(true);
+            const promise = noticeService.createNotice(token, body);
+            handleLoading(false);
+            promise
+                .then((res) => {
+                    console.log(res);
+                    setSnackbar({
+                        message: 'Proposta enviada com sucesso! ',
+                        open: true,
+                        severity: 'success',
+                    });
+                    //TODO Enviar arquivos atraves de urls assinadas recebidas
+                })
+                .catch((error) => {
+                    console.log(error);
+                    const message = handleError(error);
+                    setSnackbar({
+                        message,
+                        open: true,
+                        severity: 'warning',
+                    });
+                });
         }
     }
 
@@ -75,7 +103,7 @@ export default function ReviewInfo({ urlSearchParams, notice }: any) {
                     ))}
             </List>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <SaveButton onClick={() => handleSubmit()}>
+                <SaveButton loading={loading} onClick={() => handleSubmit()}>
                     Enviar Proposta
                 </SaveButton>
             </Box>

@@ -15,18 +15,13 @@ async function getOneById(id: string | number, token: string) {
     }
 }
 
-async function createNotice(token: string, body: TransformedObject) {
-    try {
-        console.log(token);
-        const response = await instance.post('/notice', body, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
+function createNotice(token: string, body: TransformedObject) {
+    const promise = instance.post('/notice', body, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return promise;
 }
 
 export const noticeService = {

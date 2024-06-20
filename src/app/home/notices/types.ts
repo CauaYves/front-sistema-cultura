@@ -1,5 +1,7 @@
+import { SnackbarState } from '@/context/snackbar-context';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { Dispatch, SetStateAction } from 'react';
 
 export interface SubscriptionProps {
     router: AppRouterInstance;
@@ -87,4 +89,10 @@ export interface TransformedObject {
     connections: Connections;
     responsible: Person;
     coordinator: Person;
+}
+
+export interface ReviewInfoProps {
+    setSnackbar: Dispatch<SetStateAction<SnackbarState>>;
+    urlSearchParams: any;
+    notice: any;
 }

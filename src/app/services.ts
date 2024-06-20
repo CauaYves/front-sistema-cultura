@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { AxiosResponse } from 'axios';
-import { AlertColor } from '@mui/material';
-import authService from './api/auth';
-import { CulturalizeApiError } from '@/protocols';
-import { appLocalStore } from '@/hooks';
 import { useUserData } from '@/context/user-context';
+import { appLocalStore } from '@/hooks';
+import { CulturalizeApiError, DataFields } from '@/protocols';
+import { AlertColor } from '@mui/material';
+import { AxiosResponse } from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import authService from './api/auth';
 
 const useSignInHandlers = () => {
     const router = useRouter();
@@ -39,7 +39,7 @@ const useSignInHandlers = () => {
                 setRequestMessage('Login efetuado com sucesso!');
                 setTimeout(() => router.push('/home'), 1500);
             })
-            .catch(({ response }: CulturalizeApiError) => {
+            .catch(({ response }: CulturalizeApiError<DataFields>) => {
                 const { status, data } = response;
                 let errorMessage = '';
 

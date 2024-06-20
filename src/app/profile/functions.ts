@@ -20,7 +20,7 @@ export const handleDealWithPromise = ({
         .then((res: ApiResponse<CulturalAgentPf | CulturalAgentPj>) => {
             setAgent(res.data);
         })
-        .catch((error: CulturalizeApiError) => {
+        .catch((error: CulturalizeApiError<string>) => {
             console.log(error);
             if (!error.response) return;
             if (error.response.status === 401) {

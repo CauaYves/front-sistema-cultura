@@ -1,9 +1,6 @@
-import { CulturalizeApiError } from '@/protocols';
-
-function filterErrors(error: CulturalizeApiError) {
+function filterErrors(error: string[]) {
     let message = '';
-    const errorDetails = error.response?.data.details;
-    errorDetails.forEach((detail: string) => {
+    error.forEach((detail: string) => {
         message += detail;
     });
     return message;

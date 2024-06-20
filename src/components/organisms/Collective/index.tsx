@@ -1,18 +1,17 @@
 /* eslint-disable prettier/prettier */
-import { Button, Dialog, Paper } from '@mui/material';
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useSnackbar } from '@/context/snackbar-context';
-import { useCollective } from '@/context/collective-context';
-import { Collective } from '@/types';
 import collectiveService from '@/app/api/collective';
 import CollectiveModal from '@/components/molecules/modals/collective';
-import { CulturalizeApiError } from '@/protocols';
-import { handleDeleteCollective } from './collectiveUtils';
 import EditCollectiveModal from '@/components/molecules/modals/editCollective';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useCollective } from '@/context/collective-context';
+import { useSnackbar } from '@/context/snackbar-context';
 import { appLocalStore } from '@/hooks';
+import { CulturalizeApiError, DataFields } from '@/protocols';
+import { Collective } from '@/types';
+import { Button, Dialog, Paper } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useEffect, useState } from 'react';
+import { handleDeleteCollective } from './collectiveUtils';
 import CollectiveCollumns from './collumns';
 
 interface TableCollectiveRow extends Collective {
@@ -46,7 +45,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCollective, refreshTable]);
 
-    const handleError = async (error: CulturalizeApiError) => {
+    const handleError = async (error: CulturalizeApiError<DataFields>) => {
         if (error.response.status === 401) {
             setSnackbar({
                 message: 'Token de acesso expirado, faça login novamente! ',

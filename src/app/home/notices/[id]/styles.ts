@@ -33,6 +33,8 @@ export const NoticesForm = styled('form')(({ theme }) => ({
 
 export const ButtonBox = styled(Box)(({ theme }) => ({
     margin: `${theme.spacing(2)} 0px`,
+    display: 'flex',
+    justifyContent: 'center',
 }));
 
 export const ButtonGroupStld = styled(ButtonGroup)(({ theme }) => ({
@@ -59,4 +61,31 @@ export const AccordionSummaryStld = styled(AccordionSummary)(({ theme }) => ({
 
 export const StyledBox = styled(Box)(({ theme }) => ({
     margin: `${theme.spacing(2)} 0px`,
+}));
+
+export const FlexBox = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+        display: 'block',
+        width: '100%',
+    },
+}));
+
+export const TextFieldWrapper = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+        display: 'block',
+        width: '100%',
+        maxWidth: 'none',
+    },
+}));
+
+export const HalfTextFieldWrapper = styled(Box)(({ theme }) => ({
+    width: '49%',
+    display: 'block',
+    [theme.breakpoints.down('sm')]: {
+        display: 'block',
+        width: '100%',
+        maxWidth: 'none',
+    },
 }));

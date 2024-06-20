@@ -1,21 +1,21 @@
 'use client';
-import * as React from 'react';
-import {
-    Box,
-    Typography,
-    Container,
-    Alert,
-    Snackbar,
-    AlertColor,
-} from '@mui/material';
 import { Copyright } from '@/components/atoms';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { CulturalizeApiError, DataFields } from '@/protocols';
+import {
+    Alert,
+    AlertColor,
+    Box,
+    Container,
+    Snackbar,
+    Typography,
+} from '@mui/material';
 import Image from 'next/image';
-import { CulturalizeApiError } from '@/protocols';
+import { useRouter } from 'next/navigation';
+import * as React from 'react';
+import { useState } from 'react';
 import authService from '../api/auth';
-import RecoverEmailBox from './emailBox';
 import CreateNewPassword from './createNewPassword';
+import RecoverEmailBox from './emailBox';
 
 export default function SignIn() {
     const router = useRouter();
@@ -39,7 +39,7 @@ export default function SignIn() {
                 setRequestMessage('Código enviado com sucesso! ');
                 setCodeAlreadySent(true);
             })
-            .catch(({ response }: CulturalizeApiError) => {
+            .catch(({ response }: CulturalizeApiError<DataFields>) => {
                 const { status, data } = response;
                 let errorMessage = '';
 
