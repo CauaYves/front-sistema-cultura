@@ -1,10 +1,6 @@
 import { mobalBreakpoint } from '@/constants';
 import { Box, FormControl, Paper, styled, TextField } from '@mui/material';
 
-const FlexibleBox = styled(Box)`
-    background-color: red;
-`;
-
 const StyledTextField = styled(TextField)`
     margin: 0px 5px 5px 0px;
     max-width: 70%;
@@ -71,12 +67,11 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 export {
+    ButtonsContainer,
+    PapersContainer,
+    SelectFormControl,
+    StyledPaper,
     StyledTextField,
     TextFieldWrapper,
-    StyledPaper,
-    PapersContainer,
-    ButtonsContainer,
     VisuallyHiddenInput,
-    SelectFormControl,
-    FlexibleBox,
 };

@@ -3,9 +3,10 @@ import { BackButton } from '@/components';
 import RootBox from '@/components/atoms/boxes/rootBox';
 import LoadingScreen from '@/components/atoms/loaders/screenLoading';
 import StepperComp from '@/components/molecules/stepper';
+import { SnackbarState } from '@/context/snackbar-context';
 import { appLocalStore } from '@/hooks';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
-import { Box } from '@mui/material';
+import { Alert, Box, Snackbar } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import CoordinatorInfo from '../components/coordinatorInfo';
@@ -26,9 +27,15 @@ export default function NoticeDetails({
     const [loading, setLoading] = useState(false);
     const [userPF, setUserPF] = useState<CulturalAgentPf | undefined>();
     const [userPJ, setUserPJ] = useState<CulturalAgentPj | undefined>();
+    const [snackbar, setSnackbar] = useState<SnackbarState>({
+        message: '',
+        severity: 'warning',
+        open: false,
+    });
     const router = useRouter();
     const { session } = appLocalStore.get('session');
     const { getNoticeDetails, getUserPFandPJ } = noticeSlugServices;
+
     const handleLoading = (bool: boolean) => setLoading(bool);
 
     useEffect(() => {
@@ -59,11 +66,27 @@ export default function NoticeDetails({
         1: <ProposalInfo router={router} urlSearchParams={searchParams} />,
         2: <ResponsibleInfo router={router} urlSearchParams={searchParams} />,
         3: <CoordinatorInfo router={router} urlSearchParams={searchParams} />,
-        4: <ReviewInfo urlSearchParams={searchParams} notice={details} />,
+        4: (
+            <ReviewInfo
+                urlSearchParams={searchParams}
+                notice={details}
+                setSnackbar={setSnackbar}
+            />
+        ),
     };
-
+    const handleClose = () => {
+        setSnackbar({ ...snackbar, open: false });
+    };
     return (
         <RootBox>
+            <Snackbar
+                onClose={handleClose}
+                open={snackbar.open}
+                autoHideDuration={6000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            >
+                <Alert severity={snackbar.severity}>{snackbar.message} </Alert>
+            </Snackbar>
             <FlexibleBox sx={{ display: 'block' }}>
                 <StepperComp
                     steps={steps}

@@ -55,6 +55,19 @@ function update(token: string, body: User) {
     return promise;
 }
 
+async function checkToken(token: string) {
+    try {
+        const response = await instance.get('/auth/check-token', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 const authService = {
     login,
     getUserData,
@@ -63,6 +76,7 @@ const authService = {
     recoverPassword,
     updatePassword,
     update,
+    checkToken,
 };
 
 export default authService;

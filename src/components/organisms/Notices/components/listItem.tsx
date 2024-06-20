@@ -1,8 +1,8 @@
+import { useSnackbar } from '@/context/snackbar-context';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import useNoticesService from '../services';
 import { StyledBox, StyledBtn, StyledTypo } from '../styles';
 import { NoticePreviewList } from '../types';
-import useNoticesService from '../services';
-import { useSnackbar } from '@/context/snackbar-context';
 
 export default function NoticesListItem({
     id,

@@ -1,12 +1,13 @@
+import authService from '@/app/api/auth';
 import { noticePreviewService } from '@/app/api/noticePreview';
-import { useEffect, useState } from 'react';
-import NoticesList from './components/list';
-import { NoticePreviewList, NoticesProps } from './types';
-import useNoticesService from './services';
+import { noticeSlugServices } from '@/app/home/notices/[id]/services';
 import LoadingScreen from '@/components/atoms/loaders/screenLoading';
 import { useSnackbar } from '@/context/snackbar-context';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
-import { noticeSlugServices } from '@/app/home/notices/[id]/services';
+import { useEffect, useState } from 'react';
+import NoticesList from './components/list';
+import useNoticesService from './services';
+import { NoticePreviewList, NoticesProps } from './types';
 
 export default function Notices({ router, setSelectedModule }: NoticesProps) {
     const [noticeList, setNoticeList] = useState<NoticePreviewList[]>([]);
@@ -27,14 +28,17 @@ export default function Notices({ router, setSelectedModule }: NoticesProps) {
                 open: true,
                 severity: 'warning',
             });
-            // throw new Error('unauthorizedError', {
-            //     cause: 'invalid_token',
-            // });
 
             return router.push('/');
         }
         const { session } = JSON.parse(sessionJSON);
-
+        async function checkIfTokenIsValid() {
+            const response = await authService.checkToken(session.token);
+            if (response !== 'OK') {
+                router.push('/');
+            }
+        }
+        checkIfTokenIsValid();
         const fetchUserPFandPJ = getUserPFandPJ(session.token).then(
             (usersRegistrations) => {
                 setUserPF(usersRegistrations[0]);

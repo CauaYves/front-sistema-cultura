@@ -1,9 +1,9 @@
+import enrollmentService from '@/app/api/enrollment';
+import uploadService from '@/app/api/upload';
 import { WebFile } from '@/components/molecules/fileUpload';
+import { SnackbarState } from '@/context/snackbar-context';
 import { filterErrors } from '@/utils/filterErrorMessages';
 import { FormEvent } from 'react';
-import enrollmentService from '@/app/api/enrollment';
-import { SnackbarState } from '@/context/snackbar-context';
-import uploadService from '@/app/api/upload';
 import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
@@ -95,7 +95,7 @@ export const handleError = (
 ) => {
     let message = '';
     if (error.response.status === 400) {
-        message = filterErrors(error);
+        message = filterErrors(error.response.data.details);
     } else {
         message = error.response.data;
     }

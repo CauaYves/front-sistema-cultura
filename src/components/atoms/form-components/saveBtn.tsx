@@ -5,7 +5,7 @@ function SaveBtn() {
     const { pending } = useFormStatus();
     return (
         <SaveButton type="submit" disabled={pending}>
-            Salvar
+            Próximo
         </SaveButton>
     );
 }

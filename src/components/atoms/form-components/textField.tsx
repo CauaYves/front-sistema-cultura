@@ -10,7 +10,13 @@ function TextInput(props: TextFieldProps) {
 }
 
 const TextFieldWrapper = styled(Box)(({ theme }) => ({
-    margin: `${theme.spacing(1)} 0px`,
+    margin: `${theme.spacing(1)}`,
+    width: '100%',
+    [theme.breakpoints.down('sm')]: {
+        display: 'block',
+        width: '100%',
+        maxWidth: 'none',
+    },
 }));
 
 export { TextInput };

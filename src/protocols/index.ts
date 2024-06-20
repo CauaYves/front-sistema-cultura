@@ -1,10 +1,12 @@
-export interface CulturalizeApiError {
+export type DataFields = {
+    message: string;
+    details: string[];
+};
+
+export interface CulturalizeApiError<T> {
     response: {
         status: number;
-        data: {
-            message: string;
-            details: string[];
-        };
+        data: T;
     };
 }
 
