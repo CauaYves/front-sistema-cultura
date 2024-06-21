@@ -74,9 +74,7 @@ export default function NoticeDetails({
             />
         ),
     };
-    const handleClose = () => {
-        setSnackbar({ ...snackbar, open: false });
-    };
+    const handleClose = () => setSnackbar({ ...snackbar, open: false });
     return (
         <RootBox>
             <Snackbar

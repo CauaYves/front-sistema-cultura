@@ -113,10 +113,28 @@ function handleError(error: CulturalizeApiError<any>) {
     return message;
 }
 
+async function submitForm(
+    event: React.FormEvent<HTMLFormElement>,
+    searchParams: any,
+    router: AppRouterInstance,
+    actualStep: string,
+) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const formValues: { [key: string]: string } = Object.fromEntries(
+        Array.from(formData.entries()).map(([key, value]) => [
+            key,
+            value.toString(),
+        ]),
+    );
+    incrementAtualStep(actualStep, searchParams, router, formValues);
+}
+
 export const noticeSlugServices = {
     getNoticeDetails,
     incrementAtualStep,
     getUserPFandPJ,
     transformObject,
     handleError,
+    submitForm,
 };

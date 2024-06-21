@@ -57,15 +57,6 @@ export default function NoticesInfo({
                     Perguntas Frequentes
                 </ButtonStld>
             </ButtonGroupStld>
-            {/* <Info>
-                <Typography variant="h6">
-                    Você está se inscrevendo no edital: {notice?.name}
-                </Typography>
-                <Typography variant="body1">
-                    leia as observações do edital abaixo <br />
-                    {notice?.observations}
-                </Typography>
-            </Info> */}
             {subModulesKeys[subModule]}
         </FlexibleBox>
     );

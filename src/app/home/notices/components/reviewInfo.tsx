@@ -51,7 +51,7 @@ export default function ReviewInfo({
             handleLoading(false);
             promise
                 .then((res) => {
-                    console.log(res);
+                    // const signedUrls: WebFile[] = res.data;
                     setSnackbar({
                         message: 'Proposta enviada com sucesso! ',
                         open: true,
