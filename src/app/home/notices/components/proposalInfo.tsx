@@ -7,22 +7,10 @@ import FormButtons from './formButtons';
 
 export default function ProposalInfo({ router }: ProposalInfoProps) {
     const searchParams = useSearchParams();
-    const { incrementAtualStep } = noticeSlugServices;
-
-    async function submitForm(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const formValues: { [key: string]: string } = Object.fromEntries(
-            Array.from(formData.entries()).map(([key, value]) => [
-                key,
-                value.toString(),
-            ]),
-        );
-        incrementAtualStep('1', searchParams, router, formValues);
-    }
+    const { submitForm } = noticeSlugServices;
 
     return (
-        <NoticesForm onSubmit={submitForm}>
+        <NoticesForm onSubmit={(e) => submitForm(e, searchParams, router, '1')}>
             <FormTitleSection title="Dados da Proposta" />
             <TextFieldWrapper>
                 <TextInput name="name" label="Nome da proposta" fullWidth />

@@ -18,23 +18,9 @@ import { ProposalInfoProps } from '../types';
 
 export default function CoordinatorInfo({ router }: ProposalInfoProps) {
     const searchParams = useSearchParams();
-    const { incrementAtualStep } = noticeSlugServices;
-
-    async function submitForm(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const formValues: { [key: string]: string } = Object.fromEntries(
-            Array.from(formData.entries()).map(([key, value]) => [
-                key,
-                value.toString(),
-            ]),
-        );
-
-        incrementAtualStep('3', searchParams, router, formValues);
-    }
-
+    const { submitForm } = noticeSlugServices;
     return (
-        <NoticesForm onSubmit={submitForm}>
+        <NoticesForm onSubmit={(e) => submitForm(e, searchParams, router, '3')}>
             <FlexBox>
                 <StyledPaper>
                     <FormTitleSection title="Dados Pessoais" />
