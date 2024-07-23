@@ -25,11 +25,6 @@ export default function ReviewInfo({
     const [loading, setLoading] = useState(false);
     if (!notice) return <LoadingScreen open />;
     const searchParamsParsed = transformObject(urlSearchParams, notice.id);
-    const handleFilesChange = (index: number, newFiles: WebFile[]) => {
-        const updatedFiles = [...files];
-        updatedFiles[index] = newFiles;
-        setFiles(updatedFiles);
-    };
     const handleLoading = (bool: boolean) => {
         setLoading(bool);
     };
@@ -41,7 +36,6 @@ export default function ReviewInfo({
                 contentType: file[0].type,
             });
         });
-        console.log(body);
         const sessionJSON = localStorage.getItem('session');
         if (sessionJSON) {
             const { session } = JSON.parse(sessionJSON);
@@ -50,7 +44,7 @@ export default function ReviewInfo({
             const promise = noticeService.createNotice(token, body);
             handleLoading(false);
             promise
-                .then((res) => {
+                .then(() => {
                     // const signedUrls: WebFile[] = res.data;
                     setSnackbar({
                         message: 'Proposta enviada com sucesso! ',
@@ -60,7 +54,6 @@ export default function ReviewInfo({
                     //TODO Enviar arquivos atraves de urls assinadas recebidas
                 })
                 .catch((error) => {
-                    console.log(error);
                     const message = handleError(error);
                     setSnackbar({
                         message,
@@ -83,11 +76,9 @@ export default function ReviewInfo({
                             <ListItemText primary={upload} />
                             <Box sx={{ background: 'white', width: '20%' }}>
                                 <FileInput
-                                    files={files[index] || []}
+                                    file={files || []}
                                     caption=""
-                                    setFiles={(newFiles: WebFile[]) =>
-                                        handleFilesChange(index, newFiles)
-                                    }
+                                    setFile={setFiles}
                                 />
                             </Box>
                             {files[index] ? (

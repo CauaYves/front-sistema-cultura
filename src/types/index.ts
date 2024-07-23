@@ -103,4 +103,18 @@ const inputProps: InputProps = {
     margin: 'dense',
 };
 
+export type Classification = {
+    category: string;
+    classificationFilesId: number;
+    cpf: string;
+    createdAt: string;
+    id: number;
+    noticeNumber: string;
+    projectNumber: string;
+    proponentName: string;
+    situation: string;
+    updatedAt: string;
+    userId: string;
+};
+
 export { inputProps };

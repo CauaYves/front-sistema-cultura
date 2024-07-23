@@ -8,27 +8,17 @@ import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,
-    file: WebFile[] | undefined,
+    file: WebFile[][] | undefined,
     proponent: IdentificationModulesKey,
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-    const testeArquivo: WebFile[] = [
-        {
-            name: 'teste',
-            lastModified: 21312312,
-            lastModifiedDate: 3243243,
-            type: 'application/pdf',
-            webkitRelativePath: 'relativePath',
-            length: 231123123,
-        },
-    ];
     event.preventDefault();
     handleStartLoading(setLoading)();
     const storedData = localStorage.getItem('session') || '';
     const { session } = JSON.parse(storedData);
 
-    if (!testeArquivo) {
+    if (!file) {
         return setSnackbar({
             message: 'Anexe o comprovante de residência',
             open: true,
@@ -36,7 +26,7 @@ export const handleSubmit = async (
         });
     }
 
-    const formData = createFormData(event, testeArquivo, proponent);
+    const formData = createFormData(event, file, proponent);
     formData.cpf = session.user.cpf;
     formData.name = session.user.name;
 
@@ -47,11 +37,7 @@ export const handleSubmit = async (
 
     try {
         const res = await createEnrollment(formData, session.token);
-        uploadFileAndShowSnackbar(
-            testeArquivo,
-            res.data.signedUrl,
-            setSnackbar,
-        );
+        uploadFileAndShowSnackbar(file, res.data.signedUrl, setSnackbar);
     } catch (error) {
         handleError(setSnackbar, error);
     } finally {
@@ -61,7 +47,7 @@ export const handleSubmit = async (
 
 const createFormData = (
     event: FormEvent<HTMLFormElement>,
-    file: WebFile[],
+    file: WebFile[][],
     proponent: IdentificationModulesKey,
 ) => {
     const data = new FormData(event.currentTarget);
@@ -74,18 +60,18 @@ const createFormData = (
     formData.public = formData.public === 'on';
     formData.programs = [formData.cultura === 'on ' ? 'cultura' : ''];
     formData.upload = {
-        name: file[0].name,
-        contentType: file[0].type,
+        name: file[0][0].name,
+        contentType: file[0][0].type,
     };
     return formData;
 };
 
 const uploadFileAndShowSnackbar = async (
-    file: WebFile[],
+    file: WebFile[][],
     signedUrl: string,
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
 ) => {
-    uploadService.upload(file, signedUrl, file[0].type);
+    uploadService.upload(file, signedUrl, file[0][0].type);
     setSnackbar({
         message: 'cadastro criado com sucesso!',
         open: true,

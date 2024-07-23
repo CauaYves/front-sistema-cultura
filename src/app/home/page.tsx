@@ -4,6 +4,7 @@ import Collective from '@/components/organisms/Collective';
 import Indentification from '@/components/organisms/Identification';
 import LegalActs from '@/components/organisms/LegalActs';
 import Localization from '@/components/organisms/Localization';
+import MyProjects from '@/components/organisms/MyProjects';
 import Notices from '@/components/organisms/Notices';
 import ProfileBar from '@/components/organisms/profile';
 import { useSnackbar } from '@/context/snackbar-context';
@@ -26,7 +27,6 @@ export default function Dashboard() {
     const [selectedModule, setSelectedModule] = useState<ModulesKey>('notices');
     const [openDrawer, setOpenDrawer] = useState(true);
     const { message, open, severity, setSnackbar } = useSnackbar();
-
     const organismObjects: OrganismObjects = {
         identification: (
             <Indentification
@@ -39,6 +39,7 @@ export default function Dashboard() {
         culturalColective: <Collective router={router} />,
         imagesAndLinks: <p>imagesAndLinks</p>,
         documents: <p>documents</p>,
+        myProjects: <MyProjects />,
         authorizedUsers: <p>authorizedUsers</p>,
         notices: (
             <Notices router={router} setSelectedModule={setSelectedModule} />

@@ -1,9 +1,8 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
 import { Divider, Typography } from '@mui/material';
-import NoticesListItem from './listItem';
-import { StyledPaper, StrongTypo } from '../styles';
+import Box from '@mui/material/Box';
+import { StrongTypo, StyledPaper } from '../styles';
 import { NoticesListProps } from '../types';
+import NoticesListItem from './listItem';
 
 export default function NoticesList({
     notices,
