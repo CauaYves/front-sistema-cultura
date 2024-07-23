@@ -13,22 +13,12 @@ export const handleSubmit = async (
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-    const testeArquivo: WebFile[] = [
-        {
-            name: 'teste',
-            lastModified: 21312312,
-            lastModifiedDate: 3243243,
-            type: 'application/pdf',
-            webkitRelativePath: 'relativePath',
-            length: 231123123,
-        },
-    ];
     event.preventDefault();
     handleStartLoading(setLoading)();
     const storedData = localStorage.getItem('session') || '';
     const { session } = JSON.parse(storedData);
 
-    if (!testeArquivo) {
+    if (!file) {
         return setSnackbar({
             message: 'Anexe o comprovante de residência',
             open: true,
@@ -36,7 +26,7 @@ export const handleSubmit = async (
         });
     }
 
-    const formData = createFormData(event, testeArquivo, proponent);
+    const formData = createFormData(event, file, proponent);
     formData.cpf = session.user.cpf;
     formData.name = session.user.name;
 
@@ -47,11 +37,7 @@ export const handleSubmit = async (
 
     try {
         const res = await createEnrollment(formData, session.token);
-        uploadFileAndShowSnackbar(
-            testeArquivo,
-            res.data.signedUrl,
-            setSnackbar,
-        );
+        uploadFileAndShowSnackbar(file, res.data.signedUrl, setSnackbar);
     } catch (error) {
         handleError(setSnackbar, error);
     } finally {

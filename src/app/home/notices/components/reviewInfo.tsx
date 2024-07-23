@@ -41,7 +41,6 @@ export default function ReviewInfo({
                 contentType: file[0].type,
             });
         });
-        console.log(body);
         const sessionJSON = localStorage.getItem('session');
         if (sessionJSON) {
             const { session } = JSON.parse(sessionJSON);
@@ -60,7 +59,6 @@ export default function ReviewInfo({
                     //TODO Enviar arquivos atraves de urls assinadas recebidas
                 })
                 .catch((error) => {
-                    console.log(error);
                     const message = handleError(error);
                     setSnackbar({
                         message,
@@ -83,9 +81,9 @@ export default function ReviewInfo({
                             <ListItemText primary={upload} />
                             <Box sx={{ background: 'white', width: '20%' }}>
                                 <FileInput
-                                    files={files[index] || []}
+                                    file={files[index] || []}
                                     caption=""
-                                    setFiles={(newFiles: WebFile[]) =>
+                                    setFile={(newFiles: WebFile[]) =>
                                         handleFilesChange(index, newFiles)
                                     }
                                 />
