@@ -22,7 +22,7 @@ export interface WebFile extends File {
 }
 
 export interface FileInputProps {
-    file: WebFile[] | undefined;
+    file: WebFile[][];
     setFile: Dispatch<SetStateAction<WebFile[][]>>;
     caption: string;
 }
@@ -56,7 +56,7 @@ function FileInput({ file, setFile, caption }: FileInputProps) {
     };
 
     useEffect(() => {
-        renderFiles(file);
+        renderFiles(file[0]);
     }, [file]);
 
     return (

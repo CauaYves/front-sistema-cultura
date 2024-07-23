@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import CreateClassification from './components/createClassification';
 import ClassificationExibition from './components/exibitionClassification';
+import ExternalLinks from './components/externalLinks';
 import FileExibition from './components/filesExibition';
 
 export default function MyProjects() {
@@ -36,6 +37,7 @@ export default function MyProjects() {
                 setReloadTable={setReloadTable}
             />
             <ClassificationExibition classifications={classifications} />
+            <ExternalLinks />
             <FileExibition filesUrlsList={filesUrlsList} />
         </Box>
     );

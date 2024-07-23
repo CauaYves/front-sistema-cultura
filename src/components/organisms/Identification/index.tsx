@@ -24,7 +24,7 @@ import { IdentificationModulesKey, IdentificationProps } from './types';
 export default function Indentification({
     setSelectedModule,
 }: Readonly<IdentificationProps>) {
-    const [file, setFile] = useState<WebFile[]>();
+    const [file, setFile] = useState<WebFile[][]>([]);
     const [loading, setLoading] = useState(false);
     const { setSnackbar } = useSnackbar();
     const [proponent, setProponent] = useState<IdentificationModulesKey>('PF');

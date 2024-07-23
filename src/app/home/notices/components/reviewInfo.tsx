@@ -76,7 +76,7 @@ export default function ReviewInfo({
                             <ListItemText primary={upload} />
                             <Box sx={{ background: 'white', width: '20%' }}>
                                 <FileInput
-                                    file={files[index] || []}
+                                    file={files || []}
                                     caption=""
                                     setFile={setFiles}
                                 />

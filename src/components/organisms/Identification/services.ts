@@ -8,7 +8,7 @@ import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,
-    file: WebFile[] | undefined,
+    file: WebFile[][] | undefined,
     proponent: IdentificationModulesKey,
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -47,7 +47,7 @@ export const handleSubmit = async (
 
 const createFormData = (
     event: FormEvent<HTMLFormElement>,
-    file: WebFile[],
+    file: WebFile[][],
     proponent: IdentificationModulesKey,
 ) => {
     const data = new FormData(event.currentTarget);
@@ -60,18 +60,18 @@ const createFormData = (
     formData.public = formData.public === 'on';
     formData.programs = [formData.cultura === 'on ' ? 'cultura' : ''];
     formData.upload = {
-        name: file[0].name,
-        contentType: file[0].type,
+        name: file[0][0].name,
+        contentType: file[0][0].type,
     };
     return formData;
 };
 
 const uploadFileAndShowSnackbar = async (
-    file: WebFile[],
+    file: WebFile[][],
     signedUrl: string,
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
 ) => {
-    uploadService.upload(file, signedUrl, file[0].type);
+    uploadService.upload(file, signedUrl, file[0][0].type);
     setSnackbar({
         message: 'cadastro criado com sucesso!',
         open: true,
