@@ -1,5 +1,5 @@
 import { noticeService } from '@/app/api';
-import { FileInput, SaveButton, WebFile } from '@/components';
+import { FilesInput, SaveButton } from '@/components';
 import LoadingScreen from '@/components/atoms/loaders/screenLoading';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -21,7 +21,7 @@ export default function ReviewInfo({
     setSnackbar,
 }: ReviewInfoProps) {
     const { transformObject, handleError } = noticeSlugServices;
-    const [files, setFiles] = useState<WebFile[][]>([]);
+    const [files, setFiles] = useState<File[][]>([]);
     const [loading, setLoading] = useState(false);
     if (!notice) return <LoadingScreen open />;
     const searchParamsParsed = transformObject(urlSearchParams, notice.id);
@@ -45,7 +45,7 @@ export default function ReviewInfo({
             handleLoading(false);
             promise
                 .then(() => {
-                    // const signedUrls: WebFile[] = res.data;
+                    // const signedUrls: File[] = res.data;
                     setSnackbar({
                         message: 'Proposta enviada com sucesso! ',
                         open: true,
@@ -75,7 +75,7 @@ export default function ReviewInfo({
                         <ListItem key={index}>
                             <ListItemText primary={upload} />
                             <Box sx={{ background: 'white', width: '20%' }}>
-                                <FileInput
+                                <FilesInput
                                     file={files || []}
                                     caption=""
                                     setFile={setFiles}

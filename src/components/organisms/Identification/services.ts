@@ -1,6 +1,5 @@
 import enrollmentService from '@/app/api/enrollment';
 import uploadService from '@/app/api/upload';
-import { WebFile } from '@/components/molecules/fileUpload';
 import { SnackbarState } from '@/context/snackbar-context';
 import { filterErrors } from '@/utils/filterErrorMessages';
 import { FormEvent } from 'react';
@@ -8,7 +7,7 @@ import { IdentificationModulesKey } from './types';
 
 export const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,
-    file: WebFile[][] | undefined,
+    file: File | undefined,
     proponent: IdentificationModulesKey,
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
     setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -47,7 +46,7 @@ export const handleSubmit = async (
 
 const createFormData = (
     event: FormEvent<HTMLFormElement>,
-    file: WebFile[][],
+    file: File,
     proponent: IdentificationModulesKey,
 ) => {
     const data = new FormData(event.currentTarget);
@@ -60,18 +59,18 @@ const createFormData = (
     formData.public = formData.public === 'on';
     formData.programs = [formData.cultura === 'on ' ? 'cultura' : ''];
     formData.upload = {
-        name: file[0][0].name,
-        contentType: file[0][0].type,
+        name: file.name,
+        contentType: file.type,
     };
     return formData;
 };
 
 const uploadFileAndShowSnackbar = async (
-    file: WebFile[][],
+    file: File,
     signedUrl: string,
     setSnackbar: React.Dispatch<React.SetStateAction<SnackbarState>>,
 ) => {
-    uploadService.upload(file, signedUrl, file[0][0].type);
+    uploadService.upload(file, signedUrl);
     setSnackbar({
         message: 'cadastro criado com sucesso!',
         open: true,

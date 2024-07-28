@@ -1,6 +1,6 @@
 import { noticeService } from '@/app/api';
 import enrollmentService from '@/app/api/enrollment';
-import { CulturalizeApiError } from '@/protocols';
+import { IndicaCulturalApiError } from '@/protocols';
 import { filterErrors } from '@/utils/filterErrorMessages';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { TransformedObject } from '../types';
@@ -101,7 +101,7 @@ function transformObject(
     };
 }
 
-function handleError(error: CulturalizeApiError<any>) {
+function handleError(error: IndicaCulturalApiError<any>) {
     const { response } = error;
     const status = response.status;
     let message = '';

@@ -1,4 +1,4 @@
-import { FileInput, WebFile } from '@/components/molecules';
+import { SingleFileInput } from '@/components/molecules/fileUpload/singleFileInput';
 import { useSnackbar } from '@/context/snackbar-context';
 import { appLocalStore } from '@/hooks';
 import PersonIcon from '@mui/icons-material/Person';
@@ -24,7 +24,7 @@ import { IdentificationModulesKey, IdentificationProps } from './types';
 export default function Indentification({
     setSelectedModule,
 }: Readonly<IdentificationProps>) {
-    const [file, setFile] = useState<WebFile[][]>([]);
+    const [file, setFile] = useState<File>();
     const [loading, setLoading] = useState(false);
     const { setSnackbar } = useSnackbar();
     const [proponent, setProponent] = useState<IdentificationModulesKey>('PF');
@@ -81,7 +81,7 @@ export default function Indentification({
                     <AddressForm />
                     <InterestAreaForm />
                     <StyledPaper>
-                        <FileInput
+                        <SingleFileInput
                             file={file}
                             setFile={setFile}
                             caption="Envie o comprovante de residência"

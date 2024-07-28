@@ -5,13 +5,17 @@ export type uploadResponseData = {
     fileId: string;
 };
 
-function upload(file: any, url: string, contentType: string) {
-    const promise: any = axios.put(url, file, {
-        headers: {
-            'Content-Type': `${contentType}`,
-        },
-    });
-    return promise;
+async function upload(file: any, url: string) {
+    try {
+        const response = await axios.put(url, file, {
+            headers: {
+                'Content-Type': file.type,
+            },
+        });
+        return response;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 const uploadService = {

@@ -1,11 +1,7 @@
 import { classificationService } from '@/app/api/classification';
 import { TextFieldWrapper } from '@/app/profile/styles';
 import { SaveButton, TextInput } from '@/components/atoms';
-import {
-    FilePreview,
-    InfiniteFileInput,
-    WebFile,
-} from '@/components/molecules';
+import { FilePreview, InfiniteFileInput } from '@/components/molecules';
 import { SnackbarState } from '@/context/snackbar-context';
 import { cloudflareService } from '@/lib/cloudflare';
 import { Alert, Box, Paper, Snackbar } from '@mui/material';
@@ -21,7 +17,7 @@ export default function CreateClassification({
     token,
     setReloadTable,
 }: CreateClassificationProps) {
-    const [file, setFile] = useState<WebFile[]>();
+    const [file, setFile] = useState<File[] | undefined>();
     const [filesNames, setFilesNames] = useState<FilePreview[]>();
     const [snackbar, setSnackbar] = useState<SnackbarState>();
 
@@ -42,6 +38,7 @@ export default function CreateClassification({
                 token,
                 classificationData,
             );
+            console.log('response', response);
             await cloudflareService.uploadFiles(response.signedUrlsList, file);
 
             setSnackbar({

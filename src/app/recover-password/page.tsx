@@ -1,6 +1,6 @@
 'use client';
 import { Copyright } from '@/components/atoms';
-import { CulturalizeApiError, DataFields } from '@/protocols';
+import { DataFields, IndicaCulturalApiError } from '@/protocols';
 import {
     Alert,
     AlertColor,
@@ -39,7 +39,7 @@ export default function SignIn() {
                 setRequestMessage('Código enviado com sucesso! ');
                 setCodeAlreadySent(true);
             })
-            .catch(({ response }: CulturalizeApiError<DataFields>) => {
+            .catch(({ response }: IndicaCulturalApiError<DataFields>) => {
                 const { status, data } = response;
                 let errorMessage = '';
 
@@ -98,7 +98,7 @@ export default function SignIn() {
                     Seja bem vindo à
                 </Typography>
                 <Typography component="h1" variant="h6">
-                    Culturalize
+                    Indica Cultural
                 </Typography>
                 {codeAlreadySent ? (
                     <CreateNewPassword

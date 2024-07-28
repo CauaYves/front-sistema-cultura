@@ -5,7 +5,7 @@ import EditCollectiveModal from '@/components/molecules/modals/editCollective';
 import { useCollective } from '@/context/collective-context';
 import { useSnackbar } from '@/context/snackbar-context';
 import { appLocalStore } from '@/hooks';
-import { CulturalizeApiError, DataFields } from '@/protocols';
+import { DataFields, IndicaCulturalApiError } from '@/protocols';
 import { Collective } from '@/types';
 import { Button, Dialog, Paper } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
@@ -45,7 +45,7 @@ export default function CulturalCollective({ router }: Readonly<CulturalColl>) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setCollective, refreshTable]);
 
-    const handleError = async (error: CulturalizeApiError<DataFields>) => {
+    const handleError = async (error: IndicaCulturalApiError<DataFields>) => {
         if (error.response.status === 401) {
             setSnackbar({
                 message: 'Token de acesso expirado, faça login novamente! ',

@@ -2,16 +2,20 @@ import { VisuallyHiddenInput } from '@/components/organisms/Identification/style
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box, Button, Typography } from '@mui/material';
 import { ChangeEventHandler, Dispatch, SetStateAction } from 'react';
-import { FilePreview, WebFile } from './fileUpload';
+
+export type FilePreview = {
+    contentType: string;
+    name: string;
+};
 
 interface InfiniteFileInput {
-    files: WebFile[] | undefined;
-    setFiles: Dispatch<SetStateAction<WebFile[] | undefined>>;
+    files: File[] | undefined;
+    setFiles: Dispatch<SetStateAction<File[] | undefined>>;
     setFilesNames: Dispatch<SetStateAction<FilePreview[] | undefined>>;
     caption: string;
 }
 
-function filterFilePreview(fileArray: WebFile[]) {
+function filterFilePreview(fileArray: File[]) {
     const previews = fileArray.map((file) => ({
         contentType: file.type,
         name: file.name,
@@ -28,14 +32,7 @@ function InfiniteFileInput({
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const fileList = event.target.files;
         if (fileList) {
-            const fileArray: WebFile[] = Array.from(fileList).map((file) => ({
-                name: file.name,
-                lastModified: file.lastModified,
-                lastModifiedDate: new Date(file.lastModified),
-                type: file.type,
-                webkitRelativePath: file.webkitRelativePath,
-                length: file.size,
-            }));
+            const fileArray: File[] = Array.from(fileList);
             const previews = filterFilePreview(fileArray);
 
             setFilesNames((prevPreviews) => {
@@ -65,7 +62,7 @@ function InfiniteFileInput({
                 <VisuallyHiddenInput
                     type="file"
                     onChange={handleChange}
-                    accept="pdf image/* !mp4 !bat !txt"
+                    accept="application/pdf, image/*"
                     multiple
                 />
             </Button>

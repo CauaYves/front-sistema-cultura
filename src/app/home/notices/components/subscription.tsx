@@ -99,7 +99,7 @@ export default function Subscription({
                     <AccordionDetails>
                         <Typography variant="body2">
                             O cadastramento de projetos será realizado através
-                            do Sistema Culturalize (Pessoa Física ou Pessoa
+                            do Sistema Indica Cultural (Pessoa Física ou Pessoa
                             Jurídica) e Inscrição de Projeto Para efetuar a
                             inscrição de projetos, basta concluir o
                             cadastramento do proponente e do projeto, não sendo

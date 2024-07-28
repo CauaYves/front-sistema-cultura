@@ -3,7 +3,7 @@ export type DataFields = {
     details: string[];
 };
 
-export interface CulturalizeApiError<T> {
+export interface IndicaCulturalApiError<T> {
     response: {
         status: number;
         data: T;

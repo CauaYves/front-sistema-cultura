@@ -1,5 +1,5 @@
 import { SetSnackbar } from '@/context/snackbar-context';
-import { ApiResponse, CulturalizeApiError } from '@/protocols';
+import { ApiResponse, IndicaCulturalApiError } from '@/protocols';
 import { CulturalAgentPf, CulturalAgentPj } from '@/types';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
@@ -20,7 +20,7 @@ export const handleDealWithPromise = ({
         .then((res: ApiResponse<CulturalAgentPf | CulturalAgentPj>) => {
             setAgent(res.data);
         })
-        .catch((error: CulturalizeApiError<string>) => {
+        .catch((error: IndicaCulturalApiError<string>) => {
             if (!error.response) return;
             if (error.response.status === 401) {
                 setSnackbar({
