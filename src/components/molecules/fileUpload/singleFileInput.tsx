@@ -1,27 +1,39 @@
 import { VisuallyHiddenInput } from '@/components/organisms/Identification/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Box, Button, Typography } from '@mui/material';
-import { ChangeEventHandler, useEffect, useState } from 'react';
+import {
+    ChangeEventHandler,
+    Dispatch,
+    SetStateAction,
+    useEffect,
+    useState,
+} from 'react';
 
-function FilesInput({ files, setFiles, caption }: any) {
-    const [inputFiles, setInputFiles] = useState<string[]>([]);
+type SingleFileInputProps = {
+    file: File | undefined;
+    setFile: Dispatch<SetStateAction<File | undefined>>;
+    caption: string;
+};
+
+function SingleFileInput({ file, setFile, caption }: SingleFileInputProps) {
+    const [inputFile, setInputFile] = useState<string>();
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         const fileList = event.target.files;
         if (fileList) {
-            setFiles(fileList[0]);
+            setFile(fileList[0]);
         }
     };
 
-    const renderFiles = (files: File[]) => {
-        if (files && files.length > 0) {
-            setInputFiles(files.map((file) => file.name));
+    const renderFiles = (file: File) => {
+        if (file) {
+            setInputFile(file.name);
         }
     };
 
     useEffect(() => {
-        renderFiles(files);
-    }, [files]);
+        if (file) renderFiles(file);
+    }, [file]);
 
     return (
         <Box>
@@ -45,12 +57,10 @@ function FilesInput({ files, setFiles, caption }: any) {
             <Typography component="p" variant="caption">
                 {caption}
             </Typography>
-            {inputFiles.map((fileName, index) => (
-                <Typography key={index} component="p" variant="body2">
-                    {fileName}
-                </Typography>
-            ))}
+            <Typography component="p" variant="body2">
+                {inputFile}
+            </Typography>
         </Box>
     );
 }
-export { FilesInput };
+export { SingleFileInput };

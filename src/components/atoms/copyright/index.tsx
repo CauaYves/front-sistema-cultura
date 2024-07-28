@@ -10,7 +10,7 @@ function Copyright(props: any) {
         >
             {'Copyright © '}
             <Link color="inherit" href="#">
-                Culturalize
+                Indica Cultural
             </Link>{' '}
             {new Date().getFullYear()}
         </Typography>

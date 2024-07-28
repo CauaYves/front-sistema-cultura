@@ -130,7 +130,7 @@ export default function Dashboard() {
                     }}
                 >
                     <Typography variant="h6" component="h1">
-                        Culturalize
+                        Indica Cultural
                     </Typography>
                     <IconButton
                         onClick={toggleDrawer}

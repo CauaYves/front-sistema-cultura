@@ -1,7 +1,7 @@
 const subscriptionInformation = [
     {
         title: 'Sistema de Inscrições',
-        description: `O cadastramento de projetos será realizado através do Sistema Culturalize Cadastro de Proponente (Pessoa Física ou Pessoa Jurídica) e Inscrição de Projeto Para efetuar a inscrição de projetos, basta concluir o cadastramento do proponente e do projeto, não sendo necessário o envio físico de qualquer documentação. Endereço de email: classedigital2016@gmail.com`,
+        description: `O cadastramento de projetos será realizado através do Sistema Indica Cultural Cadastro de Proponente (Pessoa Física ou Pessoa Jurídica) e Inscrição de Projeto Para efetuar a inscrição de projetos, basta concluir o cadastramento do proponente e do projeto, não sendo necessário o envio físico de qualquer documentação. Endereço de email: classedigital2016@gmail.com`,
     },
     {
         title: 'Documentação do Proponente Pessoa Física',

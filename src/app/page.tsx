@@ -1,24 +1,23 @@
 'use client';
-import * as React from 'react';
-import {
-    TextField,
-    FormControlLabel,
-    Checkbox,
-    Link,
-    Grid,
-    Box,
-    Typography,
-    Container,
-    InputAdornment,
-    IconButton,
-    Alert,
-    Snackbar,
-} from '@mui/material';
 import { Copyright } from '@/components/atoms';
+import { inputProps } from '@/types';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
+import {
+    Alert,
+    Box,
+    Checkbox,
+    Container,
+    FormControlLabel,
+    Grid,
+    IconButton,
+    InputAdornment,
+    Link,
+    Snackbar,
+    TextField,
+    Typography,
+} from '@mui/material';
 import Image from 'next/image';
-import { inputProps } from '@/types';
 import useSignInHandlers from './services';
 
 export default function SignIn() {
@@ -64,7 +63,7 @@ export default function SignIn() {
                     Seja bem vindo à
                 </Typography>
                 <Typography component="h1" variant="h6">
-                    Culturalize
+                    Indica Cultural
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
                     <TextField

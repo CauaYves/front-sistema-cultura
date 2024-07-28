@@ -1,28 +1,28 @@
 'use client';
-import * as React from 'react';
-import MaskedInput from 'react-text-mask';
 import { Copyright } from '@/components/atoms';
+import { inputProps } from '@/types';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { LoadingButton } from '@mui/lab';
 import {
+    Alert,
+    AlertColor,
     Box,
     Container,
     Grid,
+    IconButton,
+    InputAdornment,
     Link,
+    Snackbar,
     TextField,
     Typography,
-    Snackbar,
-    Alert,
-    AlertColor,
-    InputAdornment,
-    IconButton,
 } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import { AxiosError } from 'axios';
-import { useState } from 'react';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import * as React from 'react';
+import { useState } from 'react';
+import MaskedInput from 'react-text-mask';
 import authService from '../api/auth';
-import { inputProps } from '@/types';
 
 export default function SignUp() {
     const router = useRouter();
@@ -103,7 +103,7 @@ export default function SignUp() {
                     Seja bem vindo à
                 </Typography>
                 <Typography component="h1" variant="h6">
-                    Culturalize
+                    Indica Cultural
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit}>
                     <TextField

@@ -1,6 +1,6 @@
 import { useUserData } from '@/context/user-context';
 import { appLocalStore } from '@/hooks';
-import { CulturalizeApiError, DataFields } from '@/protocols';
+import { DataFields, IndicaCulturalApiError } from '@/protocols';
 import { AlertColor } from '@mui/material';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -39,7 +39,7 @@ const useSignInHandlers = () => {
                 setRequestMessage('Login efetuado com sucesso!');
                 setTimeout(() => router.push('/home'), 1500);
             })
-            .catch(({ response }: CulturalizeApiError<DataFields>) => {
+            .catch(({ response }: IndicaCulturalApiError<DataFields>) => {
                 const { status, data } = response;
                 let errorMessage = '';
 

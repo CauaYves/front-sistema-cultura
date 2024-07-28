@@ -3,7 +3,7 @@ import { cepMask, phoneMask } from '@/components/atoms';
 import { useCollective } from '@/context/collective-context';
 import { useSnackbar } from '@/context/snackbar-context';
 import { appLocalStore } from '@/hooks';
-import { CulturalizeApiError, DataFields } from '@/protocols';
+import { DataFields, IndicaCulturalApiError } from '@/protocols';
 import { Collective, UserData, inputProps } from '@/types';
 import { filterErrors } from '@/utils/filterErrorMessages';
 import { LoadingButton } from '@mui/lab';
@@ -57,7 +57,7 @@ export default function EditCollectiveModal({
 
     const handleStartLoading = () => setLoading(true);
     const handleStopLoading = () => setLoading(false);
-    const handleError = (error: CulturalizeApiError<DataFields>) => {
+    const handleError = (error: IndicaCulturalApiError<DataFields>) => {
         console.error(error);
         let message = '';
         if (error.response.status === 400) {

@@ -85,7 +85,7 @@ export default function Confirmacao() {
                     />
                 </Box>
                 <Typography component="h1" variant="h6">
-                    Culturalize
+                    Indica Cultural
                 </Typography>
                 <Typography component="h1" variant="body2">
                     Insira o código de confirmação enviado ao seu email
