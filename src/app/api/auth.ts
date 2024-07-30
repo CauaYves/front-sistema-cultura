@@ -2,7 +2,7 @@ import { User } from '@/types';
 import instance from './api';
 
 export type LoginCredentials = {
-    email: string;
+    cpf: string;
     password: string;
 };
 

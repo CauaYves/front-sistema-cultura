@@ -15,11 +15,12 @@ const useSignInHandlers = () => {
     const [severity, setSeverity] = useState<AlertColor>('warning');
     const [showPassword, setShowPassword] = useState(false);
     const { setUserData } = useUserData();
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const userData = {
-            email: data.get('email') as string,
+            cpf: data.get('cpf') as string,
             password: data.get('password') as string,
         };
         setLoading(true);

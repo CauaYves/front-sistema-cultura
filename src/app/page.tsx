@@ -1,5 +1,5 @@
 'use client';
-import { Copyright } from '@/components/atoms';
+import { Copyright, cpfMask } from '@/components/atoms';
 import { inputProps } from '@/types';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
@@ -18,6 +18,7 @@ import {
     Typography,
 } from '@mui/material';
 import Image from 'next/image';
+import MaskedInput from 'react-text-mask';
 import useSignInHandlers from './services';
 
 export default function SignIn() {
@@ -66,14 +67,22 @@ export default function SignIn() {
                     Indica Cultural
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                    <TextField
-                        {...inputProps}
-                        id="email"
-                        label="E-mail"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
+                    <MaskedInput
+                        mask={cpfMask}
+                        render={(ref, props) => (
+                            <TextField
+                                {...props}
+                                {...inputProps}
+                                inputRef={ref}
+                                id="cpf"
+                                label="CPF"
+                                name="cpf"
+                                autoComplete="cpf"
+                                autoFocus
+                            />
+                        )}
                     />
+
                     <TextField
                         {...inputProps}
                         name="password"
