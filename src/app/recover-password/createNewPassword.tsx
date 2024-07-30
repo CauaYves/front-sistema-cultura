@@ -1,21 +1,21 @@
 import { inputProps } from '@/types';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
+    AlertColor,
     Box,
-    TextField,
     Grid,
-    Link,
     IconButton,
     InputAdornment,
-    AlertColor,
+    Link,
+    TextField,
 } from '@mui/material';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { Dispatch, FormEventHandler, SetStateAction, useState } from 'react';
 import authService from '../api/auth';
-import { VisibilityOff, Visibility } from '@mui/icons-material';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 interface CreateNewPasswordProps {
-    email: string;
+    cpf: string;
     secondHandleSubmit: FormEventHandler<HTMLFormElement>;
     loading: boolean;
     router: AppRouterInstance;
@@ -24,7 +24,7 @@ interface CreateNewPasswordProps {
     setSeverity: Dispatch<SetStateAction<AlertColor>>;
 }
 export default function CreateNewPassword({
-    email,
+    cpf,
     loading,
     router,
     setOpen,
@@ -37,8 +37,7 @@ export default function CreateNewPassword({
     const [showPassword, setShowPassword] = useState(false);
 
     const checkIfPasswordAreEqual = (password1: string, password2: string) => {
-        if (password1 !== password2) return false;
-        return true;
+        return password1 === password2;
     };
     const handleTogglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -55,9 +54,9 @@ export default function CreateNewPassword({
         const body = {
             code,
             password: password1,
-            email,
+            cpf,
         };
-
+        console.log('corpo', body);
         const passwordAreEquals = checkIfPasswordAreEqual(password1, password2);
         if (!passwordAreEquals) {
             setInputError(false);
@@ -78,7 +77,8 @@ export default function CreateNewPassword({
                     }, 300);
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                console.error(error);
                 setOpen(true);
                 setSeverity('error');
                 setRequestMessage('Código de confirmação não confere! ');

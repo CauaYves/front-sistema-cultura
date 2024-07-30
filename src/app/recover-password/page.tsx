@@ -24,15 +24,18 @@ export default function SignIn() {
     const [requestMessage, setRequestMessage] = React.useState('');
     const [severity, setSeverity] = useState<AlertColor>('warning');
     const [codeAlreadySent, setCodeAlreadySent] = useState(false);
-    const [userEmail, setUserEmail] = useState('');
+    const [userCPF, setUserCPF] = useState('');
 
     const firstHandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true);
         const data = new FormData(event.currentTarget);
-        const email = data.get('email') as string;
-        setUserEmail(email);
-        const promise = authService.recoverPassword(email);
+        const cpfWithDots = data.get('cpf') as string;
+
+        const cpf = cpfWithDots.replaceAll('/[,-]/g', '');
+        setUserCPF(cpf);
+        console.log(cpf);
+        const promise = authService.recoverPassword(cpf);
         promise
             .then(() => {
                 setSeverity('success');
@@ -40,6 +43,8 @@ export default function SignIn() {
                 setCodeAlreadySent(true);
             })
             .catch(({ response }: IndicaCulturalApiError<DataFields>) => {
+                console.log(response);
+
                 const { status, data } = response;
                 let errorMessage = '';
 
@@ -102,7 +107,7 @@ export default function SignIn() {
                 </Typography>
                 {codeAlreadySent ? (
                     <CreateNewPassword
-                        email={userEmail}
+                        cpf={userCPF}
                         secondHandleSubmit={secondHandleSubmit}
                         loading={loading}
                         router={router}
