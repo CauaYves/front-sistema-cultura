@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/material';
 function ButtonBox({ children }: any) {
     return <StyledBox>{children}</StyledBox>;
 }
-
+console.log('a');
 const StyledBox = styled(Box)({
     display: 'flex',
     justifyContent: 'center',

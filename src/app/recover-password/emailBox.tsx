@@ -1,8 +1,10 @@
+import { cpfMask } from '@/components';
 import { inputProps } from '@/types';
 import { LoadingButton } from '@mui/lab';
-import { Box, TextField, Grid, Link, Typography } from '@mui/material';
+import { Box, Grid, Link, TextField, Typography } from '@mui/material';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { FormEventHandler } from 'react';
+import MaskedInput from 'react-text-mask';
 
 interface RecoverEmailBoxProps {
     firstHandleSubmit: FormEventHandler<HTMLFormElement>;
@@ -17,15 +19,22 @@ export default function RecoverEmailBox({
     return (
         <Box component="form" onSubmit={firstHandleSubmit} sx={{ mt: 1 }}>
             <Typography variant="body2">
-                Insira seu email para enviarmos o código de confirmação
+                Insira seu cpf para enviarmos o código de confirmação
             </Typography>
-            <TextField
-                {...inputProps}
-                id="email"
-                label="E-mail"
-                name="email"
-                autoComplete="email"
-                autoFocus
+            <MaskedInput
+                mask={cpfMask}
+                render={(ref, props) => (
+                    <TextField
+                        {...props}
+                        {...inputProps}
+                        inputRef={ref}
+                        id="cpf"
+                        label="CPF"
+                        name="cpf"
+                        autoComplete="cpf"
+                        autoFocus
+                    />
+                )}
             />
             <LoadingButton
                 variant="contained"

@@ -2,7 +2,7 @@ import { User } from '@/types';
 import instance from './api';
 
 export type LoginCredentials = {
-    email: string;
+    cpf: string;
     password: string;
 };
 
@@ -27,8 +27,8 @@ function confirmRegistration(code: string) {
     return promise;
 }
 
-function recoverPassword(email: string) {
-    const promise = instance.post(`/auth/forgot-password`, { email });
+function recoverPassword(cpf: string) {
+    const promise = instance.post(`/auth/forgot-password`, { cpf });
     return promise;
 }
 
