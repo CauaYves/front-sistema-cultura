@@ -1,7 +1,8 @@
 'use client';
-import { Copyright } from '@/components/atoms';
+import authService from '@/app/api/auth';
+import { Copyright, cpfMask } from '@/components';
 import { SnackbarState } from '@/context/snackbar-context';
-import { LoadingButton } from '@mui/lab';
+import { inputProps } from '@/types';
 import {
     Alert,
     Box,
@@ -15,20 +16,44 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { confirmationPageService } from './services';
+import { FormEvent, useState } from 'react';
+import MaskedInput from 'react-text-mask';
 
-export default function Confirmacao() {
+export default function ReesendConfirmationCode() {
     const router = useRouter();
-    const [loading, setLoading] = useState(false);
     const [snackbar, setSnackbar] = useState<SnackbarState>({
         message: '',
         severity: 'warning',
         open: false,
     });
 
-    const { handleSubmit } = confirmationPageService;
+    async function resendCode(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const cpf = data.get('cpf') as string;
+        const promise = authService.recicleConfirmationCode(cpf);
+        promise
+            .then((res) => {
+                setSnackbar({
+                    message: res.data,
+                    open: true,
+                    severity: 'success',
+                });
+                router.push('/cadastro/confirmacao');
+            })
+            .catch((error) => {
+                if (error.response.status === 404) {
+                    setSnackbar({
+                        message: 'CPF não encontrado',
+                        open: true,
+                        severity: 'error',
+                    });
+                }
+            });
+    }
+
     const handleClose = () => setSnackbar({ ...snackbar, open: false });
+
     return (
         <Container component="main" maxWidth="xs">
             <Snackbar
@@ -60,47 +85,44 @@ export default function Confirmacao() {
                     Indica Cultural
                 </Typography>
                 <Typography component="h1" variant="body2">
-                    Insira o código de confirmação enviado ao seu email
+                    Insira o seu CPF para enviarmos um novo código de
+                    confirmação
                 </Typography>
                 <Box
                     component="form"
-                    onSubmit={(event) =>
-                        handleSubmit({ event, setLoading, setSnackbar, router })
-                    }
+                    sx={{ width: '100%' }}
+                    onSubmit={(event) => resendCode(event)}
                 >
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="code"
-                        label="Código de verificação"
-                        name="code"
+                    <MaskedInput
+                        mask={cpfMask}
+                        render={(ref, props) => (
+                            <TextField
+                                {...props}
+                                {...inputProps}
+                                inputRef={ref}
+                                id="cpf"
+                                label="CPF"
+                                name="cpf"
+                                autoComplete="cpf"
+                                autoFocus
+                            />
+                        )}
                     />
                     <Box>
-                        <LoadingButton
+                        <Button
                             variant="contained"
                             fullWidth
-                            loading={loading}
                             type="submit"
                             sx={{ mt: 1 }}
                         >
-                            Verificar
-                        </LoadingButton>
-                        <Button
-                            onClick={() => {
-                                router.push('/cadastro/reconfirmar');
-                            }}
-                            variant="outlined"
-                            fullWidth
-                            sx={{ mt: 2, mb: 2 }}
-                        >
-                            Reenviar código de confirmação
+                            Receber código
                         </Button>
                     </Box>
                     <Grid container>
                         <Grid
                             sx={{
                                 display: 'flex',
+                                mt: 2,
                             }}
                         >
                             <Link href="/" variant="body2">

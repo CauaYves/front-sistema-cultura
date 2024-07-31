@@ -42,12 +42,18 @@ const useSignInHandlers = () => {
             })
             .catch(({ response }: IndicaCulturalApiError<DataFields>) => {
                 const { status, data } = response;
+                console.log(response);
                 let errorMessage = '';
 
                 if (status === 422) {
                     errorMessage = `${data}`;
                 } else if (status === 404) {
                     errorMessage = 'Usuário não encontrado';
+                } else if (status === 403) {
+                    errorMessage = `${data}`;
+                    setTimeout(() => {
+                        router.push('/cadastro/confirmacao');
+                    }, 1500);
                 } else {
                     errorMessage = `${data.details}`;
                 }

@@ -68,6 +68,11 @@ async function checkToken(token: string) {
     }
 }
 
+function recicleConfirmationCode(cpf: string) {
+    const promise = instance.post('/auth/resend-code', { cpf });
+    return promise;
+}
+
 const authService = {
     login,
     getUserData,
@@ -77,6 +82,7 @@ const authService = {
     updatePassword,
     update,
     checkToken,
+    recicleConfirmationCode,
 };
 
 export default authService;
