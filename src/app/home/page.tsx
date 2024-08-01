@@ -49,7 +49,7 @@ export default function Dashboard() {
         queue: <p>queue</p>,
         support: <p>support</p>,
         about: <p>about</p>,
-        billings: <p>billings</p>,
+        billings: <MyProjects />,
         advice: <p>advice</p>,
         legislation: <LegalActs />,
         metometer: <p>metometer</p>,
