@@ -14,6 +14,7 @@ async function uploadFiles(
             files[index],
             url.signedUrl,
         );
+        console.log('response', response);
         return response;
     });
     const results = await Promise.all(responseList);

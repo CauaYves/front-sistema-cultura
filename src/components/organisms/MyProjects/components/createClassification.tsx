@@ -1,9 +1,10 @@
 import { classificationService } from '@/app/api/classification';
 import { TextFieldWrapper } from '@/app/profile/styles';
-import { SaveButton, TextInput } from '@/components/atoms';
+import { TextInput } from '@/components/atoms';
 import { FilePreview, InfiniteFileInput } from '@/components/molecules';
 import { SnackbarState } from '@/context/snackbar-context';
 import { cloudflareService } from '@/lib/cloudflare';
+import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Paper, Snackbar } from '@mui/material';
 import { Dispatch, SetStateAction, useState } from 'react';
 import ClassificationSelect from './classificationSelectInput';
@@ -20,9 +21,13 @@ export default function CreateClassification({
     const [file, setFile] = useState<File[] | undefined>();
     const [filesNames, setFilesNames] = useState<FilePreview[]>();
     const [snackbar, setSnackbar] = useState<SnackbarState>();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const handleLoading = (bool: boolean) => setLoading(bool);
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         try {
+            handleLoading(true);
             event.preventDefault();
             const data = new FormData(event.currentTarget);
             const classificationData = {
@@ -47,6 +52,7 @@ export default function CreateClassification({
                 severity: 'success',
             });
             setReloadTable((prev) => !prev);
+            handleLoading(false);
         } catch (error) {
             console.error(error);
         }
@@ -103,7 +109,9 @@ export default function CreateClassification({
                         justifyContent: 'left',
                     }}
                 >
-                    <SaveButton type="submit">Salvar</SaveButton>
+                    <LoadingButton type="submit" loading={loading}>
+                        Salvar
+                    </LoadingButton>
                 </Box>
             </Box>
         </Paper>
