@@ -39,7 +39,7 @@ export default function Dashboard() {
         culturalColective: <Collective router={router} />,
         imagesAndLinks: <p>imagesAndLinks</p>,
         documents: <p>documents</p>,
-        myProjects: <MyProjects />,
+        myProjects: <p>myProjects</p>,
         authorizedUsers: <p>authorizedUsers</p>,
         notices: (
             <Notices router={router} setSelectedModule={setSelectedModule} />
