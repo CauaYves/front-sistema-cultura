@@ -37,7 +37,7 @@ export default function MyProjects() {
                 setReloadTable={setReloadTable}
             />
             <ClassificationExibition classifications={classifications} />
-            <ExternalLinks />
+            {classifications.length !== 0 && <ExternalLinks />}
             <FileExibition filesUrlsList={filesUrlsList} />
         </Box>
     );
