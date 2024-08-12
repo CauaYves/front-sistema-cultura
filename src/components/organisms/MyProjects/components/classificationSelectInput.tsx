@@ -4,8 +4,11 @@ import { SelectFormControl } from '../../Identification/styles';
 
 export default function ClassificationSelect() {
     const possibleSituations = [
+        'Vazio',
         'Selecionado Cota',
         'Selecionado Item 10.5',
+        'Selecionado Item 10.6',
+        'Selecionado Item 5.1.4',
         'Selecionado Ampla Concorrência',
         'Desclassificado',
         'Desclassificado',
@@ -14,6 +17,7 @@ export default function ClassificationSelect() {
         'Classificado/Despriorizado',
         'Classificado/Despriozado 10.2.2',
         'Inabilitado Item 4.4',
+        'Inabilitado item 4.4',
     ];
     const [value, setValue] = useState('');
     return (
