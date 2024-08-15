@@ -1,5 +1,5 @@
 import { Box, Button, Link, Paper } from '@mui/material';
-const LINK_CONTRAPARTIDA = 'https://form.jotform.com/241957596455069';
+const LINK_CONTRAPARTIDA = 'http://www.indicacultural.com.br/Contrapartida';
 
 export default function ExternalLinks() {
     return (
