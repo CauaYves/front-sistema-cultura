@@ -1,5 +1,5 @@
 import { Box, Button, Link, Paper } from '@mui/material';
-const LINK_CONTRAPARTIDA = 'http://www.indicacultural.com.br/Contrapartida';
+const LINK_CONTRAPARTIDA = 'https://www.indicacultural.com.br/Contrapartida';
 
 export default function ExternalLinks() {
     return (
@@ -12,7 +12,11 @@ export default function ExternalLinks() {
                 }}
             >
                 <Button variant="contained">
-                    <Link href={LINK_CONTRAPARTIDA} sx={{ color: '#FFFFFF' }}>
+                    <Link
+                        href={LINK_CONTRAPARTIDA}
+                        sx={{ color: '#FFFFFF' }}
+                        target="_blank"
+                    >
                         Insira a Contrapartida e Execução Cultural
                     </Link>
                 </Button>
