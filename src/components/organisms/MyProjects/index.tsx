@@ -30,12 +30,15 @@ export default function MyProjects() {
         fetchClassification();
     }, [reloadTable]);
     if (!classifications) return <LoadingScreen open />;
+
     return (
         <Box>
-            <CreateClassification
-                token={token}
-                setReloadTable={setReloadTable}
-            />
+            {!classifications && (
+                <CreateClassification
+                    token={token}
+                    setReloadTable={setReloadTable}
+                />
+            )}
             <ClassificationExibition classifications={classifications} />
             {classifications.length !== 0 && <ExternalLinks />}
             <FileExibition filesUrlsList={filesUrlsList} />
