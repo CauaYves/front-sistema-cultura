@@ -33,12 +33,10 @@ export default function MyProjects() {
 
     return (
         <Box>
-            {!classifications && (
-                <CreateClassification
-                    token={token}
-                    setReloadTable={setReloadTable}
-                />
-            )}
+            <CreateClassification
+                token={token}
+                setReloadTable={setReloadTable}
+            />
             <ClassificationExibition classifications={classifications} />
             {classifications.length !== 0 && <ExternalLinks />}
             <FileExibition filesUrlsList={filesUrlsList} />
