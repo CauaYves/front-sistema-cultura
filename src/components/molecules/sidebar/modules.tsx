@@ -1,32 +1,29 @@
-import * as React from 'react';
-import SearchIcon from '@mui/icons-material/Search';
-import FolderIcon from '@mui/icons-material/Folder';
-import People from '@mui/icons-material/People';
-import AttachMoney from '@mui/icons-material/AttachMoney';
-import TrendingUp from '@mui/icons-material/TrendingUp';
-import { styled } from '@mui/material/styles';
+import { ModulesKey } from '@/app/home/types';
+import { SubModule } from '@/components/atoms';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import Business from '@mui/icons-material/Business';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
+import FingerprintRoundedIcon from '@mui/icons-material/FingerprintRounded';
+import FolderIcon from '@mui/icons-material/Folder';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import LocalAtm from '@mui/icons-material/LocalAtm';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import People from '@mui/icons-material/People';
+import StraightenIcon from '@mui/icons-material/Straighten';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import FingerprintRoundedIcon from '@mui/icons-material/FingerprintRounded';
-import Business from '@mui/icons-material/Business';
-import LocalAtm from '@mui/icons-material/LocalAtm';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
-import StraightenIcon from '@mui/icons-material/Straighten';
-import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MuiAccordionSummary, {
     AccordionSummaryProps,
 } from '@mui/material/AccordionSummary';
-import { SubModule } from '@/components/atoms';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import FolderCopyIcon from '@mui/icons-material/FolderCopy';
-import EventBusyIcon from '@mui/icons-material/EventBusy';
-import { ModulesKey } from '@/app/home/types';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -141,7 +138,7 @@ export default function SidebarModules({
                                     ...Icolors,
                                 }}
                             />
-                            <Typography>Projetos</Typography>
+                            <Typography>Editais</Typography>
                         </>
                     ) : (
                         <FolderIcon sx={Icolors} />
@@ -151,7 +148,7 @@ export default function SidebarModules({
                     <SubModule
                         selectedModule={selectedModule}
                         setSelectedModule={setSelectedModule}
-                        tag="Inscrições"
+                        tag="Inscrições Abertas"
                         name="notices"
                     >
                         <AssignmentIcon sx={Icolors} />
@@ -167,7 +164,7 @@ export default function SidebarModules({
                     <SubModule
                         selectedModule={selectedModule}
                         setSelectedModule={setSelectedModule}
-                        tag="Editais Encerrados"
+                        tag="Inscrições Encerradas"
                         name="noticesClosed"
                     >
                         <EventBusyIcon sx={Icolors} />
@@ -182,50 +179,6 @@ export default function SidebarModules({
                     </SubModule>
                 </AccordionDetails>
             </Accordion>
-
-            <Accordion
-                expanded={expanded === 'panel2'}
-                onChange={handleChange('panel2')}
-            >
-                <AccordionSummary
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
-                >
-                    {open ? (
-                        <>
-                            <TrendingUp
-                                sx={{
-                                    mr: '10px',
-                                    ...Icolors,
-                                }}
-                            />
-                            <Typography>Incentivar Projeto</Typography>
-                        </>
-                    ) : (
-                        <TrendingUp sx={Icolors} />
-                    )}
-                </AccordionSummary>
-                <AccordionDetails>
-                    <SubModule
-                        selectedModule={selectedModule}
-                        setSelectedModule={setSelectedModule}
-                        tag="Já Incentivados"
-                        name="alreadyIncentived"
-                    >
-                        <AttachMoney sx={Icolors} />
-                    </SubModule>
-
-                    <SubModule
-                        selectedModule={selectedModule}
-                        setSelectedModule={setSelectedModule}
-                        tag="Buscar Projeto"
-                        name="searchProject"
-                    >
-                        <SearchIcon sx={Icolors} />
-                    </SubModule>
-                </AccordionDetails>
-            </Accordion>
-
             <Accordion
                 expanded={expanded === 'panel5'}
                 onChange={handleChange('panel5')}

@@ -46,9 +46,6 @@ export default function SignIn() {
             >
                 <Alert severity={severity}>{requestMessage}</Alert>
             </Snackbar>
-            {/* <Box sx={{ background: 'blue', display: 'flex' }} maxWidth="50%">
-                aaaaaaaaaaaaaaaaaaaaaaaaaa
-            </Box> */}
             <Box maxWidth="450px">
                 <Box
                     sx={{
