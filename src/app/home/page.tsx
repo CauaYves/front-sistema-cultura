@@ -27,6 +27,7 @@ export default function Dashboard() {
     const [selectedModule, setSelectedModule] = useState<ModulesKey>('notices');
     const [openDrawer, setOpenDrawer] = useState(true);
     const { message, open, severity, setSnackbar } = useSnackbar();
+
     const organismObjects: OrganismObjects = {
         identification: (
             <Indentification
@@ -82,7 +83,6 @@ export default function Dashboard() {
             >
                 <Alert severity={severity}>{message} </Alert>
             </Snackbar>
-            <CssBaseline />
             <AppBar
                 position="absolute"
                 open={openDrawer}
